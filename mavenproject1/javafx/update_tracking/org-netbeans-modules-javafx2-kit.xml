@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="org.netbeans.modules.javafx2.kit">
+    <module_version install_time="1416342416598" last="true" origin="installer" specification_version="1.14.1">
+        <file crc="916376597" name="VERSION.txt"/>
+        <file crc="3671458904" name="config/Modules/org-netbeans-modules-javafx2-kit.xml"/>
+        <file crc="3823398915" name="modules/locale/org-netbeans-modules-javafx2-kit_ja.jar"/>
+        <file crc="2883361060" name="modules/locale/org-netbeans-modules-javafx2-kit_pt_BR.jar"/>
+        <file crc="3104940833" name="modules/locale/org-netbeans-modules-javafx2-kit_ru.jar"/>
+        <file crc="2182012987" name="modules/locale/org-netbeans-modules-javafx2-kit_zh_CN.jar"/>
+        <file crc="664275402" name="modules/org-netbeans-modules-javafx2-kit.jar"/>
+    </module_version>
+</module>

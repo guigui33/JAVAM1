@@ -7,7 +7,7 @@ package com.strim1.mavenproject1;
 
 /**
  *
- * @author guigui
+ * 
  */
 class TraitementDemande {
          
@@ -28,13 +28,13 @@ class TraitementDemande {
             case "information": 
                 return information(decoupageRequete[1]);//modifier
             default:
-                return "requte inconnue, Usage: motclé id dmenade"; 
+                return "requête inconnue, Usage: motclé id demande"; 
         }
     }   
     
     /**
      * 
-     * @param demande
+     * @param demande 
      * @return  un message si la modification a été prise en compte ou non.
      *          si non, explication de l'erreur 
      */
