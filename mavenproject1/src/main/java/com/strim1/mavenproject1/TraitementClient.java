@@ -34,7 +34,7 @@ public class TraitementClient extends Thread {
             fluxEntree = new InputStreamReader(service.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         if(fluxEntree!=null){
             BufferedReader lecture=new BufferedReader(fluxEntree);
             try {
