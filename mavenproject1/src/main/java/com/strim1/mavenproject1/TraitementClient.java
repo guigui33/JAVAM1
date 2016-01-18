@@ -6,14 +6,13 @@
 package com.strim1.mavenproject1;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -35,7 +34,7 @@ public class TraitementClient extends Thread {
             fluxEntree = new InputStreamReader(service.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         if(fluxEntree!=null){
             BufferedReader lecture=new BufferedReader(fluxEntree);
             try {

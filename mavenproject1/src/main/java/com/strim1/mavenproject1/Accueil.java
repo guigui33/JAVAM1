@@ -24,7 +24,8 @@ public class Accueil {
     ServerSocket ecoute; //
     /**
      * Construteur Accueil 
-     * int port le port du service 
+     * @param port 
+     *            le port du service 
      */
     public Accueil(int port){
         try {
@@ -34,7 +35,12 @@ public class Accueil {
         }
     }
     
-    public int fonctionnementService(){
+    /**
+     * 
+     * attend la connexion d'un client
+     * lance le thread qui va traiter les demandes du clients
+     */
+    public void fonctionnementService(){
         while(true){
             try {
                 service=ecoute.accept();
@@ -43,13 +49,5 @@ public class Accueil {
             }
             new TraitementClient(service).start();
         }
-    }
-    
-    /**
-     * @param args the command line arguments
-     * test de la classe
-     */
-    public static void main(String[] args) {
-      System.out.println("debut programme!!!");
     }
 }
