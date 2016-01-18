@@ -1,0 +1,20 @@
+Protocole de gestion :
+
+Requêtes à implémenter dans le serveur :
+	INSCRIPTION, adresse_mail, mot_de_passe, nom, prenom
+	CONNEXION, adresse_mail, mot_de_passe
+	DECONNEXION
+	RECHERCHER, categorie, mot clé
+	VISITER, id_utilisateur
+	MODIFIER_COORDONNEES, mot_de_passe, nom, prenom, adresse, telephone, annee_naissance, visiilite_coordonnes
+	MODIFIER_DIPLOMES, id_utilisateur, annee,  type, etablissement, visibilité_diplome
+	MODIFIER_COMPETENCES, id_utilisateur, compétence, niveau, visibilité_compétence
+	
+Retour du serveur :	
+	OK texte_retour
+	ERREUR nom_commande, raison
+	
+	
+	
+	
+	
