@@ -12,6 +12,11 @@
     </properties>
     <dependencies>
         <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>5.1.38</version>
+	</dependency>
+        <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>javafx-maven-plugin</artifactId>
             <version>1.0.0</version>
