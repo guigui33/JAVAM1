@@ -221,8 +221,27 @@ public class Bdd{
         }     
     }
     
-    
+    public void SupprimerDiplome(int id,String Type){
+        
+        try {
+            st = co.createStatement();
+            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Type='"+Type+"'";
+            st.executeUpdate(sql);
+        }catch (SQLException ex){
+        Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
  
+     public void SupprimerCompetence(int id,String matiere){   
+        try {
+            st = co.createStatement();
+            String sql="DELETE FROM Competences WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
+            st.executeUpdate(sql);
+        }catch (SQLException ex){
+        Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
+     
     public static void main(String[] args){    
        Bdd bdd=new Bdd();
        bdd.connexion();
@@ -231,10 +250,10 @@ public class Bdd{
        //bdd.VerifierMdp("aajjjjjjjj");
        //bdd.AjouterCompetence(1, "fr", Bdd.niveau.Bon);
        //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
-       bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Tous,Bdd.visibiliter.Personne,Bdd.visibiliter.Tous);
+       //bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Tous,Bdd.visibiliter.Personne,Bdd.visibiliter.Tous);
        //bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
-    
-    
+       //bdd.SupprimerCompetence(1, "Rugby");
+       //bdd.SupprimerDiplome(1,"fr");
     }
 }
 
