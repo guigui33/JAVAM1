@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package com.strim1.mavenproject1;
 
 import java.io.BufferedReader;
@@ -19,57 +19,63 @@ import java.util.logging.Logger;
  * @author guigui
  */
 public class TraitementClient extends Thread {
-    private Socket service;
+    private Socket connexionCourante;
+    private boolean fermeture;
+    
     private String demandeClient;
     private String retourServeur;
     
-    public TraitementClient(Socket service){
-        this.service=service;
+    public TraitementClient(Socket connexionCourante) {
+        this.connexionCourante = connexionCourante;
+        this.fermeture = false;
     }
-        
+    
     private void reception(){
         InputStreamReader fluxEntree=null;
         
         try {
-            fluxEntree = new InputStreamReader(service.getInputStream());
+            fluxEntree = new InputStreamReader(connexionCourante.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        if(fluxEntree!=null){
+        }
+        
             BufferedReader lecture=new BufferedReader(fluxEntree);
             try {
                 demandeClient=lecture.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            /*fermeture connexion client*/
-            if(demandeClient==null){
-                try {
-                    service.close();// ??? fermeture du socket client client
-                } catch (IOException ex) {
-                    Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+            }        
     }
     
+    private void deconnexion(){
+        try {
+            connexionCourante.close();// ??? fermeture du socket client client
+        } catch (IOException ex) {
+            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void emission(){
         PrintStream fluxSortie=null;
         try {
-            fluxSortie = new PrintStream(service.getOutputStream());
+            fluxSortie = new PrintStream(connexionCourante.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(fluxSortie!=null){
-                fluxSortie.println(retourServeur);
+            fluxSortie.println(retourServeur);
         }
     }
     
     public void run(){
-        reception();
-        TraitementDemande traitementDemande=new TraitementDemande();
-        retourServeur=traitementDemande.requete(demandeClient);
-        emission();
+        while(!fermeture){
+            reception();
+            if(demandeClient!=null){
+            TraitementDemande traitementDemande=new TraitementDemande();
+            retourServeur=traitementDemande.requete(demandeClient);
+            emission();
+            }
+            else fermeture=true;
+        }
+        deconnexion();
     }
 }
