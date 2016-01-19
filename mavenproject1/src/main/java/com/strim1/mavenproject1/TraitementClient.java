@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * @author guigui
  */
 public class TraitementClient extends Thread {
-    private Socket connexionCourante;
+    private final Socket connexionCourante;
     private boolean fermeture;
     
     private String demandeClient;
@@ -39,12 +39,12 @@ public class TraitementClient extends Thread {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-            BufferedReader lecture=new BufferedReader(fluxEntree);
-            try {
-                demandeClient=lecture.readLine();
-            } catch (IOException ex) {
-                Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-            }        
+        BufferedReader lecture=new BufferedReader(fluxEntree);
+        try {
+            demandeClient=lecture.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void deconnexion(){
@@ -66,13 +66,14 @@ public class TraitementClient extends Thread {
         }
     }
     
+    @Override
     public void run(){
         while(!fermeture){
             reception();
             if(demandeClient!=null){
-            TraitementDemande traitementDemande=new TraitementDemande();
-            retourServeur=traitementDemande.requete(demandeClient);
-            emission();
+                TraitementDemande traitementDemande=new TraitementDemande();
+                retourServeur=traitementDemande.requete(demandeClient);
+                emission();
             }
             else fermeture=true;
         }
