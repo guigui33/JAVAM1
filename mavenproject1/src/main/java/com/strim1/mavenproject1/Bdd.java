@@ -24,7 +24,8 @@ import java.util.logging.Logger;
  */
 
 public class Bdd{
-   
+    
+    public Statement st;
       /* Les enum */
     enum visibiliter{
         Personne,
@@ -50,7 +51,7 @@ public class Bdd{
     private final String url;
     private Connection co;
     /**
-     * constructeur par dÃ©faut de la classe SQL
+     * constructeur par défaut de la classe SQL
      */
     public Bdd() {
         this.host = "javaguigui";
@@ -101,7 +102,6 @@ public class Bdd{
     
     public boolean VerifierMail(String mail) {
         ResultSet verif=null;
-        Statement st;
         try {
             st = co.createStatement();
             verif = st.executeQuery("SELECT AddrMail FROM Utilisateurs WHERE AddrMail='" + mail + "'");
@@ -126,8 +126,7 @@ public class Bdd{
     
     //Ajout d'information à la BDD.
     
-    public void AjoutUtilisateur(String nom, String prenom, String addrmail, String tel, String date,String mdp,visibiliter v){
-        Statement st;
+    public void CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
         ResultSet resultat1;
         int idMax=0;
         boolean VerifMail;
@@ -148,21 +147,19 @@ public class Bdd{
                     idMax = resultat1.getInt("max(Id)");
                     idMax += 1;
                     }
-                  String sql = "INSERT INTO Utilisateurs VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','" + tel + "','"+ date +"','" + mdp + "','"+ v +"');";
+                  String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "');";
                   st.executeUpdate(sql);
                 }   
           } catch (SQLException ex) {
         Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
+          }
     }    
        
-    public void AjouterCompetence(int id, String matiere, niveau n, visibiliter v )
+    public void AjouterCompetence(int id, String matiere, niveau n )
     {
-        Statement st;
         try {
             st = co.createStatement();
-            String sql="INSERT INTO Competences VALUES (" +id+ ",'"+matiere+"','"+n+"','" +v+"')";
+            String sql="INSERT INTO Competences VALUES (" +id+ ",'"+matiere+"','"+n+"')";
             st.executeUpdate(sql);
             
         }catch (SQLException ex) {
@@ -170,12 +167,11 @@ public class Bdd{
         }
     }
     
-    public void AjouterDiplome(int id, String Dobtention,String Type ,String etabli, visibiliter v )
+    public void AjouterDiplome(int id, String Dobtention,String Type ,String etabli)
     {
-        Statement st;
         try {
             st = co.createStatement();
-            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+Dobtention+"','"+Type+"','" +etabli+"','"+v+"')";
+            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+Dobtention+"','"+Type+"','" +etabli+"')";
             st.executeUpdate(sql);
             
         }catch (SQLException ex) {
@@ -183,9 +179,8 @@ public class Bdd{
         }
     }
     
-    public void ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter v){
+    public void ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc){
         
-        Statement st;
         try {
             int i;
             int val=0;
@@ -201,36 +196,64 @@ public class Bdd{
                 val =((Number) resultat1.getObject(1)).intValue(); 
                 }
                 if(val == 1){
-                    String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',Visible='"+v+"' WHERE Id="+id+"";
+                    String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"',VisibleComp='"+vc+"',VisibleDipl='"+vd+"' WHERE Id="+id+"";
                          st.executeUpdate(sql);    
                 }else{
                     System.out.println("Erreur, l'addresse Mail : " + addrmail + " est deja utilisé");
                 }   
             }else{
-                String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',Visible='"+v+"' WHERE Id="+id+"";
+                String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"',VisibleComp='"+vc+"',VisibleDipl='"+vd+"' WHERE Id="+id+"";
                          st.executeUpdate(sql); 
             }
         }catch (SQLException ex) {
         Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }    
+        }     
+    }
     
+    public void ModififerCompetence(int id, String matiere, niveau n){
+       
+        try {
+            st = co.createStatement();
+            String sql="UPDATE Competences SET Niveau='"+n+"' WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
+            st.executeUpdate(sql);
+        }catch (SQLException ex){
+        Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
     
+    public void SupprimerDiplome(int id,String Type){
+        
+        try {
+            st = co.createStatement();
+            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Type='"+Type+"'";
+            st.executeUpdate(sql);
+        }catch (SQLException ex){
+        Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
  
+     public void SupprimerCompetence(int id,String matiere){   
+        try {
+            st = co.createStatement();
+            String sql="DELETE FROM Competences WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
+            st.executeUpdate(sql);
+        }catch (SQLException ex){
+        Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+    }
+     
     public static void main(String[] args){    
        Bdd bdd=new Bdd();
        bdd.connexion();
        //bdd.VerifierMail("grosse@bite.xxx");
-       //bdd.AjoutUtilisateur("TEst", "Test", "eooto@hotmail.fr", "0564563423", "1994-12-12", "bricuuuuu",visibiliter.Tous);
+       //bdd.CreerUtilisateur("TEst", "Test", "Uber@hotmail.fr","1994-12-12", "bricuuuuu");
        //bdd.VerifierMdp("aajjjjjjjj");
-       //bdd.AjouterCompetence(1, "fr", Bdd.niveau.Bon , Bdd.visibiliter.Tous);
-       //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk", Bdd.visibiliter.Tous);
-       bdd.ModifierInformation(4,"Testmodi","000000000","fffffffff", Bdd.visibiliter.Tous);
-    
-    
-    
+       //bdd.AjouterCompetence(1, "fr", Bdd.niveau.Bon);
+       //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
+       //bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Tous,Bdd.visibiliter.Personne,Bdd.visibiliter.Tous);
+       //bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
+       //bdd.SupprimerCompetence(1, "Rugby");
+       //bdd.SupprimerDiplome(1,"fr");
     }
 }
 
