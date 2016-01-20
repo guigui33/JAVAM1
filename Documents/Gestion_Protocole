@@ -1,20 +1,20 @@
 Protocole de gestion :
 
 Requêtes à implémenter dans le serveur :
-	INSCRIPTION, adresse_mail, mot_de_passe, nom, prenom
+	INSCRIPTION, adresse_mail, mot_de_passe, nom, prenom ,dateN
 	CONNEXION, adresse_mail, mot_de_passe
 	DECONNEXION
 	RECHERCHER, categorie, mot clé
-	VISITER, id_utilisateur
-	MODIFIER_COORDONNEES, mot_de_passe, nom, prenom, adresse, telephone, annee_naissance, visiilite_coordonnes
-	MODIFIER_DIPLOMES, id_utilisateur, annee,  type, etablissement, visibilité_diplome
-	MODIFIER_COMPETENCES, id_utilisateur, compétence, niveau, visibilité_compétence
+	VISITER, id_utilisateurx	
+	MODIFIER_COORDONNEES, id_utilisateur, mot_de_passe, adresseMail,telephone, visiilite_coordonnes, visibilité_diplome, visibilité_compétence
+	MODIFIER_DIPLOMES, id_utilisateur, annee,  type, etablissement
+	MODIFIER_COMPETENCES, id_utilisateur, compétence, niveau
 	
 Retour du serveur :	
 	OK texte_retour
 	ERREUR nom_commande, raison
 	
-	
+	 
 	
 	
 	
