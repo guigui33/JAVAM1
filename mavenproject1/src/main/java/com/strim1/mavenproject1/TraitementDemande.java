@@ -21,12 +21,12 @@ class TraitementDemande {
         decoupageRequete=demandeClient.split(" ");
         //en fonction du mot cle on redirige vers le service correspondant
         switch(decoupageRequete[0]){
-            case "modifier": 
+            case "MODIFIER": 
                 return modifier(decoupageRequete[1]);//modifier
-            case "creationCompte": 
+            case "CREATION": 
                 return creationCompte(decoupageRequete[1]);//modifier
-            case "information": 
-                return information(decoupageRequete[1]);//modifier
+            case "RECHERCHER": 
+                return rechercher(decoupageRequete[1]);//modifier
             default:
                 return "requête inconnue, Usage: motclé id demande"; 
         }
@@ -39,7 +39,7 @@ class TraitementDemande {
      *          si non, explication de l'erreur 
      */
     private String modifier(String demande){
-        return null;
+        return "modifier";
     }
     
     /**
@@ -49,7 +49,7 @@ class TraitementDemande {
      *         sinon, message d'erreur contenant la raison du refus.
      */
     private String creationCompte(String demande){
-        return null;
+        return "creation compte";
     }
    
     /**
@@ -58,8 +58,7 @@ class TraitementDemande {
      * @return un message contenant les informations demandées par le client 
      *          peut être un message d'erreur, informations non trouvées ou pas les droits d'accès.
      */
-    private String information(String demande){
-        
-        return null;
+    private String rechercher(String demande){        
+        return "RECHERCHER";
     }
 }

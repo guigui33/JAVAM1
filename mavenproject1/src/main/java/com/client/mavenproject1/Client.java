@@ -25,7 +25,7 @@ public class Client {
     private boolean quitter;
     
     private String requete;
-    private String reponse;
+    private String reponseServeur;
     
     public Client(){
         this.socket=null;
@@ -42,7 +42,9 @@ public class Client {
         }
     }
     
-    private void Deconnexion(){
+    private void deconnexion(){
+          System.out.println("deconnexion...");
+          System.out.println("fin client.");
         try {
             socket.close();
         } catch (IOException ex) {
@@ -58,8 +60,10 @@ public class Client {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(reponse!=null)
+        if(requete!=null){
+            System.out.println("requete: "+requete);
             fluxSortie.println(requete);
+        }
     }
     
     private void reception(){
@@ -72,12 +76,12 @@ public class Client {
         }
         if(fluxEntreeSocket!=null){
             try {
-                reponse= fluxEntreeSocket.readLine();
+                reponseServeur= fluxEntreeSocket.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(reponse!=null)
-                System.out.println("Reponse du serveur : " + reponse);
+            if(reponseServeur!=null)
+                System.out.println("Reponse du serveur : " + reponseServeur);
         }
         
     }
@@ -112,7 +116,6 @@ public class Client {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         while (continuer) {
             switch (c) {
                 case "1":
@@ -120,7 +123,7 @@ public class Client {
                     continuer = false;
                     break;
                 case "2":
-                    requete = "Modifier ";
+                    requete = "MODIFIER ";
                     continuer = false;
                     break;
                 case "3":
@@ -133,7 +136,6 @@ public class Client {
                     break;
                 case "0":
                     requete=null;
-                    System.out.println("bye.");
                     continuer = false;
                     quitter=true;
                     break;
@@ -144,9 +146,9 @@ public class Client {
         
         //on ecrit le reste de la requete à envoyer au serveur, a faire ds une methode
         if(!quitter){
-            System.out.print("requête: "+reponse +" ");
+            System.out.print("requête à completer: "+requete +" ");
             try {
-                reponse = reponse + fluxEntreeStandard.readLine();
+                requete = requete + fluxEntreeStandard.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -154,14 +156,16 @@ public class Client {
     }
     
     public void fonctionnement(){
-        connexion(1324);
+        connexion(50000);
         while(!quitter){
             menu();
             choix();
-            emission();
-            reception();
+            if(!quitter){
+                emission();
+                reception();
+            }
         }
-        Deconnexion();
+        deconnexion();
         
     }
     

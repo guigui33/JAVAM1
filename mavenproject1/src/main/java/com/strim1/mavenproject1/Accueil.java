@@ -45,6 +45,7 @@ public class Accueil {
             try {
                 System.out.println("attente client...");
                 service=ecoute.accept();
+                System.err.println("Nouvelle connexion : "+ service);
             } catch (IOException ex) {
                 Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -54,6 +55,6 @@ public class Accueil {
     
     public static void main(String[] args) {
         System.out.println("debut programme");
-        new Accueil(1324).fonctionnementService();
+        new Accueil(50000).fonctionnementService();
     }
 }

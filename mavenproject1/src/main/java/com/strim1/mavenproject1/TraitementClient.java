@@ -42,12 +42,14 @@ public class TraitementClient extends Thread {
         BufferedReader lecture=new BufferedReader(fluxEntree);
         try {
             demandeClient=lecture.readLine();
+            System.out.println("demande client: "+demandeClient);
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     private void deconnexion(){
+        System.err.println("deconnexion client : "+ connexionCourante);
         try {
             connexionCourante.close();// ??? fermeture du socket client client
         } catch (IOException ex) {
@@ -62,6 +64,7 @@ public class TraitementClient extends Thread {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(fluxSortie!=null){
+            System.out.println("retour Serveur: "+retourServeur);
             fluxSortie.println(retourServeur);
         }
     }
@@ -77,6 +80,7 @@ public class TraitementClient extends Thread {
             }
             else fermeture=true;
         }
+        System.out.println("demande de deconnexion client.");
         deconnexion();
     }
 }
