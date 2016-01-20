@@ -43,11 +43,17 @@ public class Accueil {
     public void fonctionnementService(){
         while(true){
             try {
+                System.out.println("attente client...");
                 service=ecoute.accept();
             } catch (IOException ex) {
                 Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
             }
             new TraitementClient(service).start();
         }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("debut programme");
+        new Accueil(1324).fonctionnementService();
     }
 }
