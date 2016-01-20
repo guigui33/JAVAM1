@@ -68,7 +68,7 @@ public class Bdd{
             // Pas besoins sous JDK 1.8 Class.forName("com.mysql.jdbc");
             //System.out.println("Driver O.K.");
             co = DriverManager.getConnection(url, host, pwd);
-            System.out.println("Connexion effective !");
+            System.out.println("Connexion BDD effective !");
         } catch (SQLException e) {
             System.out.println("Erreur connexion");
         }
@@ -126,8 +126,9 @@ public class Bdd{
     
     //Ajout d'information à la BDD.
     
-    public void CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
+    public String CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
         ResultSet resultat1;
+        String retour;
         int idMax=0;
         boolean VerifMail;
         int VerifMdp=0;
@@ -136,11 +137,14 @@ public class Bdd{
             VerifMail = VerifierMail(addrmail);
             VerifMdp = VerifierMdp(mdp);
             if (VerifMail!= true) {
-            System.out.println("Erreur, l'addresse Mail : " + addrmail + " est deja utilisé");
+            retour="Erreur, l'addresse Mail : " + addrmail + " est deja utilisé";
+            return retour;
             } else if( VerifMdp == 1){
-                System.out.println("Mot de passe trop court 6 car min ");
+                retour="Mot de passe trop court 6 car min ";
+                return retour;
                 }else if (VerifMdp == 2){
-                        System.out.println("Mot de passe trop long 16 car max");
+                        retour="Mot de passe trop long 16 car max";
+                        return retour;
                         }else if(VerifMdp==3){
                   resultat1 = st.executeQuery("SELECT  max(Id)  FROM Utilisateurs;");
                   while (resultat1.next()) {
@@ -149,10 +153,13 @@ public class Bdd{
                     }
                   String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "');";
                   st.executeUpdate(sql);
+                  retour="Inscription Ok, bienvenu";
+                  return retour;
                 }   
           } catch (SQLException ex) {
         Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
           }
+        return retour="erreur Creation";
     }    
        
     public void AjouterCompetence(int id, String matiere, niveau n )
