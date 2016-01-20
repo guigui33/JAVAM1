@@ -92,6 +92,7 @@ public class Client {
     private void menu(){
         System.out.println("***menu***");
         System.out.println("1) Creation du compte\n"
+                +"2)"
                 + "2) modifier informations\n"
                 +"0) quitter\n") ;
         System.out.print("choix: ");
@@ -119,7 +120,7 @@ public class Client {
         while (continuer) {
             switch (c) {
                 case "1":
-                    requete = "CREATION ";
+                    requete = "INSCRIPTION ";
                     continuer = false;
                     break;
                 case "2":
@@ -145,14 +146,36 @@ public class Client {
         }
         
         //on ecrit le reste de la requete à envoyer au serveur, a faire ds une methode
-        if(!quitter){
+        /*if(!quitter){
             System.out.print("requête à completer: "+requete +" ");
             try {
                 requete = requete + fluxEntreeStandard.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }*/
+        
+        //a refaire
+        formulaire("insciption");
+    }
+    
+    private void formulaire(String question){
+            /*BufferedReader fluxEntreeStandard = new BufferedReader(
+                new InputStreamReader(System.in));
+        
+        String c=null;
+        
+        try {
+            c = fluxEntreeStandard.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        System.out.println("adresse mail: ");
+        System.out.println("mdp: ");
+        System.out.println("mdp: ");*/
+        requete+="adrmail "+"mdp444444 "+"nom "+"prenom "+"1998-12-19";
+        
     }
     
     public void fonctionnement(){

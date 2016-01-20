@@ -19,9 +19,10 @@ import java.util.logging.Logger;
  * renvoie le client sur un thread qui va gerer les demandes des clients
  */
 public class Accueil {
+    private final Bdd bdd;
+    private Socket service; //socket de service 
+    private ServerSocket ecoute; 
     
-    Socket service; //socket de service 
-    ServerSocket ecoute; //
     /**
      * Construteur Accueil 
      * @param port 
@@ -33,8 +34,10 @@ public class Accueil {
         } catch (IOException ex) {
             Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
         }
+        bdd=new Bdd();
+        bdd.connexion();
     }
-    
+        
     /**
      * 
      * attend la connexion d'un client
@@ -49,7 +52,7 @@ public class Accueil {
             } catch (IOException ex) {
                 Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
             }
-            new TraitementClient(service).start();
+            new TraitementClient(service,bdd).start();
         }
     }
     

@@ -10,9 +10,11 @@ package com.strim1.mavenproject1;
  * 
  */
 class TraitementDemande {
-         
-    public TraitementDemande() {
-              
+     
+    private final Bdd bdd;
+    
+    public TraitementDemande(Bdd bdd) {
+        this.bdd=bdd;
     }
     
     public String requete(String demandeClient){
@@ -22,11 +24,11 @@ class TraitementDemande {
         //en fonction du mot cle on redirige vers le service correspondant
         switch(decoupageRequete[0]){
             case "MODIFIER": 
-                return modifier(decoupageRequete[1]);//modifier
-            case "CREATION": 
-                return creationCompte(decoupageRequete[1]);//modifier
+                return modifier(decoupageRequete);//modifier
+            case "INSCRIPTION": 
+                return creationCompte(decoupageRequete);//modifier
             case "RECHERCHER": 
-                return rechercher(decoupageRequete[1]);//modifier
+                return rechercher(decoupageRequete);//modifier
             default:
                 return "requête inconnue, Usage: motclé id demande"; 
         }
@@ -38,7 +40,7 @@ class TraitementDemande {
      * @return  un message si la modification a été prise en compte ou non.
      *          si non, explication de l'erreur 
      */
-    private String modifier(String demande){
+    private String modifier(String[] demande){
         return "modifier";
     }
     
@@ -48,8 +50,9 @@ class TraitementDemande {
      * @return un message si la creation a été effectuée 
      *         sinon, message d'erreur contenant la raison du refus.
      */
-    private String creationCompte(String demande){
-        return "creation compte";
+    private String creationCompte(String []demande){
+       bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
+        return "creation compte ok";
     }
    
     /**
@@ -58,7 +61,7 @@ class TraitementDemande {
      * @return un message contenant les informations demandées par le client 
      *          peut être un message d'erreur, informations non trouvées ou pas les droits d'accès.
      */
-    private String rechercher(String demande){        
+    private String rechercher(String[] demande){        
         return "RECHERCHER";
     }
 }

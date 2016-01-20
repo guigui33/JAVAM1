@@ -25,9 +25,12 @@ public class TraitementClient extends Thread {
     private String demandeClient;
     private String retourServeur;
     
-    public TraitementClient(Socket connexionCourante) {
+    private final Bdd bdd;
+    
+    public TraitementClient(Socket connexionCourante,Bdd bdd) {
         this.connexionCourante = connexionCourante;
         this.fermeture = false;
+        this.bdd=bdd;
     }
     
     private void reception(){
@@ -74,7 +77,7 @@ public class TraitementClient extends Thread {
         while(!fermeture){
             reception();
             if(demandeClient!=null){
-                TraitementDemande traitementDemande=new TraitementDemande();
+                TraitementDemande traitementDemande=new TraitementDemande(bdd);
                 retourServeur=traitementDemande.requete(demandeClient);
                 emission();
             }
