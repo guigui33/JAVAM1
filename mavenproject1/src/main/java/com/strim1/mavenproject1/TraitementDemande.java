@@ -20,25 +20,46 @@ class TraitementDemande {
     public String requete(String demandeClient){
         /*decouper la requte en tableau */
         String [] decoupageRequete;
-        decoupageRequete=demandeClient.split(" ");
+        decoupageRequete=demandeClient.split("#");
         //en fonction du mot cle on redirige vers le service correspondant
         switch(decoupageRequete[0]){
             case "CONNEXION":
+                if(decoupageRequete.length!=3){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return connexion(decoupageRequete);
             case "INSCRIPTION": 
+                if(decoupageRequete.length!=6){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return creationCompte(decoupageRequete);//modifier
             case "RECHERCHER": 
+                if(decoupageRequete.length!=3){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return rechercher(decoupageRequete);//modifier
             case "VISITER":
-                    return visiter(decoupageRequete);
+                if(decoupageRequete.length!=3){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
+                return visiter(decoupageRequete);
             case "MODIFIER_COORDONNEES":
+                if(decoupageRequete.length!=8){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return modifierCoordonnees(decoupageRequete);
             case "MODIFIER_DIPLOMES":
+                if(decoupageRequete.length!=5){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return modifierDiplomes(decoupageRequete);
             case "MODIFIER_COMPTETENCES":
+                if(decoupageRequete.length!=4){
+                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                }
                 return modifierCompetences(decoupageRequete);
             default:
-                return "requête inconnue, Usage: motclé id demande"; 
+                return "requête inconnue, Usage: motclé#id#demande"; 
         }
     }   
     
