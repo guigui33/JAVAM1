@@ -51,8 +51,8 @@ class TraitementDemande {
      *         sinon, message d'erreur contenant la raison du refus.
      */
     private String creationCompte(String []demande){
-       bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
-        return "creation compte ok";
+        String retour=  bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
+        return retour;
     }
    
     /**
