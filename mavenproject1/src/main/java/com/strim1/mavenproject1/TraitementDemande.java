@@ -81,7 +81,7 @@ class TraitementDemande {
      *         sinon, message d'erreur contenant la raison du refus.
      */
     private String creationCompte(String []demande){
-        return bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
+        return bdd.creerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
     }
    
     /**
@@ -96,17 +96,17 @@ class TraitementDemande {
     }
 
     private String visiter(String[] decoupageRequete) {
-        return bdd.visiterProfil(decoupageRequete[1],decoupageRequete[2]);
+        return bdd.visiterProfil(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]));
     }
 
     private String modifierCoordonnees(String[] decoupageRequete) {
-        return bdd.modifierCoordonnees(decoupageRequete[1],
+        return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),
                 decoupageRequete[3],
                 decoupageRequete[4],
                 decoupageRequete[2],
-                decoupageRequete[5],
-                decoupageRequete[6],
-                decoupageRequete[7]);
+                bdd.parseVisibiliter(decoupageRequete[5]),
+                bdd.parseVisibiliter(decoupageRequete[6]),
+                bdd.parseVisibiliter(decoupageRequete[7]));
     }
 
     private String modifierDiplomes(String[] decoupageRequete) {
