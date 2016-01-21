@@ -21,6 +21,8 @@ Requêtes à implémenter dans le serveur :
 
 	MODIFIER_DIPLOMES#id_utilisateur#annee#type#etablissement
 	MODIFIER_COMPETENCES#id_utilisateur#compétence#niveau
+	SUPPRIMER_COMPETENCES#id_utilisateur#compétence
+	SUPPRIMER_DIPLOMES#id_utilisateur#diplome
 	
 Retour du serveur :	//a redefinir
 	OK texte_retour
@@ -29,3 +31,14 @@ Retour du serveur :	//a redefinir
 Non utile:
 	DECONNEXION
 
+Lien bdd:
+
+CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp)
+ConnexionClient(String mail,String mdp)
+AjouterCompetence(int id, String matiere, niveau n)
+AjouterDiplome(int id, String dateobtention,String diplome ,String etabli)
+ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc)
+ModififerCompetence(int id, String matiere, niveau n)
+SupprimerDiplome(int id,String diplome)
+SupprimerCompetence(int id,String matiere)
+VisiterProfil(int idcourant,int idvisite)
