@@ -109,7 +109,7 @@ public class Client {
      */
     //a refaire
     private void choix(){
-        
+                
         BufferedReader fluxEntreeStandard = new BufferedReader(
                 new InputStreamReader(System.in));
         
@@ -124,31 +124,31 @@ public class Client {
         while (continuer) {
             switch (c) {
                 case "1":
-                    requete = "INSCRIPTION ";
+                    requete = "INSCRIPTION";
                     continuer = false;
                     break;
                 case "2":
-                    requete = "CONNEXION ";
+                    requete = "CONNEXION";
                     continuer = false;
                     break;
                 case "3":
-                    requete = "RECHERCHER ";
+                    requete = "RECHERCHER";
                     continuer = false;
                     break;
                 case "4":
-                    requete = "VISITER ";
+                    requete = "VISITER";
                     continuer = false;
                     break;
                case "5":
-                    requete = "MODIFIER_COORDONNEES ";
+                    requete = "MODIFIER_COORDONNEES";
                     continuer = false;
                     break;
                    case "6":
-                    requete = "MODIFIER_DIPLOMES ";
+                    requete = "MODIFIER_DIPLOMES";
                     continuer = false;
                     break;
                        case "7":
-                    requete = "MODIFIER_COMPETENCES ";
+                    requete = "MODIFIER_COMPETENCES";
                     continuer = false;
                     break;
                 case "0":
@@ -164,14 +164,15 @@ public class Client {
         //on ecrit le reste de la requete à envoyer au serveur, 
         //a faire ds une methode
         if(!quitter){
-            System.out.print("requête à completer: "+requete +" ");
+            String delimitateur="#";
+            requete+=delimitateur;
+            System.out.print("requête à completer: "+requete);
             try {
                 requete = requete + fluxEntreeStandard.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
+        }        
         //a refaire
         //formulaire("insciption");
     }

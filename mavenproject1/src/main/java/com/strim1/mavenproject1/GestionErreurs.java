@@ -10,6 +10,10 @@ package com.strim1.mavenproject1;
  * @author guigui
  */
 public class GestionErreurs {
+    
+    /*erreurs traitées dans la Bdd
+    A ajouter si application doit faire des verifs 
+    */
     public String traitementErreurs(String typeErreur){
         switch (typeErreur){
             /*case "Montant negatif":
