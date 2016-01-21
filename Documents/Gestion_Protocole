@@ -4,9 +4,9 @@ attention:
 	mdp>6
 	date=AAAA-MM-JJ 
 	
-modification dans les requêtes de connexion et inscription:
+modification dans les requêtes de connexion:
 	il faut retourner l'identifiant utilisateur lors des 
-demandes de connexion et d'inscription	:
+demandes de connexion:
 Si requte okay, on retourne "Msg okay"+ #identifiantBDD.
 
 
@@ -15,12 +15,9 @@ Requêtes à implémenter dans le serveur :
 	CONNEXION#adresse_mail#mot_de_passe
 	RECHERCHER#categorie#mot_clé
 	VISITER#idutilisateurCourant#id_utilisateurAVisiter
-		    								         		MODIFIER_COORDONNEES#id_utilisateur#mot_de_passe#adresseMail				
-					#telephone#visiilite_coordonnes
-					#visibilité_diplome#visibilité_compétence
-
-	MODIFIER_DIPLOMES#id_utilisateur#annee#type#etablissement
-	MODIFIER_COMPETENCES#id_utilisateur#compétence#niveau
+	MODIFIER_COORDONNEES#id_utilisateur#mot_de_passe#adresseMail#telephone#visiilite_coordonnes#visibilité_diplome#visibilité_compétence
+	AJOUTER_DIPLOMES#id_utilisateur#annee#type#etablissement // On ne peut pas modifier son diplome, que le crée ou le supp.
+	MODIFIER_COMPETENCES#id_utilisateur#compétence#niveau // Ajoute aussi les competences si non existante.
 	SUPPRIMER_COMPETENCES#id_utilisateur#compétence
 	SUPPRIMER_DIPLOMES#id_utilisateur#diplome
 	
@@ -41,4 +38,5 @@ ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi
 ModififerCompetence(int id, String matiere, niveau n)
 SupprimerDiplome(int id,String diplome)
 SupprimerCompetence(int id,String matiere)
-VisiterProfil(int idcourant,int idvisite)
+VisiterProfil(int idCourant,int idVisite)
+RechercherProfil(int idCourant, String categorie, String motCle) -> Retourne un string id, nom, prenom.
