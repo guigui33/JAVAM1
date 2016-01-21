@@ -72,7 +72,8 @@ class TraitementDemande {
      * @return un message contenant les informations demandées par le client 
      *          peut être un message d'erreur, informations non trouvées ou pas les droits d'accès.
      */
-    private String rechercher(String[] demande){        
+    private String rechercher(String[] demande){    
+        
         return "RECHERCHER";
     }
 

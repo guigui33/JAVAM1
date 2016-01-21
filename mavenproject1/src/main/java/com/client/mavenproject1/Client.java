@@ -92,8 +92,12 @@ public class Client {
     private void menu(){
         System.out.println("***menu***");
         System.out.println("1) Creation du compte\n"
-                +"2)"
-                + "2) modifier informations\n"
+                +"2)Connexion"
+                +"3) Rechercher "
+                +"4) Visiter"
+                + "5) modifier coordonnées\n"
+                + "6) modifier diplomes\n"
+                + "7) modifier competences\n"
                 +"0) quitter\n") ;
         System.out.print("choix: ");
     }
@@ -124,7 +128,7 @@ public class Client {
                     continuer = false;
                     break;
                 case "2":
-                    requete = "MODIFIER ";
+                    requete = "CONNEXION ";
                     continuer = false;
                     break;
                 case "3":
@@ -132,7 +136,19 @@ public class Client {
                     continuer = false;
                     break;
                 case "4":
-                    requete = "DECO ";
+                    requete = "VISITER ";
+                    continuer = false;
+                    break;
+               case "5":
+                    requete = "MODIFIER_COORDONNEES ";
+                    continuer = false;
+                    break;
+                   case "6":
+                    requete = "MODIFIER_DIPLOMES ";
+                    continuer = false;
+                    break;
+                       case "7":
+                    requete = "MODIFIER_COMPETENCES ";
                     continuer = false;
                     break;
                 case "0":
@@ -145,20 +161,25 @@ public class Client {
             }
         }
         
-        //on ecrit le reste de la requete à envoyer au serveur, a faire ds une methode
-        /*if(!quitter){
+        //on ecrit le reste de la requete à envoyer au serveur, 
+        //a faire ds une methode
+        if(!quitter){
             System.out.print("requête à completer: "+requete +" ");
             try {
                 requete = requete + fluxEntreeStandard.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }*/
+        }
         
         //a refaire
-        formulaire("insciption");
+        //formulaire("insciption");
     }
     
+    /**
+    *on demandera à l'utilisateur de remplir les données dans des 
+    * formulaires, on recuperera les informations dans cette fonction
+    */
     private void formulaire(String question){
             /*BufferedReader fluxEntreeStandard = new BufferedReader(
                 new InputStreamReader(System.in));
@@ -174,7 +195,7 @@ public class Client {
         System.out.println("adresse mail: ");
         System.out.println("mdp: ");
         System.out.println("mdp: ");*/
-        requete+="adrmail "+"mdp444444 "+"nom "+"prenom "+"1998-12-19";
+       // requete+="adrmail "+"mdp444444 "+"nom "+"prenom "+"1998-12-19";
         
     }
     
