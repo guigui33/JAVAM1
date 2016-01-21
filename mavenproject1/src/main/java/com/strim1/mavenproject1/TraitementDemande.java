@@ -23,12 +23,20 @@ class TraitementDemande {
         decoupageRequete=demandeClient.split(" ");
         //en fonction du mot cle on redirige vers le service correspondant
         switch(decoupageRequete[0]){
-            case "MODIFIER": 
-                return modifier(decoupageRequete);//modifier
+            case "CONNEXION":
+                return connexion(decoupageRequete);
             case "INSCRIPTION": 
                 return creationCompte(decoupageRequete);//modifier
             case "RECHERCHER": 
                 return rechercher(decoupageRequete);//modifier
+            case "VISITER":
+                    return visiter(decoupageRequete);
+            case "MODIFIER_COORDONNEES":
+                return modifierCoordonnees(decoupageRequete);
+            case "MODIFIER_DIPLOMES":
+                return modifierDiplomes(decoupageRequete);
+            case "MODIFIER_COMPTETENCES":
+                return modifierCompetences(decoupageRequete);
             default:
                 return "requête inconnue, Usage: motclé id demande"; 
         }
@@ -40,8 +48,11 @@ class TraitementDemande {
      * @return  un message si la modification a été prise en compte ou non.
      *          si non, explication de l'erreur 
      */
-    private String modifier(String[] demande){
-        return "modifier";
+    private String connexion(String[] demande){
+        String retour;
+        //retour=bdd.(); //verification du mot de passe et login de l'utilisateur
+  
+        return "connexion ok";
     }
     
     /**
@@ -63,5 +74,21 @@ class TraitementDemande {
      */
     private String rechercher(String[] demande){        
         return "RECHERCHER";
+    }
+
+    private String visiter(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String modifierCoordonnees(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String modifierDiplomes(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String modifierCompetences(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
