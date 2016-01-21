@@ -36,9 +36,8 @@ public class Client {
         try {
             this.socket = new Socket("localhost", port);
         } catch (IOException ex) {
-            System.out.print("erreur de connexion.");
+            System.out.print("erreur de connexion. Serveur non accessible.");
             quitter=true;
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -82,8 +81,7 @@ public class Client {
             }
             if(reponseServeur!=null)
                 System.out.println("Reponse du serveur : " + reponseServeur);
-        }
-        
+        }        
     }
     
     /**
@@ -92,9 +90,9 @@ public class Client {
     private void menu(){
         System.out.println("***menu***");
         System.out.println("1) Creation du compte\n"
-                +"2)Connexion"
-                +"3) Rechercher "
-                +"4) Visiter"
+                +"2)Connexion\n"
+                +"3) Rechercher\n"
+                +"4) Visiter\n"
                 + "5) modifier coordonnées\n"
                 + "6) modifier diplomes\n"
                 + "7) modifier competences\n"
