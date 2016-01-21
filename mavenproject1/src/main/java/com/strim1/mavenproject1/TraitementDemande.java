@@ -70,10 +70,8 @@ class TraitementDemande {
      *          si non, explication de l'erreur 
      */
     private String connexion(String[] demande){
-        String retour;
-        //retour=bdd.(); //verification du mot de passe et login de l'utilisateur
-  
-        return "connexion ok";
+        
+        return bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
     }
     
     /**
@@ -83,8 +81,7 @@ class TraitementDemande {
      *         sinon, message d'erreur contenant la raison du refus.
      */
     private String creationCompte(String []demande){
-        String retour=  bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
-        return retour;
+        return bdd.CreerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
     }
    
     /**
@@ -99,15 +96,21 @@ class TraitementDemande {
     }
 
     private String visiter(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return bdd.visiterProfil(decoupageRequete[1],decoupageRequete[2]);
     }
 
     private String modifierCoordonnees(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return bdd.modifierCoordonnees(decoupageRequete[1],
+                decoupageRequete[3],
+                decoupageRequete[4],
+                decoupageRequete[2],
+                decoupageRequete[5],
+                decoupageRequete[6],
+                decoupageRequete[7]);
     }
 
     private String modifierDiplomes(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     private String modifierCompetences(String[] decoupageRequete) {
