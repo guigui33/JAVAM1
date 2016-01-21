@@ -68,7 +68,7 @@ public class Bdd{
             // Pas besoins sous JDK 1.8 Class.forName("com.mysql.jdbc");
             //System.out.println("Driver O.K.");
             co = DriverManager.getConnection(url, host, pwd);
-            return new GestionRetourBDD().valeurRetour("Connexion ok");
+            return new GestionRetourBDD().valeurRetour("Connexion BDD ok");
         } catch (SQLException e) {
             return new GestionRetourBDD().valeurRetour("Erreur Connexion");
         }
@@ -89,7 +89,7 @@ public class Bdd{
     return true;
     }
     */
-    public int VerifierMdp(String mdp){
+    public int verifierMdp(String mdp){
         int count = mdp.codePointCount(0, mdp.length());
         if (count < 6){
             return 1;
@@ -100,7 +100,7 @@ public class Bdd{
         }
     }
     
-    public boolean VerifierMail(String mail) {
+    public boolean verifierMail(String mail) {
         ResultSet verif=null;
         try {
             st = co.createStatement();
@@ -124,7 +124,7 @@ public class Bdd{
     
     //Ajout d'information à la BDD.
     
-    public String CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
+    public String creerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
         ResultSet resultat1;
         String retour;
         int idMax=0;
@@ -133,8 +133,8 @@ public class Bdd{
         try {
             int VerifMdp=0;
             st = co.createStatement();
-            VerifMail = VerifierMail(addrmail);
-            VerifMdp = VerifierMdp(mdp);
+            VerifMail = verifierMail(addrmail);
+            VerifMdp = verifierMdp(mdp);
             if (VerifMail!= true) {
                 return new GestionRetourBDD().valeurRetour("Mail double")+ " " +addrmail;
             } else if( VerifMdp == 1){
@@ -157,7 +157,7 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String AjouterCompetence(int id, String matiere, niveau n )
+    public String ajouterCompetence(int id, String matiere, niveau n)
     {
         try {
             st = co.createStatement();
@@ -170,11 +170,11 @@ public class Bdd{
         }
     }
     
-    public String AjouterDiplome(int id, String Dobtention,String Type ,String etabli)
+    public String ajouterDiplome(int id, String dateobtention,String diplome ,String etabli)
     {
         try {
             st = co.createStatement();
-            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+Dobtention+"','"+Type+"','" +etabli+"')";
+            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+dateobtention+"','"+diplome+"','" +etabli+"')";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Diplome ok");
             
@@ -184,7 +184,7 @@ public class Bdd{
         }
     }
     
-    public String ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc){
+    public String modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc){
         
         try {
             int i;
@@ -192,7 +192,7 @@ public class Bdd{
             ResultSet resultat1;
             st = co.createStatement();
             boolean verifMail;
-            verifMail =  VerifierMail(addrmail);
+            verifMail =  verifierMail(addrmail);
             resultat1= st.executeQuery("SELECT  COUNT(*) FROM Utilisateurs WHERE Id="+id+" AND AddrMail='"+addrmail+"'");
  
             if(verifMail != true ){
@@ -218,7 +218,7 @@ public class Bdd{
          return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String ModififerCompetence(int id, String matiere, niveau n){
+    public String modififerCompetence(int id, String matiere, niveau n){
         
         try {
             st = co.createStatement();
@@ -231,11 +231,11 @@ public class Bdd{
             return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String SupprimerDiplome(int id,String Type){
+    public String supprimerDiplome(int id,String diplome){
         
         try {
             st = co.createStatement();
-            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Type='"+Type+"'";
+            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Type='"+diplome+"'";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Suppression diplome");
         }catch (SQLException ex){
@@ -244,7 +244,7 @@ public class Bdd{
         }
     }
     
-    public String SupprimerCompetence(int id,String matiere){
+    public String supprimerCompetence(int id,String matiere){
         try {
             st = co.createStatement();
             String sql="DELETE FROM Competences WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
@@ -256,19 +256,43 @@ public class Bdd{
         }
     }
     
+    public String connexionClient(String mail,String mdp){
+        try {
+            ResultSet resultat1;
+            int idUtil;
+            
+            st = co.createStatement();
+            resultat1= st.executeQuery("SELECT Id FROM Utilisateurs WHERE AddrMail='"+mail+"' AND Mdp='"+mdp+"'");
+            resultat1.next();
+            idUtil=resultat1.getInt(1);
+            System.out.println(idUtil);
+            return new GestionRetourBDD().valeurRetour("Connexion client ok."+idUtil);
+        }catch (SQLException ex){
+            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            return new GestionRetourBDD().valeurRetour("Erreur connexion");
+        }
+    }
+    
+    public String visiterProfil(int idcourant,int idvisite ){
+        return "pas encore fait";
+    }
+    
+    
     public static void main(String[] args){
+        String test;
         Bdd bdd=new Bdd();
         bdd.connexion();
         //bdd.VerifierMail("grosse@bite.xxx");
-        //bdd.CreerUtilisateur("TEst", "Test", "Uber@hotmail.fr","1994-12-12", "bricuuuuu");
+        //bdd.CreerUtilisateur("Testconnexion", "Test", "abc","1994-12-12", "123456");
         //bdd.VerifierMdp("aajjjjjjjj");
         //bdd.AjouterCompetence(1, "fr", Bdd.niveau.Bon);
         //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
         //bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Tous,Bdd.visibiliter.Personne,Bdd.visibiliter.Tous);
         //bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
         //bdd.SupprimerCompetence(1, "Rugby");
-        bdd.SupprimerDiplome(1,"fr");
-        
+        //bdd.SupprimerDiplome(1,"fr");
+        //test=bdd.connexionClient("aacc", "123456");
+        //System.out.println(test);
     }
 }
 

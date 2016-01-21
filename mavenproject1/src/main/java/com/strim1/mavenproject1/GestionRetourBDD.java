@@ -13,7 +13,7 @@ public class GestionRetourBDD {
     
     public String valeurRetour(String typeRetour){
 		switch (typeRetour){
-		case "Connexion ok":
+		case "Connexion BDD ok":
 			return ("Connexion BDD effective !");
 		case "Erreur Connexion":
 			return ("Erreur de connexion à la BDD.");
@@ -47,7 +47,10 @@ public class GestionRetourBDD {
 			return ("Votre competence à bien été supprimé.");
                 case "Erreur suppression competence":
 			return ("Votre competence n'existe pas..");
-                
+                case "Connexion client ok":
+			return ("Vous etes maintenant connecté.");        
+                case "Erreur connexion":
+			return ("Adresse mail ou mot de passe incorrecte.");    
                 default:
 			return "erreur inconnue.";
 		}
