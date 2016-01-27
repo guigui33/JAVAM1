@@ -38,5 +38,5 @@ ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi
 ModififerCompetence(int id, String matiere, niveau n)
 SupprimerDiplome(int id,String diplome)
 SupprimerCompetence(int id,String matiere)
-VisiterProfil(int idCourant,int idVisite)
+VisiterProfil(int idCourant,int idVisite) // Je peux la split en 3 requetes
 RechercherProfil(int idCourant, String categorie, String motCle) -> Retourne un string id, nom, prenom.
