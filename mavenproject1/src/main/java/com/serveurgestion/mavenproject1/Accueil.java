@@ -39,6 +39,8 @@ public class Accueil {
             Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
         
     /**
      * 
