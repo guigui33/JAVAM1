@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.strim1.mavenproject1;
+package com.serveurgestion.mavenproject1;
+
+import com.strim1.mavenproject1.Bdd;
+import com.strim1.mavenproject1.GestionErreurs;
 
 /**
  *
@@ -100,13 +103,14 @@ class TraitementDemande {
     }
 
     private String modifierCoordonnees(String[] decoupageRequete) {
-        return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),
+        /*return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),
                 decoupageRequete[3],
                 decoupageRequete[4],
-                decoupageRequete[2],
+                decoupageRequete[2]/*,
                 bdd.parseVisibiliter(decoupageRequete[5]),
                 bdd.parseVisibiliter(decoupageRequete[6]),
-                bdd.parseVisibiliter(decoupageRequete[7]));
+                bdd.parseVisibiliter(decoupageRequete[7]));*/
+        return null;
     }
 
     private String modifierDiplomes(String[] decoupageRequete) {

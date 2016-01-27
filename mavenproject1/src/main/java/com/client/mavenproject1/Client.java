@@ -5,7 +5,7 @@
 */
 package com.client.mavenproject1;
 
-import com.strim1.mavenproject1.Accueil;
+import com.serveurgestion.mavenproject1.Accueil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.strim1.mavenproject1;
+package com.serveurgestion.mavenproject1;
 
+import com.strim1.mavenproject1.Bdd;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
