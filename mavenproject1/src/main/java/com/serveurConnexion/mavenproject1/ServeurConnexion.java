@@ -25,8 +25,10 @@ public class ServeurConnexion {
     }
     
     public void fonctionnementService(){
-        new AccueilClientCo(portClient).start;
-        new AccueilServeurCo(portServeur).start;
+        AccueilClientCo accueilClientCo=new AccueilClientCo(portClient,clients);
+        AccueilServeurCo accueilServeurCo=new AccueilServeurCo(portServeur,clients);
+        accueilClientCo.start();
+        accueilServeurCo.start();
     }
     
     public static void main(String[] args) {

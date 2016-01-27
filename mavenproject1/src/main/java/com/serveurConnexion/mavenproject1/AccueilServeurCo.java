@@ -8,6 +8,7 @@ package com.serveurConnexion.mavenproject1;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,39 +19,27 @@ import java.util.logging.Logger;
 class AccueilServeurCo extends Thread{
     private Socket service;
     private ServerSocket ecoute;
+    private final HashMap <Integer,Integer> clients;
     
-    public AccueilServeurCo(int portServeur) {
+    public AccueilServeurCo(int portServeur,HashMap <Integer,Integer> clients) {
         try {
             ecoute=new ServerSocket(portServeur);
         } catch (IOException ex) {
             Logger.getLogger(AccueilServeurCo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.clients=clients;
     }
-    
-    public void fonctionnementService(){
-        while(true){
+
+    public void run(){
+           while(true){
             try {
                 System.out.println("attente serveur...");
                 service=ecoute.accept();
                 System.err.println("Nouvelle connexion : "+ service);
+                new TraitementServeur(service,clients).start();
             } catch (IOException ex) {
-                System.err.println("probleme nouvelle connexion");
-            }
-            new TraitementClient(service).start();
+                Logger.getLogger(AccueilClientCo.class.getName()).log(Level.SEVERE, null, ex);
+            }            
         }
-    }
-    
-    public void run(){
-        while(!fermeture){
-            reception();
-            if(demandeClient!=null){
-                TraitementDemande traitementDemande=new TraitementDemande(bdd);
-                retourServeur=traitementDemande.requete(demandeClient);
-                emission();
-            }
-            else fermeture=true;
-        }
-        System.out.println("demande de deconnexion client.");
-        deconnexion();
     }
 }
