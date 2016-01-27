@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author guigui
  */
-class AccueilServeurCo {
+class AccueilServeurCo extends Thread{
     private Socket service;
     private ServerSocket ecoute;
     

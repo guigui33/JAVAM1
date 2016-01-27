@@ -5,29 +5,39 @@
  */
 package com.serveurConnexion.mavenproject1;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author guigui
  */
-public class AccueilClientCo {
+public class AccueilClientCo extends Thread {
     
-   private int port;
+     private Socket service;
+    private ServerSocket ecoute;
    
     AccueilClientCo(int portClient) {
-        this.port=portClient;
+         try {
+             ecoute=new ServerSocket(portClient);
+         } catch (IOException ex) {
+             Logger.getLogger(AccueilClientCo.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
       public void run(){
-        while(!fermeture){
-            reception();
-            if(demandeClient!=null){
-                TraitementDemande traitementDemande=new TraitementDemande(bdd);
-                retourServeur=traitementDemande.requete(demandeClient);
-                emission();
+          while(true){
+            try {
+                System.out.println("attente client...");
+                service=ecoute.accept();
+                System.err.println("Nouvelle connexion : "+ service);
+            } catch (IOException ex) {
+                Logger.getLogger(AccueilClientCo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            else fermeture=true;
+            new TraitementClient(service).start();
         }
-        System.out.println("demande de deconnexion client.");
-        deconnexion();
     }
 }
