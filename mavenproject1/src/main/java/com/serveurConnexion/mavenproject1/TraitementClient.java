@@ -73,11 +73,23 @@ class TraitementClient extends Thread{
         }
     }
     
+    //a refaire pour numSession
      private String connexion(String[] demande){
-        Bdd bdd=new Bdd();
+        String retour=null;
+         Bdd bdd=new Bdd();
+         Integer idclient;
+         
         //if(bdd.connexion()){
         bdd.connexion();
-        return bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
+        retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
+        if(retour=="OK"){
+            //a refaire
+            Integer numSession=4;
+            clients.put(idclient,numSession);
+        }
+        else{
+            return "ERROR#mauvais login ou mot de passe";
+        } 
         //}
         //else return "Problème serveur, veuillez recommencer plus tard.";
         }
