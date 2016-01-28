@@ -532,7 +532,7 @@ public class Bdd{
         return "visualiserInfo probleme";
     }
         
-    
+    /*
         public String visualiserDiplome(int idcourant,int idvisite){
         
         try {
@@ -617,7 +617,7 @@ public class Bdd{
         }
         return "visualiserInfo probleme";
     }
-        
+        */
         public String visiterProfil(int idcourant,int idvisite){
             
             try {

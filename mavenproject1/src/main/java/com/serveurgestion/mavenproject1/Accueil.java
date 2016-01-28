@@ -48,7 +48,7 @@ public class Accueil {
      * lance le thread qui va traiter les demandes du clients
      */
     public void fonctionnementService(){
-        while(true){
+       /* while(true){
             try {
                 System.out.println("attente client...");
                 service=ecoute.accept();
@@ -57,11 +57,7 @@ public class Accueil {
                 Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
             }
             new TraitementClient(service,bdd).start();
-        }
+        }*/
     }
-    
-    public static void main(String[] args) {
-        System.out.println("debut programme");
-        new Accueil(50000).fonctionnementService();
-    }
+   
 }
