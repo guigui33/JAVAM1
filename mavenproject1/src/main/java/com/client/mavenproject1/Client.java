@@ -199,7 +199,7 @@ public class Client {
     }
     
     public void fonctionnement(){
-        connexion(50000);
+        connexion(50001);
         while(!quitter){
             menu();
             choix();

@@ -44,7 +44,7 @@ public class TraitementServeur extends Thread{
         BufferedReader lecture=new BufferedReader(fluxEntree);
         try {
             demandeServeur=lecture.readLine();
-            System.out.println("demande client: "+demandeServeur);
+            System.out.println("demande Seveur: "+demandeServeur);
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,6 +82,12 @@ public class TraitementServeur extends Thread{
         }
         return "ERROR";
       }
+     
+    private String deconnexionClient(String[] demande) {
+        
+        clients.remove(Integer.parseInt(demande[1]));
+        return "OK";
+    }
     
      public String requete(String demandeClient){
         /*decouper la requte en tableau */
@@ -95,6 +101,11 @@ public class TraitementServeur extends Thread{
                     return "ERROR";
                 }
                 return verificationConnexion(decoupageRequete);
+            case "DECONNEXION":
+                if(decoupageRequete.length!=2){
+                    return "ERROR";
+                }
+                return deconnexionClient(decoupageRequete);
             default:
                 return "ERROR"; 
         }
