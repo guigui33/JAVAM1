@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.strim1.mavenproject1;
 
 /**
  *
  * 
  */
+
 class TraitementDemande {
      
     private final Bdd bdd;
@@ -32,32 +34,32 @@ class TraitementDemande {
                 if(decoupageRequete.length!=6){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return creationCompte(decoupageRequete);//modifier
+                //return creationCompte(decoupageRequete);//modifier
             case "RECHERCHER": 
                 if(decoupageRequete.length!=3){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return rechercher(decoupageRequete);//modifier
+                //return rechercher(decoupageRequete);//modifier
             case "VISITER":
                 if(decoupageRequete.length!=3){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return visiter(decoupageRequete);
+                //return visiter(decoupageRequete);
             case "MODIFIER_COORDONNEES":
                 if(decoupageRequete.length!=8){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return modifierCoordonnees(decoupageRequete);
+                //return modifierCoordonnees(decoupageRequete);
             case "MODIFIER_DIPLOMES":
                 if(decoupageRequete.length!=5){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return modifierDiplomes(decoupageRequete);
+                //return modifierDiplomes(decoupageRequete);
             case "MODIFIER_COMPTETENCES":
                 if(decoupageRequete.length!=4){
                     return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
                 }
-                return modifierCompetences(decoupageRequete);
+                //return modifierCompetences(decoupageRequete);
             default:
                 return "requête inconnue, Usage: motclé#id#demande"; 
         }
@@ -80,6 +82,7 @@ class TraitementDemande {
      * @return un message si la creation a été effectuée 
      *         sinon, message d'erreur contenant la raison du refus.
      */
+    /*
     private String creationCompte(String []demande){
         return bdd.creerUtilisateur(demande[3], demande[4], demande[1], demande[5], demande[2]);
     }
@@ -90,6 +93,7 @@ class TraitementDemande {
      * @return un message contenant les informations demandées par le client 
      *          peut être un message d'erreur, informations non trouvées ou pas les droits d'accès.
      */
+    /*
     private String rechercher(String[] demande){    
         
         return "RECHERCHER";
@@ -116,4 +120,5 @@ class TraitementDemande {
     private String modifierCompetences(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+*/
 }

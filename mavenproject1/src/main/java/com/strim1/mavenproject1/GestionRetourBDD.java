@@ -13,10 +13,6 @@ public class GestionRetourBDD {
     
     public String valeurRetour(String typeRetour){
 		switch (typeRetour){
-		case "Connexion BDD ok":
-			return ("Connexion BDD effective !");
-		case "Erreur Connexion":
-			return ("Erreur de connexion à la BDD.");
 		case "Mail double":
 			return ("Erreur, l'addresse mail est deja utilisé:");
 		case "Mdp court":

@@ -14,6 +14,7 @@ package com.strim1.mavenproject1;
 * and open the template in the editor.
 */
 import java.sql.*;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,9 +29,9 @@ public class Bdd{
     public Statement st;
     /* Les enum */
     enum visibiliter{
-        Personne,
-        Tous,
-        Utilisateur;
+        Prive,
+        Public,
+        UtilisateurCo;
     };
     enum niveau{
         Moyen,
@@ -63,14 +64,14 @@ public class Bdd{
     /**
      * Methode pour se connecter à la BDD
      */
-    public String connexion(){
+    public boolean connexion(){
         try {
             // Pas besoins sous JDK 1.8 Class.forName("com.mysql.jdbc");
             //System.out.println("Driver O.K.");
             co = DriverManager.getConnection(url, host, pwd);
-            return new GestionRetourBDD().valeurRetour("Connexion BDD ok");
+            return true;
         } catch (SQLException e) {
-            return new GestionRetourBDD().valeurRetour("Erreur Connexion");
+            return false;
         }
     }
     //Verification des entrées:
@@ -89,15 +90,27 @@ public class Bdd{
     return true;
     }
     */
+    
+    public String typeVisiteur(int idcourant){
+        
+        if (idcourant !=0 && idcourant != 1){
+            return "Utilisateur";
+        }else if (idcourant == 1){
+            return "Admin";
+        }
+        return "Visiteur";
+        
+    }
+    
     public visibiliter parseVisibiliter(String v){
         
         switch (v) {
-            case "Tous":
-                return visibiliter.Tous;
-            case "Utilisateur":
-                return visibiliter.Utilisateur;
+            case "Public":
+                return visibiliter.Public;
+            case "UtilisateurCo":
+                return visibiliter.UtilisateurCo;
             default:
-                return visibiliter.Personne;
+                return visibiliter.Prive;
         }
     }
     
@@ -112,6 +125,27 @@ public class Bdd{
             default:
                 return niveau.Moyen;
         }
+    }
+    
+    public boolean verifierRequete(String requete){
+        ResultSet verif=null;
+        try {
+            st = co.createStatement();
+            verif = st.executeQuery(requete);
+            if (verif != null) {
+                int nbLignes = 0;
+                while (verif.next()) {
+                    nbLignes++;
+                }
+                if(nbLignes == 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+        }
+        return false;
     }
     
     
@@ -150,26 +184,6 @@ public class Bdd{
     
     //A voir avec GuiGuiiiiiiiiiiiiiiiiiiiiii
     
-    public String visibiliterGeneral(int id){
-        
-        String visi, visd, visc;
-        
-        visi= visibiliterInfo(id);
-        visd=visibiliterDiplome(id);
-        visc=visibiliterCompetence(id);
-        
-        if (visi == "Tous" && visd == "Tous " && visc == "Tous" ){
-            return "Tous";
-        }else if ( visi == "Tous" && visd == "Utilisateur " && visc == "Utilisateur"){
-            return "iTrU";
-        }else if (visi == "Tous" && visd == " " && visc == "Tous" ){
-            
-        }
-        
-        
-        return"Probleme d'affucckk";
-    }
-    
     public String visibiliterInfo(int id){
         try{
             ResultSet ri;
@@ -179,130 +193,21 @@ public class Bdd{
             ri.next();
             visi=ri.getString(1);
             switch (visi) {
-                case "Tous":
-                    return "Tous";
-                case "Utilisateur":
-                    return "Utilisateur";
+                case "Public":
+                    return "Public";
+                case "UtilisateurCo":
+                    return "UtilisateurCo";
                 default:
-                    return "Personne";
+                    return "Prive";
             }
         }catch (SQLException ex) {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
-    
-    public String visibiliterCompetence(int id){
-        try{
-            ResultSet ri;
-            String visi;
-            st = co.createStatement();
-            ri= st.executeQuery("SELECT VisibleComp FROM Utilisateurs WHERE Id="+id+"");
-            ri.next();
-            visi=ri.getString(1);
-            switch (visi) {
-                case "Tous":
-                    return "Tous";
-                case "Utilisateur":
-                    return "Utilisateur";
-                default:
-                    return "Personne";
-            }
-        }catch (SQLException ex) {
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new GestionRetourBDD().valeurRetour("Erreur BDD");
-    }
-    
-    public String visibiliterDiplome(int id){
-        try{
-            ResultSet ri;
-            String visi;
-            st = co.createStatement();
-            ri= st.executeQuery("SELECT VisibleDipl FROM Utilisateurs WHERE Id="+id+"");
-            ri.next();
-            visi=ri.getString(1);
-            switch (visi) {
-                case "Tous":
-                    return "Tous";
-                case "Utilisateur":
-                    return "Utilisateur";
-                default:
-                    return "Personne";
-            }
-        }catch (SQLException ex) {
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new GestionRetourBDD().valeurRetour("Erreur BDD");
-    }
-    
-    public String visualiserDipl(int idvisite){
-        
-        String visd, retour="";
-        String annee,type,etablissement;
-        ResultSet resultatDipl;            
-        visd=visibiliterDiplome(idvisite);
-        try{                
-        st = co.createStatement();    
-        resultatDipl=st.executeQuery("SELECT IdUtilisateur, Annee , Type , Etablissement FROM `Utilisateurs` u, `Diplomes` d WHERE u.Id=d.Idutilisateur AND  u.Id="+idvisite+" ");   
-        
-        while(resultatDipl.next()){
-                            
-                            if(resultatDipl.isLast()){
-                            idvisite = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + idvisite + "#" + annee + "#" + type + "#" + etablissement;                                
-                            }
-                            idvisite = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + idvisite + "#" + annee + "#" + type + "#" + etablissement + "," ;
-                        }
-        }catch (SQLException ex) {
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "Erreur de visualiser Diplome";
-    }
-    
-    public String visualiserComp(int idvisite){
-        
-        String visd, retour="";
-        String annee,type,etablissement;
-        ResultSet resultatDipl;            
-        visd=visibiliterDiplome(idvisite);
-        try{                
-        st = co.createStatement();    
-        resultatDipl=st.executeQuery("SELECT IdUtilisateur, Annee , Type , Etablissement FROM `Utilisateurs` u, `Diplomes` d WHERE u.Id=d.Idutilisateur AND  u.Id="+idvisite+" ");   
-        
-        while(resultatDipl.next()){
-                            
-                            if(resultatDipl.isLast()){
-                            idvisite = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + idvisite + "#" + annee + "#" + type + "#" + etablissement;                                
-                            }
-                            idvisite = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + idvisite + "#" + annee + "#" + type + "#" + etablissement + "," ;
-                        }
-        }catch (SQLException ex) {
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "Erreur de visualiser Diplome";
-    }
-    
-    
-    
-    
-    //Ajout d'information à la BDD.
-    public String creerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp){
+
+        //Ajout d'information à la BDD.
+    public String creerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp, visibiliter v){
         ResultSet resultat1;
         String retour;
         int idMax=0;
@@ -325,7 +230,7 @@ public class Bdd{
                     idMax = resultat1.getInt("max(Id)");
                     idMax += 1;
                 }
-                String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "');";
+                String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`, `VisibleInfo`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "', '"+ v +"');";
                 st.executeUpdate(sql);
                 return new GestionRetourBDD().valeurRetour("Inscription ok");
             }
@@ -335,11 +240,11 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String ajouterCompetence(int id, String matiere, niveau n)
+    public String ajouterCompetence(int id, String matiere, niveau n, visibiliter v)
     {
         try {
             st = co.createStatement();
-            String sql="INSERT INTO Competences VALUES (" +id+ ",'"+matiere+"','"+n+"')";
+            String sql="INSERT INTO Competences VALUES (" +id+ ",'"+matiere+"','"+n+"','"+ v +"')";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Ajout competence ok");
         }catch (SQLException ex) {
@@ -348,11 +253,11 @@ public class Bdd{
         }
     }
     
-    public String ajouterDiplome(int id, String dateobtention,String diplome ,String etabli)
+    public String ajouterDiplome(int id, String dateobtention,String diplome ,String etabli,visibiliter v)
     {
         try {
             st = co.createStatement();
-            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+dateobtention+"','"+diplome+"','" +etabli+"')";
+            String sql="INSERT INTO Diplomes VALUES (" +id+ ",'"+dateobtention+"','"+diplome+"','" +etabli+"','"+ v +"')";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Diplome ok");
             
@@ -362,7 +267,7 @@ public class Bdd{
         }
     }
     
-    public String modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc){
+    public String modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi){
         
         try {
             int i;
@@ -379,14 +284,14 @@ public class Bdd{
                     val =((Number) resultat1.getObject(1)).intValue();
                 }
                 if(val == 1){
-                    String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"',VisibleComp='"+vc+"',VisibleDipl='"+vd+"' WHERE Id="+id+"";
+                    String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"' WHERE Id="+id+"";
                     st.executeUpdate(sql);
                     return new GestionRetourBDD().valeurRetour("Information modif ok");
                 }else{
                     return new GestionRetourBDD().valeurRetour("Mail double");
                 }
             }else{
-                String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"',VisibleComp='"+vc+"',VisibleDipl='"+vd+"' WHERE Id="+id+"";
+                String sql="UPDATE Utilisateurs SET AddrMail='"+addrmail+"', Tel='"+tel+"', Mdp='"+mdp+"',VisibleInf='"+vi+"'WHERE Id="+id+"";
                 st.executeUpdate(sql);
                 return new GestionRetourBDD().valeurRetour("Information modif ok");
             }
@@ -396,11 +301,11 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String modififerCompetence(int id, String matiere, niveau n){
+    public String modififerCompetence(int id, String matiere, niveau n, visibiliter v){
         
         try {
             st = co.createStatement();
-            String sql="UPDATE Competences SET Niveau='"+n+"' WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
+            String sql="UPDATE Competences SET Niveau='"+n+"', VisibleComp='"+ v +"' WHERE IdUtilisateur="+id+" AND Matiere='"+matiere+"'";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Modif competence ok");
         }catch (SQLException ex){
@@ -409,11 +314,25 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
+    public String modififerDiplome(int id, String diplome, niveau n, visibiliter v){
+        
+        try {
+            st = co.createStatement();
+            String sql="UPDATE Diplomes SET  VisibleDip='"+ v +"' WHERE IdUtilisateur="+id+" AND Diplome='"+diplome+"'";
+            st.executeUpdate(sql);
+            return new GestionRetourBDD().valeurRetour("Modif competence ok");
+        }catch (SQLException ex){
+            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new GestionRetourBDD().valeurRetour("Erreur BDD");
+    }
+    
+    
     public String supprimerDiplome(int id,String diplome){
         
         try {
             st = co.createStatement();
-            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Type='"+diplome+"'";
+            String sql="DELETE FROM Diplomes WHERE IdUtilisateur="+id+" AND Diplome='"+diplome+"'";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Suppression diplome");
         }catch (SQLException ex){
@@ -434,7 +353,7 @@ public class Bdd{
         }
     }
     
-    public String connexionClient(String mail,String mdp){
+    public String connexionClient(String mail,String mdp, int idclient){
         try {
             ResultSet resultat1;
             int idUtil;
@@ -444,277 +363,250 @@ public class Bdd{
             resultat1.next();
             idUtil=resultat1.getInt(1);
             System.out.println(idUtil);
-            return new GestionRetourBDD().valeurRetour("Connexion client ok."+idUtil);
+            idclient=idUtil;
+            return "OK";
         }catch (SQLException ex){
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-            return new GestionRetourBDD().valeurRetour("Erreur connexion");
+            return "ERROR";
         }
     }
     
-    public String visualiserInfo(int idcourant,int idvisite){
+
         
-        try {
-            String visi, retour="";
-            int id;
-            String nom,prenom,mail,annee,tel;
-            ResultSet resultatInfo, resultatComp, resultatDipl;
-            st = co.createStatement();
-            visi=visibiliterInfo(idvisite);
-            //visd=visibiliterDiplome(idvisite);
-            //visc=visibiliterCompetence(idvisite);
-            
-            resultatInfo= st.executeQuery("SELECT `Id`, `Nom`, `Prenom`, `AddrMail`, `Tel` ,`AnneeN` FROM Utilisateurs WHERE Id="+idvisite+"");
-            //resultatDipl=st.executeQuery("SELECT IdUtilisateur, Annee , Type , Etablissement FROM `Utilisateurs` u, `Diplomes` d WHERE u.Id=d.Idutilisateur AND  u.Id="+idvisite+" ");
-            //resultatComp=st.executeQuery("SELECT IdUtilisateur , Matiere, Niveau FROM `Utilisateurs` u, `Competences` c WHERE u.Id=c.Idutilisateur AND u.Id="+idvisite+" ");
-            if (idcourant != 0 || idcourant != 1){
-                
-                switch (visi) {
-                    case "Tous":
-                    case "Utilisateur":
-                        while(resultatInfo.next()){
-                            id = resultatInfo.getInt("Id");
-                            nom = resultatInfo.getString("Nom");
-                            prenom = resultatInfo.getString("Prenom");
-                            mail = resultatInfo.getString("AddrMail");
-                            annee = resultatInfo.getString("AnneeN");
-                            tel= resultatInfo.getString("Tel");
-                            retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee;
-                        }
-                        //System.out.println(retour);
-                        return new GestionRetourBDD().valeurRetour("Visualisation ok")+ " " +retour;
-                    default:
-                        while(resultatInfo.next()){
-                            id = resultatInfo.getInt("Id");
-                            nom = resultatInfo.getString("Nom");
-                            prenom = resultatInfo.getString("Prenom");
-                            retour=retour + id + "#" + nom + "#" + prenom;
-                            return retour;
-                        }
-                }
-            }else if(idcourant == 1){
-                
-                while(resultatInfo.next()){
-                    id = resultatInfo.getInt("Id");
-                    nom = resultatInfo.getString("Nom");
-                    prenom = resultatInfo.getString("Prenom");
-                    mail = resultatInfo.getString("AddrMail");
-                    annee = resultatInfo.getString("AnneeN");
-                    tel= resultatInfo.getString("Tel");
-                    retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee;
-                }
-                return retour;
-            }else{
-                switch (visi) {
-                    case "Tous":
-                        while(resultatInfo.next()){
-                            id = resultatInfo.getInt("Id");
-                            nom = resultatInfo.getString("Nom");
-                            prenom = resultatInfo.getString("Prenom");
-                            mail = resultatInfo.getString("AddrMail");
-                            annee = resultatInfo.getString("AnneeN");
-                            retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + annee;
-                        }
-                        return new GestionRetourBDD().valeurRetour("Voir ok") + retour;
-                    default:
-                        while(resultatInfo.next()){
-                            id = resultatInfo.getInt("Id");
-                            nom = resultatInfo.getString("Nom");
-                            prenom = resultatInfo.getString("Prenom");
-                            retour=retour + id + "#" + nom + "#" + prenom;
-                            return retour;
-                        }
-                }
-            }
-        }catch (SQLException ex){
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-            return new GestionRetourBDD().valeurRetour("Erreur Id Verifier");
+        public void rechercher(int idcourant, String nom ,String prenom, String dip , String comp, niveau n){
         }
-        return "visualiserInfo probleme";
-    }
         
-    
-        public String visualiserDiplome(int idcourant,int idvisite){
         
-        try {
-            String visd, retour="";
-            int id;
-            String annee,type,etablissement;
-            ResultSet resultatDipl;
-            st = co.createStatement();
-            
-            visd=visibiliterDiplome(idvisite);
-                        
-            resultatDipl=st.executeQuery("SELECT IdUtilisateur, Annee , Type , Etablissement FROM `Utilisateurs` u, `Diplomes` d WHERE u.Id=d.Idutilisateur AND  u.Id="+idvisite+" ");
-           
-            if (idcourant != 0 || idcourant != 1){
-                
-                switch (visd) {
-                    case "Tous":
-                    case "Utilisateur":
-                        while(resultatDipl.next()){
-                            
-                            if(resultatDipl.isLast()){
-                                id = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + id + "#" + annee + "#" + type + "#" + etablissement;                                
-                            }
-                            id = resultatDipl.getInt("IdUtilisateur");
-                            annee = resultatDipl.getString("Annee");
-                            type = resultatDipl.getString("Type");
-                            etablissement = resultatDipl.getString("Etablissement");
-                            retour=retour + id + "#" + annee + "#" + type + "#" + etablissement + "," ;
-                        }
-                        //System.out.println(retour);
-                        return new GestionRetourBDD().valeurRetour("Visualisation ok")+ " " +retour;
-                    default:
-                        while(resultatDipl.next()){
-                            id = resultatDipl.getInt("Id");
-                            nom = resultatDipl.getString("Nom");
-                            prenom = resultatDipl.getString("Prenom");
-                            retour=retour + id + "#" + nom + "#" + prenom;
-                            return retour;
-                        }
-                }
-            }else if(idcourant == 1){
-                
-                while(resultatDipl.next()){
-                    id = resultatDipl.getInt("Id");
-                    nom = resultatDipl.getString("Nom");
-                    prenom = resultatDipl.getString("Prenom");
-                    mail = resultatDipl.getString("AddrMail");
-                    annee = resultatDipl.getString("AnneeN");
-                    tel= resultatDipl.getString("Tel");
-                    retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee;
-                }
-                return retour;
-            }else{
-                switch (visd) {
-                    case "Tous":
-                        while(resultatDipl.next()){
-                            id = resultatDipl.getInt("Id");
-                            nom = resultatDipl.getString("Nom");
-                            prenom = resultatDipl.getString("Prenom");
-                            mail = resultatDipl.getString("AddrMail");
-                            annee = resultatDipl.getString("AnneeN");
-                            retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + annee;
-                        }
-                        return new GestionRetourBDD().valeurRetour("Voir ok") + retour;
-                    default:
-                        while(resultatDipl.next()){
-                            id = resultatDipl.getInt("Id");
-                            nom = resultatDipl.getString("Nom");
-                            prenom = resultatDipl.getString("Prenom");
-                            retour=retour + id + "#" + nom + "#" + prenom;
-                            return retour;
-                        }
-                }
-            }
-        }catch (SQLException ex){
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-            return new GestionRetourBDD().valeurRetour("Erreur Id Verifier");
-        }
-        return "visualiserInfo probleme";
-    }
-        
-        public String visiterProfil(int idcourant,int idvisite){
+        public String visiterProfil(int idcourant, int idvisite){
             
             try {
-                String visi, retour="", visc, visd;
-                int id;
-                String nom,prenom,mail,annee,tel;
-                ResultSet resultatInfo, resultatComp, resultatDipl;
-                st = co.createStatement();
-                visi=visibiliterInfo(idvisite);
-                visd=visibiliterDiplome(idvisite);
-                visc=visibiliterCompetence(idvisite);
+            ResultSet resultatInfo, resultatComp, resultatDip, resultatAdmin;
+            
+            String visiInfo=visibiliterInfo(idvisite);
+            
+            String nom, prenom, mail, tel,matiere,niveau,diplome,eta,Diplome,visibiliter, retourInfo="",retourComp="",retourDip="", retourAdmin="", retourVisiteur;
+            String visiteur = typeVisiteur(idcourant);
+ 
+            Date annee;
+
+            String retourUtilisateur;
+            String r1="SELECT * FROM Competences WHERE IdUtilisateur="+idvisite+" AND (VisibleComp='Public' OR VisibleComp ='UtilisateurCo')";
+            String r2="SELECT * FROM Diplomes WHERE IdUtilisateur="+idvisite+" AND (VisibleDip='Public' OR VisibleDip ='UtilisateurCo')";
+            String r3="SELECT * FROM Utilisateurs WHERE Id="+idvisite+"";
+            String r4="SELECT * FROM Competences WHERE IdUtilisateur="+idvisite+"";
+            String r5="SELECT * FROM Diplomes WHERE IdUtilisateur="+idvisite+"";
+            String r6="SELECT * FROM Competences WHERE IdUtilisateur="+idvisite+" AND VisibleComp='Public'";
+            String r7="SELECT * FROM Diplomes WHERE IdUtilisateur="+idvisite+" AND VisibleDip='Public'";
+            boolean vr;
+            switch (visiteur){
                 
-                resultatInfo= st.executeQuery("SELECT `Id`, `Nom`, `Prenom`, `AddrMail`, `Tel` ,`AnneeN` FROM Utilisateurs WHERE Id="+idvisite+"");
-                resultatDipl=st.executeQuery("SELECT IdUtilisateur, Annee , Type , Etablissement FROM `Utilisateurs` u, `Diplomes` d WHERE u.Id=d.Idutilisateur AND  u.Id="+idvisite+" ");
-                resultatComp=st.executeQuery("SELECT IdUtilisateur , Matiere, Niveau FROM `Utilisateurs` u, `Competences` c WHERE u.Id=c.Idutilisateur AND u.Id="+idvisite+" ");
-                if (idcourant != 0 || idcourant != 1){
-                    
-                    switch (visi) {
-                        case "Tous":
-                        case "Utilisateur":
-                            while(resultatInfo.next()){
-                                id = resultatInfo.getInt("Id");
+                case "Utilisateur":
+                        st = co.createStatement();
+                        resultatInfo= st.executeQuery(r3);
+                    if(visiInfo != "Prive"){
+                        
+                        while(resultatInfo.next()){
                                 nom = resultatInfo.getString("Nom");
                                 prenom = resultatInfo.getString("Prenom");
                                 mail = resultatInfo.getString("AddrMail");
-                                annee = resultatInfo.getString("AnneeN");
+                                annee = resultatInfo.getDate("AnneeN");
                                 tel= resultatInfo.getString("Tel");
-                                retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee;
+                                retourInfo=idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" +"END_I#";
                             }
-                            //System.out.println(retour);
-                            return new GestionRetourBDD().valeurRetour("Visualisation ok")+ " " +retour;
-                        default:
+                    }else{
                             while(resultatInfo.next()){
-                                id = resultatInfo.getInt("Id");
-                                nom = resultatInfo.getString("Nom");
-                                prenom = resultatInfo.getString("Prenom");
-                                retour=retour + id + "#" + nom + "#" + prenom;
-                                return retour;
-                            }
-                    }
-                }else if(idcourant == 1){
-                    
-                    while(resultatInfo.next()){
-                        id = resultatInfo.getInt("Id");
-                        nom = resultatInfo.getString("Nom");
-                        prenom = resultatInfo.getString("Prenom");
-                        mail = resultatInfo.getString("AddrMail");
-                        annee = resultatInfo.getString("AnneeN");
-                        tel= resultatInfo.getString("Tel");
-                        retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee;
-                    }
-                    return retour;
-                }else{
-                    switch (visi) {
-                        case "Tous":
-                            while(resultatInfo.next()){
-                                id = resultatInfo.getInt("Id");
                                 nom = resultatInfo.getString("Nom");
                                 prenom = resultatInfo.getString("Prenom");
                                 mail = resultatInfo.getString("AddrMail");
-                                annee = resultatInfo.getString("AnneeN");
-                                retour=retour + id + "#" + nom + "#" + prenom + "#" + mail + "#" + annee;
-                            }
-                            return new GestionRetourBDD().valeurRetour("Voir ok") + retour;
-                        default:
-                            while(resultatInfo.next()){
-                                id = resultatInfo.getInt("Id");
-                                nom = resultatInfo.getString("Nom");
-                                prenom = resultatInfo.getString("Prenom");
-                                retour=retour + id + "#" + nom + "#" + prenom;
-                                return retour;
+                                retourInfo=idvisite + "#" + nom + "#" + prenom + "#" + mail + "END_I#";
                             }
                     }
-                }
-            }catch (SQLException ex){
-                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-                return new GestionRetourBDD().valeurRetour("Erreur Id Verifier");
+
+                        
+                        resultatComp=st.executeQuery(r1);
+                        vr=verifierRequete(r1);
+                        if (vr == true){
+                            while(resultatComp.next()){
+                                if(resultatComp.isLast()){
+                                    matiere = resultatComp.getString("Matiere");
+                                    niveau = resultatComp.getString("Niveau");
+                                    retourComp=retourComp + matiere + "#" + niveau +"#"+"END_C#";
+                                    }else{
+                                    matiere = resultatComp.getString("Matiere");
+                                    niveau = resultatComp.getString("Niveau");
+                                    retourComp=retourComp + matiere + "#" + niveau +"$";
+                                }
+                                    
+                            }
+                        }else{
+                                    retourComp="END_C#";
+                                    }
+                    
+                    
+
+                        resultatDip=st.executeQuery(r2);
+                        vr=verifierRequete(r2);
+                        if (vr == true){
+                            
+                        while(resultatDip.next()){
+                                if(resultatDip.isLast()){
+                                Diplome = resultatDip.getString("Diplome");
+                                annee = resultatDip.getDate("AnneeObt");
+                                eta = resultatDip.getString("Etablissement");
+                                retourDip=retourDip + Diplome + "#" + eta +"#"+ annee +"#END_D";
+                                }else{
+                                Diplome = resultatDip.getString("Diplome");
+                                annee = resultatDip.getDate("AnneeObt");
+                                eta = resultatDip.getString("Etablissement");
+                                retourDip=retourDip + Diplome + "#" + eta +"#"+ annee + "$" ;
+                                
+                                }
+                            }
+                       
+                        }else{
+                             retourDip="END_D";
+                        }
+                    
+                       
+                    retourUtilisateur=retourInfo+retourComp+retourDip;
+                    return retourUtilisateur;
+
+                case "Admin":
+                        
+                    resultatAdmin=st.executeQuery(r3);
+                        while(resultatAdmin.next()){
+                                nom = resultatAdmin.getString("Nom");
+                                prenom = resultatAdmin.getString("Prenom");
+                                mail = resultatAdmin.getString("AddrMail");
+                                annee = resultatAdmin.getDate("AnneeN");
+                                tel= resultatAdmin.getString("Tel");
+                                visibiliter=resultatAdmin.getString("VisibleInf");
+                                retourAdmin=idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter +"#END_I#";
+                        }
+                    resultatAdmin=st.executeQuery(r4);
+                        while(resultatAdmin.next()){
+                                    if(resultatAdmin.isLast()){
+                                    matiere = resultatAdmin.getString("Matiere");
+                                    niveau = resultatAdmin.getString("Niveau");
+                                    visibiliter=resultatAdmin.getString("VisibleComp");
+                                    retourAdmin=retourAdmin + matiere + "#" + niveau +"#"+ visibiliter +"#END_C#";
+                                    }else{
+                                    matiere = resultatAdmin.getString("Matiere");
+                                    niveau = resultatAdmin.getString("Niveau");
+                                    visibiliter=resultatAdmin.getString("VisibleComp");
+                                    retourAdmin=retourAdmin + matiere + "#" + niveau +"#"+visibiliter+"$";
+                                }
+                                    
+                            }
+                        resultatAdmin=st.executeQuery(r5);
+                        while(resultatAdmin.next()){
+                            if(resultatAdmin.isLast()){
+                                Diplome = resultatAdmin.getString("Diplome");
+                                annee = resultatAdmin.getDate("AnneeObt");
+                                eta = resultatAdmin.getString("Etablissement");
+                                visibiliter=resultatAdmin.getString("VisibleDip");
+                                retourAdmin=retourAdmin + Diplome + "#" + eta +"#"+ annee + "#"+ visibiliter +"#END_D";
+                            }else{
+                                Diplome = resultatAdmin.getString("Diplome");
+                                annee = resultatAdmin.getDate("AnneeObt");
+                                eta = resultatAdmin.getString("Etablissement");
+                                visibiliter=resultatAdmin.getString("VisibleDip");
+                                retourAdmin=retourAdmin +Diplome + "#" + eta +"#"+ annee +"#"+ visibiliter +"$";
+                            }
+                                
+                            }
+
+                        return retourAdmin;
+                    
+                default:
+                        st = co.createStatement();
+                        resultatInfo= st.executeQuery(r3);
+                    if(visiInfo != "Public"){  
+                        while(resultatInfo.next()){
+                                nom = resultatInfo.getString("Nom");
+                                prenom = resultatInfo.getString("Prenom");
+                                retourInfo=idvisite + "#" + nom + "#" + prenom + "#" +"END_I#";
+                            
+                            }
+                    }else{
+                            while(resultatInfo.next()){
+                                nom = resultatInfo.getString("Nom");
+                                prenom = resultatInfo.getString("Prenom");
+                                mail = resultatInfo.getString("AddrMail");
+                                annee = resultatInfo.getDate("AnneeN");
+                                tel= resultatInfo.getString("Tel");
+                                retourInfo=idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" +"END_I#";
+                            }
+                    }
+                
+                        resultatComp=st.executeQuery(r6);
+                        vr=verifierRequete(r6);
+                        if (vr == true){
+                            while(resultatComp.next()){
+                                if(resultatComp.isLast()){
+                                    matiere = resultatComp.getString("Matiere");
+                                    niveau = resultatComp.getString("Niveau");
+                                    retourComp=retourComp + matiere + "#" + niveau +"#"+"END_C#";
+                                    }else{
+                                    matiere = resultatComp.getString("Matiere");
+                                    niveau = resultatComp.getString("Niveau");
+                                    retourComp=retourComp + matiere + "#" + niveau +"$";
+                                }
+                                    
+                            }
+                        }else{
+                                    retourComp="END_C#";
+                                    }
+                
+                        resultatDip=st.executeQuery(r7);
+                        vr=verifierRequete(r7);
+                        if (vr == true){
+                            
+                        while(resultatDip.next()){
+                                Diplome = resultatDip.getString("Diplome");
+                                annee = resultatDip.getDate("AnneeObt");
+                                eta = resultatDip.getString("Etablissement");
+                                retourDip=retourDip + Diplome + "#" + eta +"#"+ annee + "$" ;
+                                if(resultatDip.isLast()){
+                                Diplome = resultatDip.getString("Diplome");
+                                annee = resultatDip.getDate("AnneeObt");
+                                eta = resultatDip.getString("Etablissement");
+                                retourDip=retourDip + Diplome + "#" + eta +"#"+ annee +"#END_D";
+                                }
+                            }
+                       
+                        }else{
+                             retourDip="END_D";
+                        }
+                    retourVisiteur=retourInfo+retourComp+retourDip;
+                    return retourVisiteur;
+                
             }
-            return new GestionRetourBDD().valeurRetour("Erreur BDD");
+            
+            }catch (SQLException ex){
+            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
         }
+            return "test";
+        }
+        
+        
+       
         public static void main(String[] args){
             String test;
             Bdd bdd=new Bdd();
             bdd.connexion();
-//bdd.VerifierMail("grosse@bite.xxx");
-//bdd.CreerUtilisateur("Testconnexion", "Test", "abc","1994-12-12", "123456");
-//bdd.VerifierMdp("aajjjjjjjj");
-//bdd.AjouterCompetence(1, "fr", Bdd.niveau.Bon);
-//bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
-//bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Tous,Bdd.visibiliter.Personne,Bdd.visibiliter.Tous);
-//bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
-//bdd.SupprimerCompetence(1, "Rugby");
-//bdd.SupprimerDiplome(1,"fr");
-//test=bdd.connexionClient("aacc", "123456");
-//System.out.println(test);
-test=bdd.visiterProfil(4, 3);
-System.out.println(test);
+                //bdd.VerifierMail("grosse@bite.xxx");
+                //bdd.CreerUtilisateur("Testconnexion", "Test", "abc","1994-12-12", "123456");
+                //bdd.VerifierMdp("aajjjjjjjj");
+                //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
+                //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
+                //bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
+                //bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
+                //bdd.SupprimerCompetence(1, "Rugby");
+                //bdd.SupprimerDiplome(1,"fr");
+                //test=bdd.connexionClient("aacc", "123456");
+                test=bdd.visiterProfil(1,1);
+                System.out.println(test);
         }
 }
 
