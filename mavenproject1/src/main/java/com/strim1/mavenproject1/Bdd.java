@@ -36,7 +36,8 @@ public class Bdd{
     enum niveau{
         Moyen,
         Bon,
-        Tresbon;
+        Tresbon, 
+        NULL;
     };
     /**
      * Le nom
@@ -91,13 +92,16 @@ public class Bdd{
     }
     */
     
-    public String typeVisiteur(int idcourant){
+    public String typeVisiteur(int idcourant, int idprofil){
         
         if (idcourant !=0 && idcourant != 1){
+            if (idcourant == idprofil){
+            return "MonProfil";
+        }
             return "Utilisateur";
         }else if (idcourant == 1){
             return "Admin";
-        }
+        } 
         return "Visiteur";
         
     }
@@ -122,8 +126,10 @@ public class Bdd{
                 return niveau.Bon;
             case "Tresbon":
                 return niveau.Tresbon;
-            default:
+            case "Moyen":
                 return niveau.Moyen;
+            default:
+                return niveau.NULL;
         }
     }
     
@@ -230,7 +236,7 @@ public class Bdd{
                     idMax = resultat1.getInt("max(Id)");
                     idMax += 1;
                 }
-                String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`, `VisibleInfo`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "', '"+ v +"');";
+                String sql = "INSERT INTO Utilisateurs(`Id`, `Nom`, `Prenom`, `AddrMail`,`AnneeN`, `Mdp`, `VisibleInf`) VALUES (" + idMax + ",'" + nom + "','" + prenom + "','" + addrmail + "','"+ date +"','" + mdp + "', '"+ v +"');";
                 st.executeUpdate(sql);
                 return new GestionRetourBDD().valeurRetour("Inscription ok");
             }
@@ -373,8 +379,179 @@ public class Bdd{
     
 
         
-        public void rechercher(int idcourant, String nom ,String prenom, String dip , String comp, niveau n){
+        public String recherche (int idcourant,String nom, String prenom, String diplome, String matiere, niveau n){
+
+    ResultSet r1;
+    int idvisite=0;
+    String util=typeVisiteur(idcourant,idvisite);
+    String nomRetour, prenomRetour;
+    int idRetour;
+    String retour="",requeteFINAL;
+    String tDiplomes="", tMatieres="";
+    boolean vr;    
+    int verif=0;
+    String requeteSELECT="SELECT Id, Nom , Prenom ",
+    requeteFROM="FROM Utilisateurs u ",
+    requeteWHERE="WHERE",
+    whereMatiere="",
+    whereCompe="",
+    whereNiveau="";
+    
+    if(nom != "NULL"){
+   	 requeteWHERE = requeteWHERE + " u.Nom='"+nom+"'";    
+    }
+
+    if(prenom != "NULL"){
+   	 if(requeteWHERE == "WHERE"){
+   	 requeteWHERE = requeteWHERE + " u.Prenom='"+prenom+"'";    
+    }else{
+        requeteWHERE = requeteWHERE + " AND u.Prenom='"+prenom+"'";
+    }
+    }
+    if(matiere != "NULL"){
+   	 if(requeteWHERE == "WHERE"){
+             whereMatiere=" u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' ";
+    }else{
+             whereMatiere= " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' ";  
+    }
+    }
+
+    if(n == Bdd.niveau.Moyen){
+   	  if(requeteWHERE == "WHERE"){
+            whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' ";  
+    }else{
+   	whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' ";  
+    }
+    }
+    
+    if(n == Bdd.niveau.Bon){
+   	  if(requeteWHERE == "WHERE"){
+            whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Bon' OR Niveau='TresBon' ";  
+    }else{
+   	whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Bon' OR Niveau='TresBon' ";  
+    }
+    }
+    
+    if(n == Bdd.niveau.Tresbon){
+   	  if(requeteWHERE == "WHERE"){
+            whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='TresBon' ";  
+    }else{
+   	whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='TresBon' ";  
+    }
+    }
+
+    if(diplome != "NULL"){
+   	  if(requeteWHERE == "WHERE"){
+   	 whereCompe= " u.Id IN (SELECT IdUtilisateur FROM Diplomes WHERE Diplome='"+diplome+"' ";    
+    }else{
+   	 whereCompe= " AND u.Id IN (SELECT IdUtilisateur FROM Diplomes WHERE Diplome='"+diplome+"' ";   
+    }
+    }
+
+    if (n != niveau.NULL && matiere != "NULL"){
+                verif=1;
+         }else if (n != niveau.NULL){
+                 verif=2;
+         }else if (matiere != "NULL"){
+   		  verif=3;
+         }
+    
+    try{
+    st = co.createStatement(); 
+    switch (util){
+    
+    case "Utilisateur":
+   	 case "Admin":
+   	 switch (verif){
+                    case 1:
+                        whereMatiere="";
+                        whereNiveau="";
+                        if(n == Bdd.niveau.Moyen){
+                                    if(requeteWHERE == "WHERE"){
+                                      whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive') ";  
+                                    }else{
+                                        whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive')";  
+                                    }
+                         }
+    
+                        if(n == Bdd.niveau.Bon){
+                              if(requeteWHERE == "WHERE"){
+                                whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive')";  
+                                }else{
+                                    whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive')";  
+                                }
+                        }
+    
+                        if(n == Bdd.niveau.Tresbon){
+                              if(requeteWHERE == "WHERE"){
+                                whereNiveau = " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon' AND VisibleComp!='Prive') ";  
+                                }else{
+                                    whereNiveau = whereNiveau + " AND u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon' AND VisibleComp!='Prive') ";  
+                                }
+                        }
+                        break;
+                    case 2:
+                        whereMatiere  = whereMatiere +"AND VisibleComp!='Prive')";
+                        break;
+                    case 3:
+                        whereMatiere  = whereMatiere + "AND VisibleComp!='Prive')";
+                        break;
+                }
+    
+   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereCompe ;    
+
+   	 r1=st.executeQuery(requeteFINAL);
+   	 vr=verifierRequete(requeteFINAL);
+   	 if (vr == true){
+   	 while(r1.next()){    
+   		 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour=retour +  idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
+   	 }
+   	 }else{
+   		 retour="NOBODY";
+   	 }
+    return retour;
+
+
+    default:
+   	 
+   	 if (matiere != "NULL" ){
+    
+   		 requeteWHERE = requeteWHERE + "AND c.VisibleComp='Public'";
+   	 }
+
+   	 if (diplome !="NULL"){
+    
+   		 requeteWHERE = requeteWHERE + "AND d.VisibleDip='Public'";
+   	 }
+    
+   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE;    
+   	 
+   	 r1=st.executeQuery(requeteFINAL);
+   	 vr=verifierRequete(requeteFINAL);
+   	 if (vr == true){
+   		 while(r1.next()){
+   	 
+   			 idRetour=r1.getInt("Id");
+   			 nomRetour=r1.getString("Nom");   	 
+   			 prenomRetour=r1.getString("Prenom");
+   			 retour=retour +  idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
+   		 }
+   	 }else{
+   		 retour="NOBODY";
+   	 }    
+    return retour;
+
+    }
+    }catch (SQLException ex){
+            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "blblb";
+}
+
+
         
         
         public String visiterProfil(int idcourant, int idvisite){
@@ -385,7 +562,7 @@ public class Bdd{
             String visiInfo=visibiliterInfo(idvisite);
             
             String nom, prenom, mail, tel,matiere,niveau,diplome,eta,Diplome,visibiliter, retourInfo="",retourComp="",retourDip="", retourAdmin="", retourVisiteur;
-            String visiteur = typeVisiteur(idcourant);
+            String visiteur = typeVisiteur(idcourant, idvisite);
  
             Date annee;
 
@@ -472,7 +649,7 @@ public class Bdd{
                     return retourUtilisateur;
 
                 case "Admin":
-                        
+                case "MonProfil":
                     resultatAdmin=st.executeQuery(r3);
                         while(resultatAdmin.next()){
                                 nom = resultatAdmin.getString("Nom");
@@ -595,17 +772,18 @@ public class Bdd{
             String test;
             Bdd bdd=new Bdd();
             bdd.connexion();
-                //bdd.VerifierMail("grosse@bite.xxx");
-                //bdd.CreerUtilisateur("Testconnexion", "Test", "abc","1994-12-12", "123456");
-                //bdd.VerifierMdp("aajjjjjjjj");
+                //bdd.verifierMail("grosse@bite.xxx");
+                //bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
+                //bdd.verifierMdp("aajjjjjjjj");
                 //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
-                //bdd.AjouterDiplome(1, "1994-12-12" , "fr","kkk");
-                //bdd.ModifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
-                //bdd.ModififerCompetence(1,"fr", Bdd.niveau.Tresbon);
-                //bdd.SupprimerCompetence(1, "Rugby");
-                //bdd.SupprimerDiplome(1,"fr");
+                //bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
+                //bdd.modifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
+                //bdd.modififerCompetence(1,"fr", Bdd.niveau.Tresbon);
+                //bdd.supprimerCompetence(1, "Rugby");
+                //bdd.supprimerDiplome(1,"fr");
                 //test=bdd.connexionClient("aacc", "123456");
-                test=bdd.visiterProfil(1,1);
+                //test=bdd.visiterProfil(1,1);
+                test=bdd.recherche(3, "NULL", "NULL", "NULL", "Okok", niveau.Bon);
                 System.out.println(test);
         }
 }
