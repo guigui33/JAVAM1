@@ -86,6 +86,7 @@ public class TraitementInscription extends Thread{
                 return "requête inconnue.";
         }
     }
+    
     //a refaire apres bdd push
     private String inscription(String[] demande){
         //INSCRIPTION#adresse_mail#mot_de_passe#nom#prenom#dateN#visibilite
