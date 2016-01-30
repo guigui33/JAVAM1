@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package com.serveurConnexion.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 class TraitementClient extends Thread{
     private final Socket connexionCourante;
-        
+    
     private String demandeClient;
     private String retourServeur;
     
@@ -33,7 +33,7 @@ class TraitementClient extends Thread{
         this.clients=clients;
     }
     
-     private void reception(){
+    private void reception(){
         InputStreamReader fluxEntree=null;
         
         try {
@@ -74,11 +74,11 @@ class TraitementClient extends Thread{
     }
     
     //a refaire pour numSession
-     private String connexion(String[] demande){
+    private String connexion(String[] demande){
         String retour=null;
-         Bdd bdd=new Bdd();
-         Integer idclient;
-         
+        Bdd bdd=new Bdd();
+        Integer idclient;
+        
         //if(bdd.connexion()){
         bdd.connexion();
         //a mettre id client
@@ -92,12 +92,12 @@ class TraitementClient extends Thread{
         }
         else{
             return "ERROR#mauvais login ou mot de passe";
-        } 
+        }
         //}
         //else return "Problème serveur, veuillez recommencer plus tard.";
-        }
+    }
     
-     public String requete(String demandeClient){
+    public String requete(){
         /*decouper la requte en tableau */
         String [] decoupageRequete;
         decoupageRequete=demandeClient.split("#");
@@ -109,17 +109,17 @@ class TraitementClient extends Thread{
                 }
                 return connexion(decoupageRequete);
             default:
-                return "requête inconnue, Usage: motclé#id#demande"; 
+                return "requête inconnue, Usage: motclé#id#demande";
         }
-    }   
+    }
     
     @Override
-      public void run(){
-         boolean fermeture=false;
+    public void run(){
+        boolean fermeture=false;
         while(!fermeture){
             reception();
             if(demandeClient!=null){
-                retourServeur=requete(demandeClient);
+                retourServeur=requete();
                 emission();
             }
             else fermeture=true;
