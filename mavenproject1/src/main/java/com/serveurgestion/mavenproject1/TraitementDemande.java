@@ -23,15 +23,16 @@ class TraitementDemande {
         decoupageRequete=demandeClient.split("#");
         //en fonction du mot cle on redirige vers le service correspondant
         /* switch(decoupageRequete[0]){
-        case "HELLO":
-        
+                
         default:
         return "requête inconnue, Usage: motclé#id#demande";
         }*/
         return null;
     }
-        
-    public boolean verificationConnexion(String[] demande){
+     
+    public boolean verificationConnexion(String demandeClient){
+        String []demande=demandeClient.split("#");
+        if(!demande[0].equals("HELLO")) return false;
         if(Integer.parseInt(demande[1])==0){
             return true;
         }

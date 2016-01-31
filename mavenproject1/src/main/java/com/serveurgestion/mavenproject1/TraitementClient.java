@@ -51,7 +51,7 @@ public class TraitementClient extends Thread {
     private void deconnexion(){
         System.err.println("deconnexion client : "+ connexionCourante);
         try {
-            connexionCourante.close();// ??? fermeture du socket client client
+            connexionCourante.close();
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,11 +71,20 @@ public class TraitementClient extends Thread {
         
     @Override
     public void run(){
-        
+        TraitementDemande traitementDemande=new TraitementDemande();
+        if(!traitementDemande.verificationConnexion(demandeClient)){
+            retourServeur="ERROR";
+            fermeture=true;
+            
+        } 
+        else {
+            retourServeur="OK";
+            fermeture=false;
+        }
+        emission();
         while(!fermeture){
             reception();
-            if(demandeClient!=null){
-                TraitementDemande traitementDemande=new TraitementDemande();
+            if(demandeClient!=null){                
                 retourServeur=traitementDemande.requete(demandeClient);
                 emission();
             }
