@@ -5,7 +5,6 @@
 */
 package com.serveurConnexion.mavenproject1;
 
-import com.strim1.mavenproject1.GestionErreurs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -51,7 +50,7 @@ public class TraitementServeur extends Thread{
     }
     
     private void deconnexion(){
-        System.err.println("deconnexion client : "+ connexionCourante);
+        System.err.println("deconnexion Serveur : "+ connexionCourante);
         try {
             connexionCourante.close();// ??? fermeture du socket client client
         } catch (IOException ex) {
@@ -77,14 +76,13 @@ public class TraitementServeur extends Thread{
         
         Integer numSession=clients.get(idClient);
         
-        if(Integer.parseInt(demande[2])==numSession){
+        if(numSession!=null && Integer.parseInt(demande[2])==numSession){
             return "OK";
         }
         return "ERROR";
       }
      
     private String deconnexionClient(String[] demande) {
-        
         clients.remove(Integer.parseInt(demande[1]));
         return "OK";
     }

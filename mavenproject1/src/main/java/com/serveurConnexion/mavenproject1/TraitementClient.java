@@ -73,28 +73,35 @@ class TraitementClient extends Thread{
         }
     }
     
+    private Integer generateurNumSession(){
+        Integer numSession=0;
+        int haut,bas;
+        haut=99999;
+        bas=0;
+        
+        numSession=(int)(Math.random()*(haut-bas)+bas);
+        
+        return numSession;
+    }
+    
     //a refaire pour numSession
     private String connexion(String[] demande){
         String retour=null;
         Bdd bdd=new Bdd();
-        Integer idclient;
-        
-        //if(bdd.connexion()){
-        bdd.connexion();
-        //a mettre id client
-        retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
-        if(retour=="OK"){
-            //a refaire
-            Integer numSession=4;
-            idclient=5;
-            clients.put(idclient,numSession);
-            return "OK#"+idclient.toString()+"#"+numSession.toString();
+                
+        if(bdd.connexion()){
+            Integer idClient=0;
+            retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
+            if(retour=="OK"){
+                Integer numSession=generateurNumSession();
+                clients.put(idClient,numSession);
+                return "OK#"+idClient.toString()+"#"+numSession.toString();
+            }
+            else{
+                return "ERROR#mauvais login ou mot de passe";
+            }
         }
-        else{
-            return "ERROR#mauvais login ou mot de passe";
-        }
-        //}
-        //else return "Problème serveur, veuillez recommencer plus tard.";
+        else return "ERROR#Problème serveur, veuillez recommencer plus tard.";
     }
     
     public String requete(){
@@ -109,7 +116,7 @@ class TraitementClient extends Thread{
                 }
                 return connexion(decoupageRequete);
             default:
-                return "requête inconnue, Usage: motclé#id#demande";
+                return "ERROR#requête inconnue, Usage: motclé#id#demande";
         }
     }
     

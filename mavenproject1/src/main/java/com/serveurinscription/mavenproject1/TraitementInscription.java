@@ -91,10 +91,10 @@ public class TraitementInscription extends Thread{
     private String inscription(String[] demande){
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-            return bdd.creerUtilisateur(demande[3],demande[4],demande[1],demande[5],demande[2],demande[7]);
+            return bdd.creerUtilisateur(demande[3],demande[4],demande[1],demande[5],demande[2],bdd.parseVisibiliter(demande[7]));
         }
         else {
-            return "Problème serveur, veuillez recommencer plus tard.";
+            return "ERROR#Problème serveur, veuillez recommencer plus tard.";
         }
     }
     
