@@ -79,7 +79,6 @@ public class TraitementClient extends Thread {
         } 
         else {
             retourServeur="OK";
-            fermeture=false;
         }
         emission();
         while(!fermeture){

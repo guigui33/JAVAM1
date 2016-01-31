@@ -78,7 +78,9 @@ public class TraitementServeur extends Thread{
       }
      
     private String deconnexionClient(String[] demande) {
-        clients.remove(Integer.parseInt(demande[1]));
+        Integer idClient=Integer.parseInt(demande[1]);
+        if(clients.containsKey(idClient))
+            clients.remove(idClient);
         return "OK";
     }
     

@@ -77,7 +77,7 @@ class TraitementClient extends Thread{
         Integer numSession=0;
         int haut,bas;
         haut=99999;
-        bas=0;
+        bas=1;
         
         numSession=(int)(Math.random()*(haut-bas)+bas);
         
@@ -94,6 +94,8 @@ class TraitementClient extends Thread{
             retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
             if(retour.equals("OK")){
                 Integer numSession=generateurNumSession();
+                if(clients.containsKey(idClient)) clients.remove(idClient);
+                
                 clients.put(idClient,numSession);
                 return "OK#"+idClient.toString()+"#"+numSession.toString();
             }
