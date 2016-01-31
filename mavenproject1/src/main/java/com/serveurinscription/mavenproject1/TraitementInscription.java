@@ -89,10 +89,13 @@ public class TraitementInscription extends Thread{
     
     //a refaire apres bdd push
     private String inscription(String[] demande){
-        //INSCRIPTION#adresse_mail#mot_de_passe#nom#prenom#dateN#visibilite
         Bdd bdd=new Bdd();
-        bdd.connexion();
-        return bdd.creerUtilisateur(demande[3],demande[4],demande[1],demande[5],demande[2]/*,demande[7]*/);
+        if(bdd.connexion()){
+            return bdd.creerUtilisateur(demande[3],demande[4],demande[1],demande[5],demande[2],demande[7]);
+        }
+        else {
+            return "Problème serveur, veuillez recommencer plus tard.";
+        }
     }
     
     public void run(){

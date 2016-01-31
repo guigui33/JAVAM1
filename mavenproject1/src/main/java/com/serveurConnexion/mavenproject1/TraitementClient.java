@@ -82,7 +82,7 @@ class TraitementClient extends Thread{
         //if(bdd.connexion()){
         bdd.connexion();
         //a mettre id client
-        retour=bdd.connexionClient(demande[1],demande[2]/*,idClient*/); //verification du mot de passe et login de l'utilisateur
+        retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
         if(retour=="OK"){
             //a refaire
             Integer numSession=4;
