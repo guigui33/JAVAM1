@@ -1,8 +1,3 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package com.serveurConnexion.mavenproject1;
 
 import java.io.BufferedReader;
@@ -95,7 +90,6 @@ public class TraitementServeur extends Thread{
         switch(decoupageRequete[0]){
             case "VERIFCONNEXION":
                 if(decoupageRequete.length!=3){
-                    //erreur non gérée
                     return "ERROR";
                 }
                 return verificationConnexion(decoupageRequete);

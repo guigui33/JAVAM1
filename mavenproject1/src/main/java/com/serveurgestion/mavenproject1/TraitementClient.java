@@ -5,7 +5,6 @@
 */
 package com.serveurgestion.mavenproject1;
 
-import com.strim1.mavenproject1.Bdd;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,12 +25,9 @@ public class TraitementClient extends Thread {
     private String demandeClient;
     private String retourServeur;
     
-    private final Bdd bdd;
-    
-    public TraitementClient(Socket connexionCourante,Bdd bdd) {
+    public TraitementClient(Socket connexionCourante) {
         this.connexionCourante = connexionCourante;
         this.fermeture = false;
-        this.bdd=bdd;
     }
     
     private void reception(){
@@ -72,13 +68,14 @@ public class TraitementClient extends Thread {
             fluxSortie.println(retourServeur);
         }
     }
-    
+        
     @Override
     public void run(){
+        
         while(!fermeture){
             reception();
             if(demandeClient!=null){
-                TraitementDemande traitementDemande=new TraitementDemande(bdd);
+                TraitementDemande traitementDemande=new TraitementDemande();
                 retourServeur=traitementDemande.requete(demandeClient);
                 emission();
             }

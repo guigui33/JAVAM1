@@ -5,7 +5,6 @@
 */
 package com.client.mavenproject1;
 
-import com.serveurgestion.mavenproject1.Accueil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -171,33 +170,9 @@ public class Client {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
         }        
-        //a refaire
-        //formulaire("insciption");
     }
     
-    /**
-    *on demandera à l'utilisateur de remplir les données dans des 
-    * formulaires, on recuperera les informations dans cette fonction
-    */
-    private void formulaire(String question){
-            /*BufferedReader fluxEntreeStandard = new BufferedReader(
-                new InputStreamReader(System.in));
         
-        String c=null;
-        
-        try {
-            c = fluxEntreeStandard.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        System.out.println("adresse mail: ");
-        System.out.println("mdp: ");
-        System.out.println("mdp: ");*/
-       // requete+="adrmail "+"mdp444444 "+"nom "+"prenom "+"1998-12-19";
-        
-    }
-    
     public void fonctionnement(){
         connexion(50001);
         while(!quitter){
