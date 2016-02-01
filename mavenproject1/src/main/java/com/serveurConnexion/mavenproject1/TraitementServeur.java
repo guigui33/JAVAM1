@@ -1,5 +1,6 @@
 package com.serveurConnexion.mavenproject1;
 
+import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,30 +19,13 @@ public class TraitementServeur extends Thread{
     
     private String demandeServeur;
     private String retourServeur;
-    
+    private final ServicePostal servicePostal;
     private final HashMap <Integer,Integer> clients;
     
     public TraitementServeur(Socket service,HashMap <Integer,Integer> clients){
         this.connexionCourante=service;
         this.clients=clients;
-    }
-    
-    private void reception(){
-        InputStreamReader fluxEntree=null;
-        
-        try {
-            fluxEntree = new InputStreamReader(connexionCourante.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        BufferedReader lecture=new BufferedReader(fluxEntree);
-        try {
-            demandeServeur=lecture.readLine();
-            System.out.println("demande Seveur: "+demandeServeur);
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.servicePostal=new ServicePostal(service);
     }
     
     private void deconnexion(){
@@ -53,18 +37,6 @@ public class TraitementServeur extends Thread{
         }
     }
     
-    private void emission(){
-        PrintStream fluxSortie=null;
-        try {
-            fluxSortie = new PrintStream(connexionCourante.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(fluxSortie!=null){
-            System.out.println("retour Serveur: "+retourServeur);
-            fluxSortie.println(retourServeur);
-        }
-    }
     
     private String verificationConnexion(String[] demande){  
         Integer idClient=Integer.parseInt(demande[1]);
@@ -109,10 +81,10 @@ public class TraitementServeur extends Thread{
     public void run(){
         boolean fermeture=false;
         while(!fermeture){
-            reception();
+            demandeServeur=servicePostal.reception();
             if(demandeServeur!=null){
                 retourServeur=requete(demandeServeur);
-                emission();
+                servicePostal.emission(retourServeur);
             }
             else fermeture=true;
         }

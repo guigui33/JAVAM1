@@ -7,6 +7,7 @@ package com.serveurinscription.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.GestionErreurs;
+import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,26 +26,11 @@ public class TraitementInscription extends Thread{
     private String reponseServeur;
     private String demandeClient;
     
+    private ServicePostal servicePostal;
+    
     public TraitementInscription(Socket connexionCourante){
         this.connexionCourante=connexionCourante;
-    }
-    
-    private void reception(){
-        InputStreamReader fluxEntree=null;
-        try {
-            fluxEntree = new InputStreamReader(connexionCourante.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementInscription.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        BufferedReader lecture=new BufferedReader(fluxEntree);
-        
-        try {
-            demandeClient=lecture.readLine();
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementInscription.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("demande client: "+demandeClient);
+        this.servicePostal=new ServicePostal(connexionCourante);
     }
     
     private void deconnexion(){
@@ -54,21 +40,6 @@ public class TraitementInscription extends Thread{
             connexionCourante.close();// ??? fermeture du socket client client
         } catch (IOException ex) {
             Logger.getLogger(TraitementInscription.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    private void emission(){
-        PrintStream fluxSortie=null;
-        
-        try {
-            fluxSortie = new PrintStream(connexionCourante.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementInscription.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(fluxSortie!=null){
-            System.out.println("retour Serveur: "+reponseServeur);
-            fluxSortie.println(reponseServeur);
         }
     }
     
@@ -99,10 +70,10 @@ public class TraitementInscription extends Thread{
     }
     
     public void run(){
-        reception();
+        demandeClient=servicePostal.reception();
         if(demandeClient!=null){
             reponseServeur=requete();
-            emission();
+            servicePostal.emission(reponseServeur);
         }
         System.out.println("demande de deconnexion client.");
         deconnexion();

@@ -5,6 +5,7 @@
 */
 package com.serveurgestion.mavenproject1;
 
+import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,31 +22,14 @@ import java.util.logging.Logger;
 public class TraitementClient extends Thread {
     private final Socket connexionCourante;
     private boolean fermeture;
-    
+    private final ServicePostal servicePostal;
     private String demandeClient;
     private String retourServeur;
     
     public TraitementClient(Socket connexionCourante) {
         this.connexionCourante = connexionCourante;
         this.fermeture = false;
-    }
-    
-    private void reception(){
-        InputStreamReader fluxEntree=null;
-        
-        try {
-            fluxEntree = new InputStreamReader(connexionCourante.getInputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        BufferedReader lecture=new BufferedReader(fluxEntree);
-        try {
-            demandeClient=lecture.readLine();
-            System.out.println("demande client: "+demandeClient);
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.servicePostal=new ServicePostal(connexionCourante);
     }
     
     private void deconnexion(){
@@ -56,36 +40,23 @@ public class TraitementClient extends Thread {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void emission(){
-        PrintStream fluxSortie=null;
-        try {
-            fluxSortie = new PrintStream(connexionCourante.getOutputStream());
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if(fluxSortie!=null){
-            System.out.println("retour Serveur: "+retourServeur);
-            fluxSortie.println(retourServeur);
-        }
-    }
         
     @Override
     public void run(){
         TraitementDemande traitementDemande=new TraitementDemande();
         if(!traitementDemande.verificationConnexion(demandeClient)){
             retourServeur="ERROR";
-            fermeture=true;
-            
+            fermeture=true;            
         } 
         else {
             retourServeur="OK";
         }
-        emission();
+        servicePostal.emission(retourServeur);
         while(!fermeture){
-            reception();
+            demandeClient=servicePostal.reception();
             if(demandeClient!=null){                
                 retourServeur=traitementDemande.requete(demandeClient);
-                emission();
+                servicePostal.emission(retourServeur);
             }
             else fermeture=true;
         }
