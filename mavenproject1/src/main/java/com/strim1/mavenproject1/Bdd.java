@@ -481,11 +481,11 @@ public class Bdd{
                         break;
                     case 2:
                         
-                        whereNiveau  = whereNiveau +"AND VisibleComp!='Prive')";
+                        whereNiveau += "AND VisibleComp!='Prive')";
                     
                         break;
                     case 3:
-                        whereMatiere  = whereMatiere + "AND VisibleComp!='Prive')";
+                        whereMatiere += "AND VisibleComp!='Prive')";
                         break;
                 }
     if (diplome !="NULL"){
@@ -501,7 +501,7 @@ public class Bdd{
    		 idRetour=r1.getInt("Id");
    		 nomRetour=r1.getString("Nom");   	 
    		 prenomRetour=r1.getString("Prenom");
-   		 retour=retour +  idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
    	 }
    	 }else{
    		 retour="NOBODY";
@@ -536,11 +536,11 @@ switch (verif){
                         break;
                     case 2:
                         
-                        whereNiveau  = whereNiveau +")";
+                        whereNiveau += ")";
                     
                         break;
                     case 3:
-                        whereMatiere  = whereMatiere + ")";
+                        whereMatiere += ")";
                         break;
                 }
     
@@ -558,7 +558,7 @@ switch (verif){
             idRetour=r1.getInt("Id");
             nomRetour=r1.getString("Nom");       
             prenomRetour=r1.getString("Prenom");
-            retour=retour +  idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
+            retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
         }
         }else{
             retour="NOBODY";
@@ -593,11 +593,11 @@ switch (verif){
                         break;
                     case 2:
                         
-                        whereNiveau  = whereNiveau +"AND VisibleComp='Public')";
+                        whereNiveau += "AND VisibleComp='Public')";
                     
                         break;
                     case 3:
-                        whereMatiere  = whereMatiere + "AND VisibleComp='Public')";
+                        whereMatiere += "AND VisibleComp='Public')";
                         break;
                 }
     
@@ -615,7 +615,7 @@ switch (verif){
             idRetour=r1.getInt("Id");
             nomRetour=r1.getString("Nom");       
             prenomRetour=r1.getString("Prenom");
-            retour=retour +  idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
+            retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
         }
         }else{
             retour="NOBODY";
