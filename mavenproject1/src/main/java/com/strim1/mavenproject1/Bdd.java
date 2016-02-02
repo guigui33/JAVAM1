@@ -492,7 +492,7 @@ public class Bdd{
     
             whereDiplome += "AND d.VisibleDip!='Prive')";
         } 
-   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereCompe ;    
+   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome;    
 
    	 r1=st.executeQuery(requeteFINAL);
    	 vr=verifierRequete(requeteFINAL);
@@ -861,7 +861,7 @@ switch (verif){
                 //bdd.supprimerDiplome(1,"fr");
                 //test=bdd.connexionClient("aacc", "123456");
                 //test=bdd.visiterProfil(1,1);
-                test=bdd.recherche(3, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
+                test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
                 System.out.println(test);
         }
 }
