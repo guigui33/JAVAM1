@@ -1,5 +1,6 @@
 package com.serveurgestion.mavenproject1;
 
+import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +16,10 @@ import java.util.logging.Logger;
  */
 
 class TraitementDemande {
-    
-    public TraitementDemande(){}
+    private final Bdd bdd;
+    public TraitementDemande(){
+        this.bdd=new Bdd();
+    }
     
     public String requete(String demandeClient){
         /*decouper la requte en tableau */
@@ -74,42 +77,92 @@ class TraitementDemande {
     }
     
     private String rechercher(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(bdd.connexion()){
+            //recherche (int idcourant,String nom, String prenom, String diplome, String matiere, niveau n)
+            return bdd.recherche(Integer.parseInt(decoupageRequete[1]), decoupageRequete[2], decoupageRequete[3], decoupageRequete[4], decoupageRequete[5], bdd.parseNiveau(decoupageRequete[6]));
+        }
+        return "ERROR";
     }
     
     private String visiter(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //visiterProfil(int idcourant, int idvisite)
+        if(bdd.connexion()){ 
+            return bdd.visiterProfil(Integer.parseInt(decoupageRequete[1]), Integer.parseInt(decoupageRequete[2]));
+        }
+        return "ERROR";
     }
     
     private String modifierUtilisateur(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi)
+      
+        if(bdd.connexion()){ 
+            return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),decoupageRequete[4],decoupageRequete[3],decoupageRequete[2],bdd.parseVisibiliter(decoupageRequete[5]));
+        }
+        return "ERROR";
     }
     
     private String ajouterDiplome(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //ajouterDiplome(int id, String dateobtention,String diplome ,String etabli,visibiliter v)
+        if(bdd.connexion()){ 
+            return bdd.ajouterDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3],decoupageRequete[4],bdd.parseVisibiliter(decoupageRequete[5]));
+        }
+        return "ERROR";
     }
     
     private String ajouterComp(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //ajouterCompetence(int id, String matiere, niveau n, visibiliter v)
+         if(bdd.connexion()){ 
+            return bdd.ajouterCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseNiveau(decoupageRequete[3]),bdd.parseVisibiliter(decoupageRequete[4]));
+        }
+        return "ERROR"; //To change body of generated methods, choose Tools | Templates.
     }
     
     private String suppCompetence(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //supprimerCompetence(int id,String matiere)
+        if(bdd.connexion()){ 
+            return bdd.supprimerCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+        }
+        return "ERROR";
     }
     
     private String suppDiplome(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //supprimerDiplome(int id,String diplome)
+        if(bdd.connexion()){ 
+            return bdd.supprimerDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+        }
+        return "ERROR";
     }
     
     private String modifVisiComp(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(bdd.connexion()){ 
+            //return bdd.modifVisiComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+        }
+        return "ERROR";
     }
     
     private String modifVisiDip(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(bdd.connexion()){ 
+            //return bdd.modifVisiDip(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+        }
+        return "ERROR";
     }
     
     private String deconnexion(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            Socket serveurConnexion;
+        try {
+            serveurConnexion = new Socket("localhost",50002);
+             ServicePostal servicePostalCo = new ServicePostal(serveurConnexion);
+            
+            String requete="DECONNEXION#"+decoupageRequete[1];
+            System.out.println("requete au serveur de connexion: "+requete);
+            servicePostalCo.emission(requete);
+            
+            String reponse= servicePostalCo.reception();
+            System.out.println("Reponse du serveur connexion: " + reponse);            
+            return null;
+        } catch (IOException ex) {
+            Logger.getLogger(TraitementDemande.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 }
