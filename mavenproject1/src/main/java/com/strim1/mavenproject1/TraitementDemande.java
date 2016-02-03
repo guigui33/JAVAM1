@@ -39,7 +39,7 @@ class TraitementDemande {
      *          si non, explication de l'erreur 
      */
     private String modifier(String demande){
-        return null;
+        return "toto";
     }
     
     /**
@@ -49,7 +49,7 @@ class TraitementDemande {
      *         sinon, message d'erreur contenant la raison du refus.
      */
     private String creationCompte(String demande){
-        return null;
+        return "toto";
     }
    
     /**
@@ -60,6 +60,6 @@ class TraitementDemande {
      */
     private String information(String demande){
         
-        return null;
+        return "toto";
     }
 }

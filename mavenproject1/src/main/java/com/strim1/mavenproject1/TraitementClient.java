@@ -42,6 +42,7 @@ public class TraitementClient extends Thread {
         BufferedReader lecture=new BufferedReader(fluxEntree);
         try {
             demandeClient=lecture.readLine();
+            System.out.println("J'ai recu : " + demandeClient);
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -71,6 +72,7 @@ public class TraitementClient extends Thread {
         while(!fermeture){
             reception();
             if(demandeClient!=null){
+                System.out.println("J'aime le jambon");
                 TraitementDemande traitementDemande=new TraitementDemande();
                 retourServeur=traitementDemande.requete(demandeClient);
                 emission();
