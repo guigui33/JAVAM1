@@ -124,7 +124,7 @@ public class Bdd{
         switch (n) {
             case "Bon":
                 return niveau.Bon;
-            case "Tresbon":
+            case "Tres bon":
                 return niveau.Tresbon;
             case "Moyen":
                 return niveau.Moyen;
@@ -271,7 +271,7 @@ public class Bdd{
         }
     }
     
-    public String modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi){
+    public String modifierInformation(int id, String mdp,String tel,String addrmail,visibiliter vi){
         
         try {
             int i;
@@ -463,14 +463,14 @@ public class Bdd{
                                     if(requeteWHERE != "WHERE"){
                                       whereNiveau = " AND ";  
                                     }
-                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive')";  
+                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                          }
     
                         if(n == Bdd.niveau.Bon){
                               if(requeteWHERE != "WHERE"){
                                 whereNiveau = " AND ";  
                                 }
-                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Prive')";  
+                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
@@ -491,7 +491,7 @@ public class Bdd{
                 }
     if (diplome !="NULL"){
     
-            whereDiplome += "AND d.VisibleDip!='Prive')";
+            whereDiplome += "AND VisibleDip!='Prive')";
         } 
    	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome;    
 
@@ -518,14 +518,14 @@ switch (verif){
                                     if(requeteWHERE != "WHERE"){
                                       whereNiveau = " AND ";  
                                     }
-                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon)";  
+                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon'))";  
                          }
     
                         if(n == Bdd.niveau.Bon){
                               if(requeteWHERE != "WHERE"){
                                 whereNiveau = " AND ";  
                                 }
-                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Bon' OR Niveau='TresBon')";  
+                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon'))";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
@@ -575,14 +575,14 @@ switch (verif){
                                     if(requeteWHERE != "WHERE"){
                                       whereNiveau = " AND ";  
                                     }
-                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' AND VisibleComp!='Public')";  
+                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Public')";  
                          }
     
                         if(n == Bdd.niveau.Bon){
                               if(requeteWHERE != "WHERE"){
                                 whereNiveau = " AND ";  
                                 }
-                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='Bon' OR Niveau='TresBon' AND VisibleComp='Public')";  
+                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public')";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
@@ -604,7 +604,7 @@ switch (verif){
     
     if (diplome !="NULL"){
     
-            whereDiplome += "AND d.VisibleDip='Public')";
+            whereDiplome += "AND VisibleDip='Public')";
         }    
         
     requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome ;    
@@ -857,12 +857,12 @@ switch (verif){
                 //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
                 //bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
                 //bdd.modifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
-                //bdd.modififerCompetence(1,"fr", Bdd.niveau.Tresbon);
+                //bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
                 //bdd.supprimerCompetence(1, "Rugby");
                 //bdd.supprimerDiplome(1,"fr");
-                test=bdd.connexionClient("abc", "123456");
+                //test=bdd.connexionClient("abc", "123456");
                 //test=bdd.visiterProfil(1,1);
-                //test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
+                test=bdd.recherche(8, "Testconnexion", "NULL", "NULL", "NULL", niveau.NULL);
                 System.out.println(test);
         }
 }
