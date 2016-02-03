@@ -133,7 +133,7 @@ class TraitementDemande {
         if(bdd.connexion()){ 
             //MODIFVISICOMP#id_utilisateur#id_competence#niveau#visibilite
             //modififerCompetence(int id, String matiere, niveau n, visibiliter v)
-           return bdd.modifierCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+           return bdd.modiferCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseNiveau(decoupageRequete[3]),bdd.parseVisibiliter(decoupageRequete[4]));
         }
         return "ERROR";
     }
