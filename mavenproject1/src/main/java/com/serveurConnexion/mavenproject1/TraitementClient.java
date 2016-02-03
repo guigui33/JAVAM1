@@ -59,7 +59,6 @@ class TraitementClient extends Thread{
         clients.put(idClient, numSession);
     }
     
-    //a refaire pour numSession
     private String connexion(String[] demande){
         String retour=null;
         Bdd bdd=new Bdd();
@@ -98,7 +97,7 @@ class TraitementClient extends Thread{
                 return "ERROR#requête inconnue, Usage: motclé#id#demande";
         }
     }
-    
+        
     @Override
     public void run(){
         boolean fermeture=false;
