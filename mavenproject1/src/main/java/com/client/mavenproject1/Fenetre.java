@@ -5,6 +5,7 @@
  */
 package com.client.mavenproject1;
 
+import com.strim1.mavenproject1.ServicePostal;
 import java.awt.CardLayout;
 import static java.lang.Boolean.TRUE;
 import javax.swing.DefaultListModel;
@@ -21,6 +22,7 @@ public class Fenetre extends javax.swing.JFrame {
      */
     
     Client c = new Client();
+    
     
     public Fenetre() {
         initComponents();
@@ -1477,7 +1479,10 @@ public class Fenetre extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
         else{
-            javax.swing.JOptionPane.showMessageDialog(null,generer_requete_inscription());
+            c.connexion(50005);
+            c.emission(generer_requete_inscription());
+            javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+            c.deconnexion();
         }
     }//GEN-LAST:event_click_inscription
 
