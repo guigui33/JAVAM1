@@ -56,7 +56,7 @@ public class Client {
     
     public void connexion(int port){
         try {
-            this.socket = new Socket("localhost", port);
+            this.socket = new Socket("192.168.1.2", port);
         } catch (IOException ex) {
             System.out.print("erreur de connexion. Serveur non accessible.");
             quitter=true;

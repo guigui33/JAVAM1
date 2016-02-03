@@ -1488,7 +1488,10 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_connexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(null,generer_requete_connexion());
+        c.connexion(50001);
+        c.emission(generer_requete_connexion());
+        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+        c.deconnexion();
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
@@ -1777,7 +1780,7 @@ public class Fenetre extends javax.swing.JFrame {
    
     private String generer_requete_inscription(){
             String req_inscription = "INSCRIPTION#";
-            req_inscription += jTextField_nom_inscr.getText() + "#" + jTextField_prenom_inscr.getText() + "#" + jTextField_mail_inscr.getText() + "#" + jTextField_mdp_inscr.getText() + "#" + jTextField_DateN_Inscr.getText() + "#" + jComboBox_visi_inscr.getItemAt(jComboBox_visi_inscr.getSelectedIndex()).toString();
+            req_inscription += jTextField_mail_inscr.getText() + "#" + jTextField_mdp_inscr.getText() + "#" + jTextField_nom_inscr.getText() + "#" + jTextField_prenom_inscr.getText() + "#" + jTextField_DateN_Inscr.getText() + "#" + jComboBox_visi_inscr.getItemAt(jComboBox_visi_inscr.getSelectedIndex()).toString();
             return req_inscription;
     }
     
