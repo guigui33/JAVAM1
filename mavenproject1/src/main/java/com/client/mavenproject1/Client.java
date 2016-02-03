@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +21,18 @@ import java.util.logging.Logger;
  */
 public class Client {
     private Socket socket;
-    private int identifiantClient; //identifiant de la base de donnée de l'utilisateur
+    private int id_user = 0;
+    private int num_session = 0;
+    private String nom;
+    private String prenom;
+    private String adresse_mail;
+    private String mdp;
+    private String telephone;
+    private String DateNaiss;
+    ArrayList<String> listeDiplome = new ArrayList<>();
+    ArrayList<String> listeCompetence = new ArrayList<>();
+    
+    private boolean Connecte;
     
     private boolean quitter;
     
@@ -30,6 +42,19 @@ public class Client {
     public Client(){
         this.socket=null;
         this.quitter=false;
+        this.nom = "BADENS";
+        this.prenom = "Florian";
+        this.adresse_mail = "jean.marc@gmail.com";
+        this.mdp = "tasoeur";
+        this.telephone = "06010203040";
+        this.DateNaiss = "25/12/1800";
+        this.Connecte = false;
+        listeDiplome.add("");
+        listeDiplome.add("BAC Pro Java");
+        listeDiplome.add("Master STRI");
+        listeCompetence.add("");
+        listeCompetence.add("Java");
+        listeCompetence.add("Routage Dynamique");
     }
     
     private void connexion(int port){
@@ -169,5 +194,45 @@ public class Client {
         Client c=new Client();
         c.fonctionnement();
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public String getAdresse_mail() {
+        return adresse_mail;
+    }
+
+    public String getMdp() {
+        return mdp;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getDateNaiss() {
+        return DateNaiss;
+    }
+
+    public boolean isConnecte() {
+        return Connecte;
+    }
+
+    public int getId_user() {
+        return id_user;
+    }
+
+    public int getNum_session() {
+        return num_session;
+    }
+ 
+    
+    
+    
     
 }
