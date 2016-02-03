@@ -491,7 +491,7 @@ public class Bdd{
                 }
     if (diplome !="NULL"){
     
-            whereDiplome += "AND d.VisibleDip!='Prive')";
+            whereDiplome += "AND VisibleDip!='Prive')";
         } 
    	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome;    
 
@@ -604,11 +604,11 @@ switch (verif){
     
     if (diplome !="NULL"){
     
-            whereDiplome += "AND d.VisibleDip='Public')";
+            whereDiplome += "AND VisibleDip='Public')";
         }    
         
     requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome ;    
-
+    
         r1=st.executeQuery(requeteFINAL);
         vr=verifierRequete(requeteFINAL);
         if (vr == true){
@@ -628,10 +628,7 @@ switch (verif){
             return "ERROR#RechercheRequete";
         }
         
-}
-
-
-        
+}        
         
         public String visiterProfil(int idcourant, int idvisite){
             

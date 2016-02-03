@@ -45,6 +45,7 @@ public class TraitementClient extends Thread {
     @Override
     public void run(){
         TraitementDemande traitementDemande=new TraitementDemande();
+        demandeClient=servicePostal.reception();
         if(!traitementDemande.verificationConnexion(demandeClient)){
             retourServeur="ERROR";
             fermeture=true;            

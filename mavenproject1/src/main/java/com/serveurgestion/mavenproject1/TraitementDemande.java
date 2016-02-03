@@ -37,9 +37,9 @@ class TraitementDemande {
                 return suppCompetence(decoupageRequete);
             case "SUPPDIPLOME":
                 return suppDiplome(decoupageRequete);
-            case "MODIFVISICOMP":
+            case "MODIFCOMP":
                 return modifVisiComp(decoupageRequete);
-            case "MODIFVISIDIP":
+            case "MODIFDIP":
                 return modifVisiDip(decoupageRequete);
             case "DECONNEXION":
                 return deconnexion(decoupageRequete);
@@ -73,9 +73,8 @@ class TraitementDemande {
     }
     
     private String rechercher(String[] decoupageRequete) {
-        if(bdd.connexion()){
-            //recherche (int idcourant,String nom, String prenom, String diplome, String matiere, niveau n)
-            return bdd.recherche(Integer.parseInt(decoupageRequete[1]), decoupageRequete[2], decoupageRequete[3], decoupageRequete[4], decoupageRequete[5], bdd.parseNiveau(decoupageRequete[6]));
+        if(bdd.connexion()){            
+            return bdd.recherche(Integer.parseInt(decoupageRequete[1]), decoupageRequete[2], decoupageRequete[3], decoupageRequete[4],decoupageRequete[5],bdd.parseNiveau(decoupageRequete[6]));
         }
         return "ERROR";
     }
@@ -89,10 +88,9 @@ class TraitementDemande {
     }
     
     private String modifierUtilisateur(String[] decoupageRequete) {
-        //modifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi)
-      
+              
         if(bdd.connexion()){ 
-            return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),decoupageRequete[4],decoupageRequete[3],decoupageRequete[2],bdd.parseVisibiliter(decoupageRequete[5]));
+            return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3],decoupageRequete[4],bdd.parseVisibiliter(decoupageRequete[5]));
         }
         return "ERROR";
     }
@@ -131,8 +129,6 @@ class TraitementDemande {
     
     private String modifVisiComp(String[] decoupageRequete) {
         if(bdd.connexion()){ 
-            //MODIFVISICOMP#id_utilisateur#id_competence#niveau#visibilite
-            //modififerCompetence(int id, String matiere, niveau n, visibiliter v)
            return bdd.modifierCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseNiveau(decoupageRequete[3]),bdd.parseVisibiliter(decoupageRequete[4]));
         }
         return "ERROR";
@@ -140,7 +136,6 @@ class TraitementDemande {
     
     private String modifVisiDip(String[] decoupageRequete) {
         if(bdd.connexion()){             
-               //modififerDiplome(int id, String diplome visibiliter v
             return bdd.modifierDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseVisibiliter(decoupageRequete[3]));
         }
         return "ERROR";

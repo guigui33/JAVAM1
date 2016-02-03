@@ -55,6 +55,10 @@ class TraitementClient extends Thread{
         return numSession;
     }
     
+    private synchronized void ajouterClient(Integer idClient,Integer numSession){
+        clients.put(idClient, numSession);
+    }
+    
     //a refaire pour numSession
     private String connexion(String[] demande){
         String retour=null;
@@ -64,7 +68,7 @@ class TraitementClient extends Thread{
             retour=bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
             if(!retour.equals("ERROR")){
                 String []decoupe=retour.split("#");
-                int idClient=Integer.parseInt(decoupe[1]);
+                Integer idClient=Integer.parseInt(decoupe[1]);
                 Integer numSession=generateurNumSession();
                 if(clients.containsKey(idClient)) clients.remove(idClient);
                 
