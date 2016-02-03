@@ -365,15 +365,17 @@ public class Bdd{
             
             st = co.createStatement();
             resultat1= st.executeQuery("SELECT Id FROM Utilisateurs WHERE AddrMail='"+mail+"' AND Mdp='"+mdp+"'");
-            resultat1.next();
-            idUtil=resultat1.getInt(1);
+            if (resultat1.next()){
+            idUtil=resultat1.getInt("Id");
             System.out.println(idUtil);
             idclient=idUtil;
             return "OK";
+            }
         }catch (SQLException ex){
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
+        return "ERROR";
     }
     
 
@@ -859,7 +861,7 @@ switch (verif){
                 //bdd.modififerCompetence(1,"fr", Bdd.niveau.Tresbon);
                 //bdd.supprimerCompetence(1, "Rugby");
                 //bdd.supprimerDiplome(1,"fr");
-                //test=bdd.connexionClient("aacc", "123456");
+                test=bdd.connexionClient("abc", "123456",22);
                 //test=bdd.visiterProfil(1,1);
                 test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
                 System.out.println(test);
