@@ -396,57 +396,57 @@ public class Bdd{
     whereDiplome="",
     whereNiveau="";
     
-    if(nom != "NULL"){
+    if( !nom.equals("NULL")){
    	 requeteWHERE += " u.Nom='"+nom+"'";    
     }
 
-    if(prenom != "NULL"){
-   	 if(requeteWHERE != "WHERE"){
+    if(!prenom.equals("NULL")){
+   	 if(!requeteWHERE.equals("WHERE")){
    	 requeteWHERE += " AND ";   
     }
         requeteWHERE +=  " u.Prenom='"+prenom+"'";
     }
     
-    if(matiere != "NULL"){
-   	 if(requeteWHERE != "WHERE"){
+    if(!matiere.equals("NULL")){
+   	 if(!requeteWHERE.equals("WHERE")){
              whereMatiere = " AND ";
     }
              whereMatiere += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' ";  
     }
 
     if(n == Bdd.niveau.Moyen){
-   	  if(requeteWHERE != "WHERE"){
+   	  if(!requeteWHERE.equals("WHERE")){
             whereNiveau = " AND ";  
     }
    	whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon' ";  
     }
     
     if(n == Bdd.niveau.Bon){
-   	  if(requeteWHERE != "WHERE"){
+   	  if(!requeteWHERE.equals("WHERE")){
             whereNiveau = " AND ";  
     }
    	whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='Bon' OR Niveau='TresBon' ";  
     }
     
     if(n == Bdd.niveau.Tresbon){
-   	  if(requeteWHERE != "WHERE"){
+   	  if(!requeteWHERE.equals("WHERE")){
             whereNiveau = " AND ";  
     }
    	whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Niveau='TresBon' ";  
     }
 
-    if(diplome != "NULL"){
-   	  if(requeteWHERE != "WHERE"){
+    if(!diplome.equals("NULL")){
+   	  if(!requeteWHERE.equals("WHERE")){
    	 whereDiplome = " AND ";    
     }
    	 whereDiplome += " u.Id IN (SELECT IdUtilisateur FROM Diplomes WHERE Diplome='"+diplome+"' ";   
     }
 
-    if (n != niveau.NULL && matiere != "NULL"){
+    if (n != niveau.NULL && !matiere.equals("NULL")){
                 verif=1;
          }else if (n != niveau.NULL){
                  verif=2;
-         }else if (matiere != "NULL"){
+         }else if (!matiere.equals("NULL")){
    		  verif=3;
          }
     
@@ -460,21 +460,21 @@ public class Bdd{
                         whereMatiere="";
                         whereNiveau="";
                         if(n == Bdd.niveau.Moyen){
-                                    if(requeteWHERE != "WHERE"){
+                                    if( !requeteWHERE.equals("WHERE")){
                                       whereNiveau = " AND ";  
                                     }
                                         whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                          }
     
                         if(n == Bdd.niveau.Bon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
                                     whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
                                     whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon' AND VisibleComp!='Prive') ";  
@@ -489,7 +489,7 @@ public class Bdd{
                         whereMatiere += "AND VisibleComp!='Prive')";
                         break;
                 }
-    if (diplome !="NULL"){
+    if (!diplome.equals("NULL")){
     
             whereDiplome += "AND VisibleDip!='Prive')";
         } 
