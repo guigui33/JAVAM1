@@ -20,7 +20,7 @@ public class GestionRetourBDD {
 		case "Mdp long":
 			return ("Le Mot de passe est trop long. Il doit etre inferieur à 16 caracteres.");
 		case "Inscription ok":
-			return ("Votre inscription est un succés ! Bienvenu!");
+			return ("Votre inscription est un succés ! Bienvenue!");
 		case "Erreur BDD":
 			return ("Erreur BDD, veuillez recommencer");
 		case "Ajout competence ok":
