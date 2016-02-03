@@ -486,7 +486,9 @@ public class Bdd{
                     
                         break;
                     case 3:
+                        
                         whereMatiere += "AND VisibleComp!='Prive')";
+                        
                         break;
                 }
     if (!diplome.equals("NULL")){
@@ -499,12 +501,19 @@ public class Bdd{
    	 vr=verifierRequete(requeteFINAL);
    	 if (vr == true){
    	 while(r1.next()){    
+                if(r1.isLast()){
+                 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour;  
+                }else{
    		 idRetour=r1.getInt("Id");
    		 nomRetour=r1.getString("Nom");   	 
    		 prenomRetour=r1.getString("Prenom");
-   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
-   	 }
-   	 }else{
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "$";    
+                }
+            }
+         }else{
    		 retour="NOBODY";
    	 }
     return retour;
@@ -515,24 +524,24 @@ switch (verif){
                         whereMatiere="";
                         whereNiveau="";
                         if(n == Bdd.niveau.Moyen){
-                                    if(requeteWHERE != "WHERE"){
+                                    if( !requeteWHERE.equals("WHERE")){
                                       whereNiveau = " AND ";  
                                     }
-                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon'))";  
+                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                          }
     
                         if(n == Bdd.niveau.Bon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
-                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon'))";  
+                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
-                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon') ";  
+                                    whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon' AND VisibleComp!='Prive') ";  
                         }
                         break;
                     case 2:
@@ -541,29 +550,36 @@ switch (verif){
                     
                         break;
                     case 3:
+                        
                         whereMatiere += ")";
+                        
                         break;
                 }
-    
-    if (diplome !="NULL"){
+    if (!diplome.equals("NULL")){
     
             whereDiplome += ")";
-        }    
-        
-    requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome ;    
+        } 
+   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome;    
 
-        r1=st.executeQuery(requeteFINAL);
-        vr=verifierRequete(requeteFINAL);
-        if (vr == true){
-        while(r1.next()){    
-            idRetour=r1.getInt("Id");
-            nomRetour=r1.getString("Nom");       
-            prenomRetour=r1.getString("Prenom");
-            retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
-        }
-        }else{
-            retour="NOBODY";
-        }
+   	 r1=st.executeQuery(requeteFINAL);
+   	 vr=verifierRequete(requeteFINAL);
+   	 if (vr == true){
+   	 while(r1.next()){    
+                if(r1.isLast()){
+                 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour;  
+                }else{
+   		 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "$";    
+                }
+            }
+         }else{
+   		 retour="NOBODY";
+   	 }
     return retour;
 
 default:
@@ -572,21 +588,21 @@ switch (verif){
                         whereMatiere="";
                         whereNiveau="";
                         if(n == Bdd.niveau.Moyen){
-                                    if(requeteWHERE != "WHERE"){
+                                    if( !requeteWHERE.equals("WHERE")){
                                       whereNiveau = " AND ";  
                                     }
-                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Public')";  
+                                        whereNiveau +=  " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public')";  
                          }
     
                         if(n == Bdd.niveau.Bon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
                                     whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public')";  
                         }
     
                         if(n == Bdd.niveau.Tresbon){
-                              if(requeteWHERE != "WHERE"){
+                              if(!requeteWHERE.equals("WHERE")){
                                 whereNiveau = " AND ";  
                                 }
                                     whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere='"+matiere+"' AND Niveau='TresBon' AND VisibleComp='Public') ";  
@@ -598,29 +614,36 @@ switch (verif){
                     
                         break;
                     case 3:
+                        
                         whereMatiere += "AND VisibleComp='Public')";
+                        
                         break;
                 }
-    
-    if (diplome !="NULL"){
+    if (!diplome.equals("NULL")){
     
             whereDiplome += "AND VisibleDip='Public')";
-        }    
-        
-    requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome ;    
-    
-        r1=st.executeQuery(requeteFINAL);
-        vr=verifierRequete(requeteFINAL);
-        if (vr == true){
-        while(r1.next()){    
-            idRetour=r1.getInt("Id");
-            nomRetour=r1.getString("Nom");       
-            prenomRetour=r1.getString("Prenom");
-            retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "#";    
-        }
-        }else{
-            retour="NOBODY";
-        }
+        } 
+   	 requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome;    
+
+   	 r1=st.executeQuery(requeteFINAL);
+   	 vr=verifierRequete(requeteFINAL);
+   	 if (vr == true){
+   	 while(r1.next()){    
+                if(r1.isLast()){
+                 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour;  
+                }else{
+   		 idRetour=r1.getInt("Id");
+   		 nomRetour=r1.getString("Nom");   	 
+   		 prenomRetour=r1.getString("Prenom");
+   		 retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "$";    
+                }
+            }
+         }else{
+   		 retour="NOBODY";
+   	 }
     return retour;
     }
     }catch (SQLException ex){
@@ -859,7 +882,7 @@ switch (verif){
                 //bdd.supprimerDiplome(1,"fr");
                 //test=bdd.connexionClient("abc", "123456");
                 //test=bdd.visiterProfil(1,1);
-                test=bdd.recherche(8, "Testconnexion", "NULL", "NULL", "NULL", niveau.NULL);
+                test=bdd.recherche(1, "NULL", "NULL", "NULL", "Okok", niveau.NULL);
                 System.out.println(test);
         }
 }
