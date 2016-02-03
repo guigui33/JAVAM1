@@ -131,14 +131,17 @@ class TraitementDemande {
     
     private String modifVisiComp(String[] decoupageRequete) {
         if(bdd.connexion()){ 
-            //return bdd.modifVisiComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+            //MODIFVISICOMP#id_utilisateur#id_competence#niveau#visibilite
+            //modififerCompetence(int id, String matiere, niveau n, visibiliter v)
+           return bdd.modifierCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
         }
         return "ERROR";
     }
     
     private String modifVisiDip(String[] decoupageRequete) {
-        if(bdd.connexion()){ 
-            //return bdd.modifVisiDip(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+        if(bdd.connexion()){             
+               //modififerDiplome(int id, String diplome, niveau n, visibiliter v
+            return bdd.modifierDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
         }
         return "ERROR";
     }

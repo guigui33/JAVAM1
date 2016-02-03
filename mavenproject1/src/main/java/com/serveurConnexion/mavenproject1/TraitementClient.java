@@ -61,14 +61,16 @@ class TraitementClient extends Thread{
         Bdd bdd=new Bdd();
                 
         if(bdd.connexion()){
-            Integer idClient=0;
-            retour=bdd.connexionClient(demande[1],demande[2],idClient); //verification du mot de passe et login de l'utilisateur
-            if(retour.equals("OK")){
+            retour=bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
+            if(!retour.equals("ERROR")){
+                String []decoupe=retour.split("#");
+                int idClient=Integer.parseInt(decoupe[1]);
                 Integer numSession=generateurNumSession();
                 if(clients.containsKey(idClient)) clients.remove(idClient);
                 
                 clients.put(idClient,numSession);
-                return "OK#"+idClient.toString()+"#"+numSession.toString();
+                retour+="#"+numSession;
+                return retour;
             }
             else{
                 return "ERROR#mauvais login ou mot de passe";
