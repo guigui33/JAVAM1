@@ -608,7 +608,7 @@ switch (verif){
         }    
         
     requeteFINAL = requeteSELECT + requeteFROM + requeteWHERE + whereMatiere + whereNiveau + whereDiplome ;    
-
+    
         r1=st.executeQuery(requeteFINAL);
         vr=verifierRequete(requeteFINAL);
         if (vr == true){
@@ -628,10 +628,7 @@ switch (verif){
             return "ERROR#RechercheRequete";
         }
         
-}
-
-
-        
+}        
         
         public String visiterProfil(int idcourant, int idvisite){
             
