@@ -16,7 +16,6 @@ package com.strim1.mavenproject1;
 */
 import java.sql.*;
 import java.sql.Date;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**

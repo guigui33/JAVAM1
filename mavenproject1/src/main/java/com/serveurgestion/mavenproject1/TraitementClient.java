@@ -5,6 +5,7 @@
 */
 package com.serveurgestion.mavenproject1;
 
+import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,8 +35,8 @@ public class TraitementClient extends Thread {
     
     private void deconnexion(){
         System.err.println("deconnexion client : "+ connexionCourante);
-        try {
-            connexionCourante.close();
+        try {       
+            connexionCourante.close();            
         } catch (IOException ex) {
             Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,7 +57,9 @@ public class TraitementClient extends Thread {
             demandeClient=servicePostal.reception();
             if(demandeClient!=null){                
                 retourServeur=traitementDemande.requete(demandeClient);
-                servicePostal.emission(retourServeur);
+                if(retourServeur!=null)
+                    servicePostal.emission(retourServeur);
+                else fermeture=true;
             }
             else fermeture=true;
         }
