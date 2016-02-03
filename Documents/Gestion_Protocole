@@ -1,20 +1,42 @@
-Protocole de gestion :
+Protocole de gestion :bdd integration
+
+attention:
+	mdp>6
+	date=AAAA-MM-JJ 
+	
+modification dans les requêtes de connexion:
+	il faut retourner l'identifiant utilisateur lors des 
+demandes de connexion:
+Si requte okay, on retourne "Msg okay"+ #identifiantBDD.
+
 
 Requêtes à implémenter dans le serveur :
-	INSCRIPTION, adresse_mail, mot_de_passe, nom, prenom
-	CONNEXION, adresse_mail, mot_de_passe
-	DECONNEXION
-	RECHERCHER, categorie, mot clé
-	VISITER, id_utilisateur
-	MODIFIER_COORDONNEES, mot_de_passe, nom, prenom, adresse, telephone, annee_naissance, visiilite_coordonnes
-	MODIFIER_DIPLOMES, id_utilisateur, annee,  type, etablissement, visibilité_diplome
-	MODIFIER_COMPETENCES, id_utilisateur, compétence, niveau, visibilité_compétence
+	INSCRIPTION#adresse_mail#mot_de_passe#nom#prenom#dateN
+	CONNEXION#adresse_mail#mot_de_passe
+	RECHERCHER#categorie#mot_clé
+	VISITER#idutilisateurCourant#id_utilisateurAVisiter
+	MODIFIER_COORDONNEES#id_utilisateur#mot_de_passe#adresseMail#telephone#visiilite_coordonnes#visibilité_diplome#visibilité_compétence
+	AJOUTER_DIPLOMES#id_utilisateur#annee#type#etablissement // On ne peut pas modifier son diplome, que le crée ou le supp.
+	MODIFIER_COMPETENCES#id_utilisateur#compétence#niveau // Ajoute aussi les competences si non existante.
+	SUPPRIMER_COMPETENCES#id_utilisateur#compétence
+	SUPPRIMER_DIPLOMES#id_utilisateur#diplome
 	
-Retour du serveur :	
+Retour du serveur :	//a redefinir
 	OK texte_retour
-	ERREUR nom_commande, raison
+	ERREUR#nom_commande#raison
 	
-	
-	
-	
-	
+Non utile:
+	DECONNEXION
+
+Lien bdd:
+
+CreerUtilisateur(String nom, String prenom, String addrmail,String date,String mdp)
+ConnexionClient(String mail,String mdp)
+AjouterCompetence(int id, String matiere, niveau n)
+AjouterDiplome(int id, String dateobtention,String diplome ,String etabli)
+ModifierInformation(int id, String addrmail,String tel,String mdp,visibiliter vi, visibiliter vd, visibiliter vc)
+ModififerCompetence(int id, String matiere, niveau n)
+SupprimerDiplome(int id,String diplome)
+SupprimerCompetence(int id,String matiere)
+VisiterProfil(int idCourant,int idVisite) // Je peux la split en 3 requetes
+RechercherProfil(int idCourant, String categorie, String motCle) -> Retourne un string id, nom, prenom.

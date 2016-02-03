@@ -5,7 +5,6 @@
 */
 package com.client.mavenproject1;
 
-import com.strim1.mavenproject1.Accueil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,7 +36,7 @@ public class Client {
     private boolean quitter;
     
     private String requete;
-    private String reponse;
+    private String reponseServeur;
     
     public Client(){
         this.socket=null;
@@ -61,13 +60,14 @@ public class Client {
         try {
             this.socket = new Socket("localhost", port);
         } catch (IOException ex) {
-            System.out.print("erreur de connexion.");
+            System.out.print("erreur de connexion. Serveur non accessible.");
             quitter=true;
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void Deconnexion(){
+    private void deconnexion(){
+          System.out.println("deconnexion...");
+          System.out.println("fin client.");
         try {
             socket.close();
         } catch (IOException ex) {
@@ -83,8 +83,10 @@ public class Client {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(reponse!=null)
+        if(requete!=null){
+            System.out.println("requete: "+requete);
             fluxSortie.println(requete);
+        }
     }
     
     private void reception(){
@@ -97,14 +99,13 @@ public class Client {
         }
         if(fluxEntreeSocket!=null){
             try {
-                reponse= fluxEntreeSocket.readLine();
+                reponseServeur= fluxEntreeSocket.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if(reponse!=null)
-                System.out.println("Reponse du serveur : " + reponse);
-        }
-        
+            if(reponseServeur!=null)
+                System.out.println("Reponse du serveur : " + reponseServeur);
+        }        
     }
     
     /**
@@ -113,7 +114,12 @@ public class Client {
     private void menu(){
         System.out.println("***menu***");
         System.out.println("1) Creation du compte\n"
-                + "2) modifier informations\n"
+                +"2)Connexion\n"
+                +"3) Rechercher\n"
+                +"4) Visiter\n"
+                + "5) modifier coordonnées\n"
+                + "6) modifier diplomes\n"
+                + "7) modifier competences\n"
                 +"0) quitter\n") ;
         System.out.print("choix: ");
     }
@@ -125,7 +131,7 @@ public class Client {
      */
     //a refaire
     private void choix(){
-        
+                
         BufferedReader fluxEntreeStandard = new BufferedReader(
                 new InputStreamReader(System.in));
         
@@ -137,28 +143,38 @@ public class Client {
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         while (continuer) {
             switch (c) {
                 case "1":
-                    requete = "CREATION ";
+                    requete = "INSCRIPTION";
                     continuer = false;
                     break;
                 case "2":
-                    requete = "Modifier ";
+                    requete = "CONNEXION";
                     continuer = false;
                     break;
                 case "3":
-                    requete = "RECHERCHER ";
+                    requete = "RECHERCHER";
                     continuer = false;
                     break;
                 case "4":
-                    requete = "DECO ";
+                    requete = "VISITER";
+                    continuer = false;
+                    break;
+               case "5":
+                    requete = "MODIFIER_COORDONNEES";
+                    continuer = false;
+                    break;
+                   case "6":
+                    requete = "MODIFIER_DIPLOMES";
+                    continuer = false;
+                    break;
+                       case "7":
+                    requete = "MODIFIER_COMPETENCES";
                     continuer = false;
                     break;
                 case "0":
                     requete=null;
-                    System.out.println("bye.");
                     continuer = false;
                     quitter=true;
                     break;
@@ -167,26 +183,32 @@ public class Client {
             }
         }
         
-        //on ecrit le reste de la requete à envoyer au serveur, a faire ds une methode
+        //on ecrit le reste de la requete à envoyer au serveur, 
+        //a faire ds une methode
         if(!quitter){
-            System.out.print("requête: "+reponse +" ");
+            String delimitateur="#";
+            requete+=delimitateur;
+            System.out.print("requête à completer: "+requete);
             try {
-                reponse = reponse + fluxEntreeStandard.readLine();
+                requete = requete + fluxEntreeStandard.readLine();
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }        
     }
     
+        
     public void fonctionnement(){
-        connexion(1324);
+        connexion(50001);
         while(!quitter){
             menu();
             choix();
-            emission();
-            reception();
+            if(!quitter){
+                emission();
+                reception();
+            }
         }
-        Deconnexion();
+        deconnexion();
         
     }
     
