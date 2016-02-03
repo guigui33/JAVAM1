@@ -319,7 +319,7 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String modififerDiplome(int id, String diplome, niveau n, visibiliter v){
+    public String modififerDiplome(int id, String diplome, visibiliter v){
         
         try {
             st = co.createStatement();
@@ -358,18 +358,18 @@ public class Bdd{
         }
     }
     
-    public String connexionClient(String mail,String mdp, int idclient){
+    public String connexionClient(String mail,String mdp){
         try {
             ResultSet resultat1;
             int idUtil;
+            String prenom;
             
             st = co.createStatement();
-            resultat1= st.executeQuery("SELECT Id FROM Utilisateurs WHERE AddrMail='"+mail+"' AND Mdp='"+mdp+"'");
+            resultat1= st.executeQuery("SELECT Id, Prenom FROM Utilisateurs WHERE AddrMail='"+mail+"' AND Mdp='"+mdp+"'");
             if (resultat1.next()){
             idUtil=resultat1.getInt("Id");
-            System.out.println(idUtil);
-            idclient=idUtil;
-            return "OK";
+            prenom=resultat1.getString("Prenom");
+            return  "OK" + "#" + idUtil +"#" +prenom;
             }
         }catch (SQLException ex){
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
@@ -861,9 +861,9 @@ switch (verif){
                 //bdd.modififerCompetence(1,"fr", Bdd.niveau.Tresbon);
                 //bdd.supprimerCompetence(1, "Rugby");
                 //bdd.supprimerDiplome(1,"fr");
-                test=bdd.connexionClient("abc", "123456",22);
+                test=bdd.connexionClient("abc", "123456");
                 //test=bdd.visiterProfil(1,1);
-                test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
+                //test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
                 System.out.println(test);
         }
 }
