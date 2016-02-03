@@ -2,10 +2,7 @@ package com.serveurgestion.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +11,6 @@ import java.util.logging.Logger;
  *
  *
  */
-
 class TraitementDemande {
     private final Bdd bdd;
     public TraitementDemande(){
