@@ -305,7 +305,7 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String modififerCompetence(int id, String matiere, niveau n, visibiliter v){
+    public String modifierCompetence(int id, String matiere, niveau n, visibiliter v){
         
         try {
             st = co.createStatement();
@@ -318,7 +318,7 @@ public class Bdd{
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
     
-    public String modififerDiplome(int id, String diplome, visibiliter v){
+    public String modifierDiplome(int id, String diplome, visibiliter v){
         
         try {
             st = co.createStatement();

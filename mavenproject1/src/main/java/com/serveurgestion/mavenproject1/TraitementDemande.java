@@ -133,15 +133,15 @@ class TraitementDemande {
         if(bdd.connexion()){ 
             //MODIFVISICOMP#id_utilisateur#id_competence#niveau#visibilite
             //modififerCompetence(int id, String matiere, niveau n, visibiliter v)
-           return bdd.modiferCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseNiveau(decoupageRequete[3]),bdd.parseVisibiliter(decoupageRequete[4]));
+           return bdd.modifierCompetence(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseNiveau(decoupageRequete[3]),bdd.parseVisibiliter(decoupageRequete[4]));
         }
         return "ERROR";
     }
     
     private String modifVisiDip(String[] decoupageRequete) {
         if(bdd.connexion()){             
-               //modififerDiplome(int id, String diplome, niveau n, visibiliter v
-            return bdd.modifierDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2]);
+               //modififerDiplome(int id, String diplome visibiliter v
+            return bdd.modifierDiplome(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],bdd.parseVisibiliter(decoupageRequete[3]));
         }
         return "ERROR";
     }
