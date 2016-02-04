@@ -54,7 +54,7 @@ public class Client {
         listeCompetence.add("Routage Dynamique");
     }
     
-    public void connexion(int port){
+    private void connexion(int port){
         try {
             this.socket = new Socket("192.168.1.2", port);
         } catch (IOException ex) {
@@ -64,15 +64,15 @@ public class Client {
     }
     
     
-    public void emission(String req){
+    private void emission(String req){
         new ServicePostal(socket).emission(req);
     }
     
-    public String reception(){
+    private String reception(){
         return new ServicePostal(socket).reception();
     }
     
-    public void deconnexion(){
+    private void deconnexion(){
           System.out.println("deconnexion...");
           System.out.println("fin client.");
         try {
@@ -81,6 +81,19 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    public String demandeConnexion(String req) {
+        String retourCo;
+        connexion(50005);
+        emission(req);
+        retourCo = reception();
+        deconnexion();
+        return retourCo;
+
+    }
+    
+    
     
     public String getNom() {
         return nom;

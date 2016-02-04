@@ -1497,11 +1497,11 @@ public class Fenetre extends javax.swing.JFrame {
         // TODO add your handling code here:
         construire_entete(0);
         //javax.swing.JOptionPane.showMessageDialog(null, generer_requete_deconnexion());
-        c.connexion(50003);
-        c.emission("HELLO#8#9747");
-        c.reception();
-        c.emission("RECHERCHER#8#NULL#NULL#NULL#NULL#Bon");
-        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+//        c.connexion(50003);
+  //      c.emission("HELLO#8#9747");
+    //    c.reception();
+      //  c.emission("RECHERCHER#8#NULL#NULL#NULL#NULL#Bon");
+//        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
         
     }//GEN-LAST:event_click_deconnexion
 
@@ -1514,29 +1514,27 @@ public class Fenetre extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
         else{
-            c.connexion(50005);
-            c.emission(generer_requete_inscription());
-            javax.swing.JOptionPane.showMessageDialog(null,c.reception());
-            c.deconnexion();
+            c.demandeConnexion(generer_requete_inscription());
+            // javax.swing.JOptionPane.showMessageDialog(null,);
         }
     }//GEN-LAST:event_click_inscription
 
     private void click_connexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion
         // TODO add your handling code here:
-        c.connexion(50001);
-        c.emission(generer_requete_connexion());
-        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
-        c.deconnexion();
+        //c.connexion(50001);
+        //c.emission(generer_requete_connexion());
+        //javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+        //c.deconnexion();
         
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
         // TODO add your handling code here:
-        c.connexion(50003);
-        c.emission("HELLO#8#9747");
-        c.reception();
-        c.emission(generer_add_diplome());
-        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+        //c.connexion(50003);
+        //c.emission("HELLO#8#9747");
+        //c.reception();
+        //c.emission(generer_add_diplome());
+        //javax.swing.JOptionPane.showMessageDialog(null,c.reception());
     }//GEN-LAST:event_click_add_diplome
 
     private void click_nom_rech(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_nom_rech
