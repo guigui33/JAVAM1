@@ -862,7 +862,7 @@ switch (verif){
                 //bdd.supprimerDiplome(1,"fr");
                 test=bdd.connexionClient("abc", "123456");
                 //test=bdd.visiterProfil(1,1);
-                //test=bdd.recherche(0, "NULL", "NULL", "NULL", "Jeux Video", niveau.NULL);
+                test=bdd.recherche(8,"Testconnexion", "NULL", "NULL", "NULL", niveau.NULL);
                 System.out.println(test);
         }
 }

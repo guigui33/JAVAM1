@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class Client {
     private Socket socket;
-    private int id_user = 0;
+    private int id_user = 8;
     private int num_session = 0;
     private String nom;
     private String prenom;
