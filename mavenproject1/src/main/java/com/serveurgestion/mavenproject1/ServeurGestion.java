@@ -29,8 +29,7 @@ public class ServeurGestion {
     }
    
     public void fonctionnementService(){
-       while(true){
-            
+       while(true){            
            try {
                System.out.println("attente client...");
                service=ecoute.accept();

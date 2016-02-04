@@ -5,8 +5,6 @@
 */
 package com.serveurConnexion.mavenproject1;
 
-import java.util.HashMap;
-
 /**
  *
  * @author guigui
