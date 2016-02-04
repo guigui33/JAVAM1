@@ -440,7 +440,7 @@ public class Bdd {
             }
             whereDiplome += " u.Id IN (SELECT IdUtilisateur FROM Diplomes WHERE Diplome LIKE '" + diplome + "' ";
         }
-
+        
         if (n != niveau.NULL && !matiere.equals("NULL")) {
             verif = 1;
         } else if (n != niveau.NULL) {
@@ -451,6 +451,24 @@ public class Bdd {
 
         try {
             st = co.createStatement();
+            if(nom.equals("NULL") && prenom.equals("NULL") && matiere.equals("NULL") && diplome.equals("NULL") && n== Bdd.niveau.NULL){
+                    
+                    requeteFINAL="SELECT `Id`,`Nom`,`Prenom` FROM `Utilisateurs` ORDER BY Id DESC LIMIT 5";
+                    r1 = st.executeQuery(requeteFINAL);
+                    while (r1.next()) {
+                            if (r1.isLast()) {
+                                idRetour = r1.getInt("Id");
+                                nomRetour = r1.getString("Nom");
+                                prenomRetour = r1.getString("Prenom");
+                                retour += idRetour + "#" + nomRetour + "#" + prenomRetour;
+                            } else {
+                                idRetour = r1.getInt("Id");
+                                nomRetour = r1.getString("Nom");
+                                prenomRetour = r1.getString("Prenom");
+                                retour += idRetour + "#" + nomRetour + "#" + prenomRetour + "$";
+                            }
+                        }return retour;
+                    }
             switch (util) {
 
                 case "Utilisateur":
@@ -860,6 +878,8 @@ public class Bdd {
         }
     }
 
+    
+    
     public static void main(String[] args) {
         String test;
         Bdd bdd = new Bdd();
@@ -875,7 +895,7 @@ public class Bdd {
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
         //test=bdd.visiterProfil(1,1);
-        //test=bdd.recherche(1, "NULL", "NULL", "NULL", "Okok", niveau.NULL);
+        //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         //System.out.println(test);
     }
 }
