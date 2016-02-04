@@ -19,12 +19,12 @@ public class ServeurConnexion {
     les clients connectés sont enregistrés dans cette variable
     identifiantBDD est la clé, le numero de session
     */
-    private final HashMap <Integer,Integer> clients;
+    private final Clients clients;
     
     public ServeurConnexion(int portClient,int portServeur){
         this.portClient=portClient;
         this.portServeur=portServeur;
-        this.clients=new HashMap<>();
+        this.clients=new Clients();
     }
     
     public void fonctionnementService(){

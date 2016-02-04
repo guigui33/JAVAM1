@@ -8,12 +8,8 @@ package com.serveurConnexion.mavenproject1;
 import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.GestionErreurs;
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,9 +23,9 @@ class TraitementClient extends Thread{
     private String demandeClient;
     private String retourServeur;
     private final ServicePostal servicePostal;
-    HashMap <Integer,Integer> clients;
+    private final Clients clients;
     
-    public TraitementClient(Socket service,HashMap <Integer,Integer> clients) {
+    public TraitementClient(Socket service,Clients clients) {
         this.connexionCourante=service;
         this.clients=clients;
         this.servicePostal=new ServicePostal(service);
@@ -45,7 +41,7 @@ class TraitementClient extends Thread{
     }
         
     private Integer generateurNumSession(){
-        Integer numSession=0;
+        Integer numSession;
         int haut,bas;
         haut=99999;
         bas=1;
@@ -55,12 +51,8 @@ class TraitementClient extends Thread{
         return numSession;
     }
     
-    private synchronized void ajouterClient(Integer idClient,Integer numSession){
-        clients.put(idClient, numSession);
-    }
-    
     private String connexion(String[] demande){
-        String retour=null;
+        String retour;
         Bdd bdd=new Bdd();
                 
         if(bdd.connexion()){
@@ -69,9 +61,20 @@ class TraitementClient extends Thread{
                 String []decoupe=retour.split("#");
                 Integer idClient=Integer.parseInt(decoupe[1]);
                 Integer numSession=generateurNumSession();
-                if(clients.containsKey(idClient)) clients.remove(idClient);
                 
-                clients.put(idClient,numSession);
+                if(clients.verification(idClient)) {
+                    try {                
+                        clients.supprimerClient(idClient);
+                    } catch (InterruptedException ex) {
+                        return "ERROR#erreur Serveur :( !";
+                    }
+                }
+                
+                try {
+                    clients.ajouterClient(idClient,numSession);
+                } catch (InterruptedException ex) {
+                    return "ERROR#erreur Serveur :( !";
+                }
                 retour+="#"+numSession;
                 return retour;
             }

@@ -5,54 +5,73 @@
  */
 package com.serveurConnexion.mavenproject1;
 
-import java.io.IOException;
 import java.util.HashMap;
+
 
 /**
  *
  * @author guigui
  */
 public class Clients {
-    private final HashMap <Integer,Integer> clients;
-    private int requeteVerifConnexion=0;
-    
-    public Clients(){
-        this.clients=new HashMap<Integer,Integer>();
+
+    private final HashMap<Integer, Integer> clients;
+    private int requeteVerifConnexion = 0;
+
+    public Clients() {
+        this.clients = new HashMap<Integer, Integer>();
     }
-    
-    public synchronized void debutVerification(){
+
+    public synchronized void debutVerification() {
         requeteVerifConnexion++;
         notifyAll();
     }
-    
-    public synchronized void finVerification(){
+
+    public synchronized void finVerification() {
         requeteVerifConnexion--;
         notifyAll();
     }
-    
-    public synchronized void supprimerClient(int idClient) throws InterruptedException{
-        while(requeteVerifConnexion>0) wait();
+
+    public synchronized void supprimerClient(int idClient) throws InterruptedException {
+        while (requeteVerifConnexion > 0) {
+            wait();
+        }
         clients.remove(idClient);
         notifyAll();
     }
-    
-    public synchronized void ajouterClient(int idClient,int numSession) throws InterruptedException{
-        while(requeteVerifConnexion>0) wait();
+
+    public synchronized void ajouterClient(int idClient, int numSession) throws InterruptedException {
+        while (requeteVerifConnexion > 0) {
+            wait();
+        }
         clients.put(idClient, numSession);
         notifyAll();
     }
     
-    public boolean verification(int idClient,int numSession){        
-        if(clients.containsKey(idClient)){
-          return numSession==clients.get(idClient);
-        }
-        else {
-            return false;
-        }
+    public int getNumSession(int idClient){
+        int numS;
+        debutVerification();
+        numS=clients.get(idClient);
+        finVerification();
+        return numS;
     }
     
-    public void run(){
-       Clients c=new Clients();
-       
+    public boolean verification(int idClient){
+        boolean b;
+        debutVerification();
+        b=clients.containsKey(idClient);
+        finVerification();
+        return b;
+    }
+    
+    public boolean verification(int idClient, int numSession) {
+        boolean b;
+        debutVerification();
+        if (clients.containsKey(idClient)) {
+            b=(numSession == clients.get(idClient));
+        } else {
+            b=false;
+        }
+        finVerification();
+        return b;
     }
 }

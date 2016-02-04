@@ -8,7 +8,6 @@ package com.serveurConnexion.mavenproject1;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,9 +20,9 @@ public class AccueilClientCo extends Thread {
     private Socket service;
     private ServerSocket ecoute;
     
-    private final HashMap <Integer,Integer> clients;
+    private final Clients clients;
     
-    AccueilClientCo(int portClient,HashMap <Integer,Integer> clients) {
+    AccueilClientCo(int portClient,Clients clients) {
          try {
              ecoute=new ServerSocket(portClient);
          } catch (IOException ex) {
