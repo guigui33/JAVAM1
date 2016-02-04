@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 class AccueilServeurCo extends Thread{
     private Socket service;
     private ServerSocket ecoute;
-    private final HashMap <Integer,Integer> clients;
+    private final Clients clients;
     
-    public AccueilServeurCo(int portServeur,HashMap <Integer,Integer> clients) {
+    public AccueilServeurCo(int portServeur,Clients clients) {
         try {
             ecoute=new ServerSocket(portServeur);
         } catch (IOException ex) {
