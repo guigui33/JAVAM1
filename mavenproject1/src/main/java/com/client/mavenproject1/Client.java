@@ -56,7 +56,7 @@ public class Client {
     
     private void connexion(int port){
         try {
-            this.socket = new Socket("192.168.1.2", port);
+            this.socket = new Socket("localhost", port);
         } catch (IOException ex) {
             System.out.print("erreur de connexion. Serveur non accessible.");
             quitter=true;
@@ -83,13 +83,13 @@ public class Client {
     }
     
     
-    public String demandeConnexion(String req) {
-        String retourCo;
-        connexion(50005);
+    public String envoyerRequete(int Port, String req) {
+        String retourReq;
+        connexion(Port);
         emission(req);
-        retourCo = reception();
+        retourReq = reception();
         deconnexion();
-        return retourCo;
+        return retourReq;
 
     }
     
@@ -131,8 +131,38 @@ public class Client {
         return num_session;
     }
 
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
+    }
 
- 
+    public void setNum_session(int num_session) {
+        this.num_session = num_session;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setAdresse_mail(String adresse_mail) {
+        this.adresse_mail = adresse_mail;
+    }
+
+    public void setMdp(String mdp) {
+        this.mdp = mdp;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setDateNaiss(String DateNaiss) {
+        this.DateNaiss = DateNaiss;
+    }
+
     
 
 }

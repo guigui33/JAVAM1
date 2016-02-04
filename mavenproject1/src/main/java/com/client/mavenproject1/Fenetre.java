@@ -29,7 +29,7 @@ public class Fenetre extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
-        construire_entete(1);
+        construire_entete(0);
     }
 
     /**
@@ -1507,6 +1507,7 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_inscription(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_inscription
         // TODO add your handling code here:
+        String retour;
         if(!verifier_motdepasse(jTextField_mdp_inscr.getText())){
             javax.swing.JOptionPane.showMessageDialog(null,"Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
@@ -1514,17 +1515,18 @@ public class Fenetre extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
         else{
-            c.demandeConnexion(generer_requete_inscription());
-            // javax.swing.JOptionPane.showMessageDialog(null,);
+            retour = c.envoyerRequete(50005,generer_requete_inscription());
+            
+            javax.swing.JOptionPane.showMessageDialog(null,retour);
+
         }
     }//GEN-LAST:event_click_inscription
 
     private void click_connexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion
         // TODO add your handling code here:
-        //c.connexion(50001);
-        //c.emission(generer_requete_connexion());
-        //javax.swing.JOptionPane.showMessageDialog(null,c.reception());
-        //c.deconnexion();
+        String retour;
+        retour = c.envoyerRequete(50001, generer_requete_connexion());
+        javax.swing.JOptionPane.showMessageDialog(null,decouperConnexion(retour));
         
     }//GEN-LAST:event_click_connexion
 
@@ -1899,6 +1901,23 @@ public class Fenetre extends javax.swing.JFrame {
         return req_delete_comp;
     }
     
-    
+    private String decouperConnexion(String req){
+        String [] decoupageRequete;
+        String retour = "";
+        decoupageRequete = req.split("#");
+        switch(decoupageRequete[0]){
+            case "OK":
+                c.setId_user(Integer.parseInt(decoupageRequete[1]));
+                c.setNum_session(Integer.parseInt(decoupageRequete[3]));
+                retour = "Bienvenue " + decoupageRequete[2] + " !" ;
+                construire_entete(1);
+                CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+                cardLayout.show(jPanel_Principal, "Panel_Compte");
+                break;
+            case "ERROR":
+                retour = decoupageRequete[1];
+        }
+        return retour;
+    }
     
 }
