@@ -30,6 +30,7 @@ public class Fenetre extends javax.swing.JFrame {
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
         construire_entete(0);
+        rechercherDixAcceuil();
     }
 
     /**
@@ -1928,7 +1929,7 @@ public class Fenetre extends javax.swing.JFrame {
     private void rechercherDixAcceuil(){
         String retour;
         c.envoyerHello(0,0);
-        retour = c.envoyerRequete(50003, "RECHERCHER#8#NULL#NULL#NULL#NULL#NULL");
+        retour = c.envoyerRequete(50003, "RECHERCHER#0#NULL#NULL#NULL#NULL#NULL");
         javax.swing.JOptionPane.showMessageDialog(null,retour);
 
     }
