@@ -20,7 +20,7 @@ public class AccueilClientCo extends Thread {
     
     private Socket service;
     private ServerSocket ecoute;
-   
+    
     private final HashMap <Integer,Integer> clients;
     
     AccueilClientCo(int portClient,HashMap <Integer,Integer> clients) {

@@ -20,6 +20,7 @@ public class ServeurConnexion {
     identifiantBDD est la clé, le numero de session
     */
     private final HashMap <Integer,Integer> clients;
+    private static final boolean occupe=false;
     
     public ServeurConnexion(int portClient,int portServeur){
         this.portClient=portClient;
