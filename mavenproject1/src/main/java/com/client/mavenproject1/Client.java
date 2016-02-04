@@ -93,6 +93,11 @@ public class Client {
 
     }
     
+    public void envoyerHello(int id, int num){
+        connexion(50003);
+        emission("HELLO#" + id + "#" + num);
+    }
+    
     
     
     public String getNom() {

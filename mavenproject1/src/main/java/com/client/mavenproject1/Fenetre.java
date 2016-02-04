@@ -1516,9 +1516,7 @@ public class Fenetre extends javax.swing.JFrame {
         }
         else{
             retour = c.envoyerRequete(50005,generer_requete_inscription());
-            
-            javax.swing.JOptionPane.showMessageDialog(null,retour);
-
+            javax.swing.JOptionPane.showMessageDialog(null,decouperInscription(retour));
         }
     }//GEN-LAST:event_click_inscription
 
@@ -1563,7 +1561,8 @@ public class Fenetre extends javax.swing.JFrame {
     private void click_recherche(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_recherche
         // TODO add your handling code here:
         if(jTextField_Nom_Rechercher.getText().matches("Nom") && jTextField_Prenom_Rechercher.getText().matches("Prenom") && jTextField_Competence_Rechercher.getText().matches("Competence")){
-            javax.swing.JOptionPane.showMessageDialog(null,"Entrer au moins un champ pour la recherche", "Erreur dans la recherche", javax.swing.JOptionPane.WARNING_MESSAGE);
+            //c.envoyerHello(0,0);
+            //c.envoyerRequete(ABORT, req)
         }
         else {
            javax.swing.JOptionPane.showMessageDialog(null,generer_req_recherche());   
@@ -1918,6 +1917,20 @@ public class Fenetre extends javax.swing.JFrame {
                 retour = decoupageRequete[1];
         }
         return retour;
+    }
+    
+    private String decouperInscription(String req){
+        String [] decoupageRequete;
+        decoupageRequete = req.split("#");
+        return decoupageRequete[1];
+    }
+    
+    private void rechercherDixAcceuil(){
+        String retour;
+        c.envoyerHello(0,0);
+        retour = c.envoyerRequete(50003, "RECHERCHER#8#NULL#NULL#NULL#NULL#NULL");
+        javax.swing.JOptionPane.showMessageDialog(null,retour);
+
     }
     
 }
