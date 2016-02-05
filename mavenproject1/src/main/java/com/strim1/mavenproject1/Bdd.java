@@ -102,7 +102,6 @@ public class Bdd {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
-        return "ERROR";
     }
     //Verification des entrées:
 
