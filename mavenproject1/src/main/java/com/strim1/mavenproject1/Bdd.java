@@ -369,7 +369,7 @@ public class Bdd {
             st = co.createStatement();
             String sql = "UPDATE Diplomes SET  VisibleDip='" + v + "' WHERE IdUtilisateur=" + id + " AND Diplome='" + diplome + "'";
             st.executeUpdate(sql);
-            return new GestionRetourBDD().valeurRetour("Modif competence ok");
+            return new GestionRetourBDD().valeurRetour("Modif diplome ok");
         } catch (SQLException ex) {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return new GestionRetourBDD().valeurRetour("");
