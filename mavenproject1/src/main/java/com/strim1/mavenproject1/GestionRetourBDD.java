@@ -26,6 +26,8 @@ public class GestionRetourBDD {
 			return ("OK#Votre inscription est un succes ! Bienvenue!");
 		case "Erreur BDD":
 			return ("ERROR#Erreur BDD");
+		case "Erreur creation":
+			return ("ERROR#CreationUtilisateur");
 		case "Ajout competence ok":
 			return ("OK#La competence a bien ete ajoute.");
                 case "Doublon competence":
