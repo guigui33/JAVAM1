@@ -8,6 +8,9 @@ package com.strim1.mavenproject1;
 /**
  *
  * @author TomGui
+ * 
+ * Description: Class gerant les retours des fonctinos de la classe Bdd.
+ * Envoei des retours sous la forme : OK# ou ERROR#
  */
 public class GestionRetourBDD {
     
