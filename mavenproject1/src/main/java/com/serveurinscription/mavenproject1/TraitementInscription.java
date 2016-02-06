@@ -6,7 +6,6 @@
 package com.serveurinscription.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
-import com.strim1.mavenproject1.GestionErreurs;
 import com.strim1.mavenproject1.ServicePostal;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -50,7 +49,7 @@ public class TraitementInscription extends Thread{
         switch(decoupageRequete[0]){
             case "INSCRIPTION":
                 if(decoupageRequete.length!=7){
-                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                    return "ERROR#inscription, requète incomplète.";
                 }
                 return inscription(decoupageRequete);
             default:

@@ -54,4 +54,17 @@ public class ServicePostal {
             Logger.getLogger(ServicePostal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     /**
+     * methode permetant de fermer le socket de service entre le client et le serveur
+     */ 
+    public void deconnexion() {
+        System.err.println("deconnexion Serveur : " + connexionCourante);
+                  try {
+                connexionCourante.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ServicePostal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+       
+    }
 }
