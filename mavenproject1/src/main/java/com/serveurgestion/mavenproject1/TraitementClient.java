@@ -1,66 +1,64 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package com.serveurgestion.mavenproject1;
 
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
- *
- * @author guigui
+ * Classe permettant le dialogue entre le serveur et le client
+ * definit le socket de service, les demandes et les retours serveur et clients
  */
 public class TraitementClient extends Thread {
-    private final Socket connexionCourante;
-    private boolean fermeture;
+    /**
+     * classe qui gere la reception, l'emission et le deconnexion
+     * @see ServicePostal
+     */
     private final ServicePostal servicePostal;
+    /**
+     * la demande du client vers le serveur gestion
+     */
     private String demandeClient;
+    /**
+     * le reponse du serveur au client
+     */
     private String retourServeur;
-    
+    /**
+     * le constructeur créé le service postal qui va gérer le dialogue entre le serveur et le client
+     * à partir d'un socket de service
+     * @param connexionCourante le socket de service
+     */
     public TraitementClient(Socket connexionCourante) {
-        this.connexionCourante = connexionCourante;
-        this.fermeture = false;
         this.servicePostal=new ServicePostal(connexionCourante);
     }
     
-    private void deconnexion(){
-        System.err.println("deconnexion client : "+ connexionCourante);
-        try {       
-            connexionCourante.close();            
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-        
     @Override
     public void run(){
+        boolean fermeture=false;
+        //classe qui va traiter la demande du client
         TraitementDemande traitementDemande=new TraitementDemande();
-        demandeClient=servicePostal.reception();
+        demandeClient=servicePostal.reception();//receptionne la première requète du client
+        
+        //verification si la première requete est correcte
         if(!traitementDemande.verificationConnexion(demandeClient)){
+            //si la première requète est incorrecte on ferme la connexion
             retourServeur="ERROR";
-            fermeture=true;            
-        } 
+            fermeture=true;
+        }
         else {
-            retourServeur="OK";
+            retourServeur="OK";//si non on informe le client que la connexion est verifiée
         }
         servicePostal.emission(retourServeur);
         while(!fermeture){
-            demandeClient=servicePostal.reception();
-            if(demandeClient!=null){                
-                retourServeur=traitementDemande.requete(demandeClient);
+            demandeClient=servicePostal.reception();//on attend la demande du client
+            if(demandeClient!=null){
+                retourServeur=traitementDemande.requete(demandeClient);//on traite sa demande
                 if(retourServeur!=null)
-                    servicePostal.emission(retourServeur);
+                    servicePostal.emission(retourServeur);//on retourne la reponse du serveur
                 else fermeture=true;
             }
             else fermeture=true;
         }
         System.out.println("demande de deconnexion client.");
-        deconnexion();
+        servicePostal.deconnexion();//on ferme le socket d'ecoute
     }
 }
