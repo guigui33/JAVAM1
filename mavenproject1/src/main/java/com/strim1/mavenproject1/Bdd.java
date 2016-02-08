@@ -102,6 +102,7 @@ public class Bdd {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
+        return "ERROR#Informations incorrecte";
     }
     //Verification des entrées:
 
@@ -228,7 +229,7 @@ public class Bdd {
                 }
                 return true;
         } catch (SQLException e) {
-            return return new GestionRetourBDD().valeurRetour("");
+            return true;
         }
     }
 
@@ -336,7 +337,7 @@ public class Bdd {
                     st.executeUpdate(sql);
                     return new GestionRetourBDD().valeurRetour("Information modif ok");
                 } else {
-                    return new GestionRetourBDD().valeurRetour("Mail double");
+                    return new GestionRetourBDD().valeurRetour("Mail double")+addrmail;
                 }
             } else {
                 String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "'WHERE Id=" + id + "";
@@ -929,17 +930,18 @@ public class Bdd {
         Bdd bdd = new Bdd();
         bdd.connexion();
                 //bdd.verifierMail("grosse@bite.xxx");
-        //bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
+        //test=bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        //bdd.modifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
+        test=bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive);
+        //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
         //test=bdd.visiterProfil(1,1);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
-        //System.out.println(test);
+        System.out.println(test);
     }
 }
