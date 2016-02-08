@@ -874,7 +874,8 @@ public class Bdd {
                         while (resultatInfo.next()) {
                             nom = resultatInfo.getString("Nom");
                             prenom = resultatInfo.getString("Prenom");
-                            retourInfo = idvisite + "#" + nom + "#" + prenom + "#" + "END_I#";
+                            mail= resultatInfo.getString("AddrMail");
+                            retourInfo = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + "END_I#";
                         }
                     } else {
                         while (resultatInfo.next()) {
@@ -911,16 +912,17 @@ public class Bdd {
                     if (vr == true) {
 
                         while (resultatDip.next()) {
-                            Diplome = resultatDip.getString("Diplome");
-                            annee = resultatDip.getDate("AnneeObt");
-                            eta = resultatDip.getString("Etablissement");
-                            retourDip = retourDip + Diplome + "#" + eta + "#" + annee + "$";
                             if (resultatDip.isLast()) {
                                 Diplome = resultatDip.getString("Diplome");
                                 annee = resultatDip.getDate("AnneeObt");
                                 eta = resultatDip.getString("Etablissement");
                                 retourDip = retourDip + Diplome + "#" + eta + "#" + annee + "#END_D";
                             }
+                            Diplome = resultatDip.getString("Diplome");
+                            annee = resultatDip.getDate("AnneeObt");
+                            eta = resultatDip.getString("Etablissement");
+                            retourDip = retourDip + Diplome + "#" + eta + "#" + annee + "$";
+                            
                         }
 
                     } else {
@@ -954,7 +956,7 @@ public class Bdd {
         //bdd.supprimerCompetence(1, "Rugby");
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
-        test=bdd.visiterProfil(9,9);
+        test=bdd.visiterProfil(0,9);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         System.out.println(test);
     }
