@@ -403,7 +403,7 @@ public class Bdd {
     
     /*
     Méthode recherche: 
-        Cette méthode est complexe, c'est a dire que en fonction des paramettres recu, on doit envoyer une requete spécifique a la BDD.
+        Cette méthode est complexe, c'est à dire qu'en fonction des parametres recus, on doit envoyer une requete spécifique à la BDD.
         On test d'abord les valeurs des champs, si NULL alors rien si !NULL alors on insere le parametre dans la requete
         Il faut concatener les requetes en fonctions des parametres fournis afin d'obtenir uen requete MySQL valide.
     */
