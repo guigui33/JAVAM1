@@ -818,11 +818,6 @@
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
-                          <Component id="jLabel_visi_info" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -833,9 +828,7 @@
                               <Component id="jLabel_naissance" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel_mail" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="jLabel_visi_info" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="jLabel_tel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="35" max="32767" attributes="0"/>
                       </Group>
@@ -856,11 +849,6 @@
                 <Component class="javax.swing.JLabel" name="jLabel_naissance">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ann&#xe9;e de Naissance : "/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel_visi_info">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="L&apos;utilisateur ne souhaite pas partag&#xe9; ses informations personnelles"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1756,7 +1744,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
                     <StringItem index="0" value="Prive"/>
-                    <StringItem index="1" value="UtilsateurCo"/>
+                    <StringItem index="1" value="UtilisateurCo"/>
                     <StringItem index="2" value="Public"/>
                   </StringArray>
                 </Property>

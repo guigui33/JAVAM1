@@ -95,7 +95,6 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_mail = new javax.swing.JLabel();
         jLabel_tel = new javax.swing.JLabel();
         jLabel_naissance = new javax.swing.JLabel();
-        jLabel_visi_info = new javax.swing.JLabel();
         jPanel_Diplomes = new javax.swing.JPanel();
         jLabel_Diplome_User = new javax.swing.JLabel();
         jPanel_Compétences = new javax.swing.JPanel();
@@ -557,8 +556,6 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_naissance.setText("Année de Naissance : ");
 
-        jLabel_visi_info.setText("L'utilisateur ne souhaite pas partagé ses informations personnelles");
-
         javax.swing.GroupLayout jPanel_CoordonneesLayout = new javax.swing.GroupLayout(jPanel_Coordonnees);
         jPanel_Coordonnees.setLayout(jPanel_CoordonneesLayout);
         jPanel_CoordonneesLayout.setHorizontalGroup(
@@ -574,10 +571,6 @@ public class Fenetre extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                         .addComponent(jLabel_naissance)
                         .addGap(188, 188, 188))))
-            .addGroup(jPanel_CoordonneesLayout.createSequentialGroup()
-                .addGap(193, 193, 193)
-                .addComponent(jLabel_visi_info)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_CoordonneesLayout.setVerticalGroup(
             jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,9 +579,7 @@ public class Fenetre extends javax.swing.JFrame {
                 .addGroup(jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_naissance, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel_mail))
-                .addGap(23, 23, 23)
-                .addComponent(jLabel_visi_info)
-                .addGap(13, 13, 13)
+                .addGap(50, 50, 50)
                 .addComponent(jLabel_tel)
                 .addContainerGap(35, Short.MAX_VALUE))
         );
@@ -1028,7 +1019,7 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel9.setText("Visibiltée :");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilsateurCo", "Public" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilisateurCo", "Public" }));
 
         javax.swing.GroupLayout Panel_Modifier_DiplomeLayout = new javax.swing.GroupLayout(Panel_Modifier_Diplome);
         Panel_Modifier_Diplome.setLayout(Panel_Modifier_DiplomeLayout);
@@ -1697,7 +1688,6 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_supp_dip2;
     private javax.swing.JLabel jLabel_tel;
     private javax.swing.JLabel jLabel_tel1;
-    private javax.swing.JLabel jLabel_visi_info;
     private javax.swing.JLabel jLabel_visi_insc;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
