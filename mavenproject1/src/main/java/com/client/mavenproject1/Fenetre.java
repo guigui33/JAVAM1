@@ -29,7 +29,8 @@ public class Fenetre extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
-        construire_entete(1);
+        construire_entete(0);
+        afficherRechercherAcceuil();
     }
 
     /**
@@ -92,15 +93,12 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel_Coordonnees = new javax.swing.JPanel();
         jLabel_mail = new javax.swing.JLabel();
-        jLabel_adresse = new javax.swing.JLabel();
         jLabel_tel = new javax.swing.JLabel();
         jLabel_naissance = new javax.swing.JLabel();
-        jLabel1_coordonnees_visible = new javax.swing.JLabel();
+        jLabel_visi_info = new javax.swing.JLabel();
         jPanel_Diplomes = new javax.swing.JPanel();
-        jLabel1_diplome_visible = new javax.swing.JLabel();
         jLabel_Diplome_User = new javax.swing.JLabel();
         jPanel_Compétences = new javax.swing.JPanel();
-        jLabel1_competences_visible = new javax.swing.JLabel();
         jLabel_Competence_User = new javax.swing.JLabel();
         Panel_Compte = new javax.swing.JPanel();
         jLabel_Nom_prenom1 = new javax.swing.JLabel();
@@ -112,11 +110,9 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel1_coordonnees_visible1 = new javax.swing.JLabel();
         jLabel_modier_coordonnees = new javax.swing.JLabel();
         jPanel_Diplomes1 = new javax.swing.JPanel();
-        jLabel1_diplome_visible1 = new javax.swing.JLabel();
         jLabel_modier_diplome = new javax.swing.JLabel();
         jLabel_mesDiplomes = new javax.swing.JLabel();
         jPanel_Compétences1 = new javax.swing.JPanel();
-        jLabel1_competences_visible1 = new javax.swing.JLabel();
         jLabel_modier_competence = new javax.swing.JLabel();
         jLabel_mesCompetences = new javax.swing.JLabel();
         Panel_Modifier_Coordonnees = new javax.swing.JPanel();
@@ -152,6 +148,8 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTextField_etablissement_diplome = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jComboBox4 = new javax.swing.JComboBox<>();
         Panel_Modifier_Competences = new javax.swing.JPanel();
         jLabel_modif_Titre_Competence = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
@@ -167,6 +165,8 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_supp_competence = new javax.swing.JLabel();
         jButton_supp_comp = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Annuaire des étudiants");
@@ -301,7 +301,7 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jComboBox_Niveau_Rechercher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A améliorer", "Bon", "Très Bon", "Dieu" }));
+        jComboBox_Niveau_Rechercher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moyen", "Bon", "TresBon" }));
         jComboBox_Niveau_Rechercher.setEnabled(false);
 
         jButton_Rechercher.setText("Rechercher");
@@ -362,7 +362,7 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_visi_insc.setText("Visibilité des infos perso :");
 
-        jComboBox_visi_inscr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Privée", "Public", "Utilisateur Connecté" }));
+        jComboBox_visi_inscr.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilisateurCo", "Public" }));
 
         jLabel_confirm_mdp_inscr.setText("Confirmer le mot de passe :");
 
@@ -506,6 +506,11 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel3.setText("Sélectionner une entrée dans la liste puis cliquer sur le bouton \"Visiter\" pour visiter son profil");
 
         jButton1.setText("Visiter");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                click_visiter(evt);
+            }
+        });
 
         javax.swing.GroupLayout Panel_RechercheLayout = new javax.swing.GroupLayout(Panel_Recherche);
         Panel_Recherche.setLayout(Panel_RechercheLayout);
@@ -548,14 +553,11 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_mail.setText("Adresse mail : ");
 
-        jLabel_adresse.setText("Adresse :");
-
         jLabel_tel.setText("Numéro de Téléphone : ");
 
         jLabel_naissance.setText("Année de Naissance : ");
 
-        jLabel1_coordonnees_visible.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_coordonnees_visible.setText("(Cette section est visible par : )");
+        jLabel_visi_info.setText("L'utilisateur ne souhaite pas partagé ses informations personnelles");
 
         javax.swing.GroupLayout jPanel_CoordonneesLayout = new javax.swing.GroupLayout(jPanel_Coordonnees);
         jPanel_Coordonnees.setLayout(jPanel_CoordonneesLayout);
@@ -565,19 +567,17 @@ public class Fenetre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_CoordonneesLayout.createSequentialGroup()
-                        .addGroup(jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_adresse)
-                            .addComponent(jLabel_tel))
+                        .addComponent(jLabel_tel)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel_CoordonneesLayout.createSequentialGroup()
                         .addComponent(jLabel_mail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                         .addComponent(jLabel_naissance)
                         .addGap(188, 188, 188))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_CoordonneesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1_coordonnees_visible)
-                .addGap(99, 99, 99))
+            .addGroup(jPanel_CoordonneesLayout.createSequentialGroup()
+                .addGap(193, 193, 193)
+                .addComponent(jLabel_visi_info)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_CoordonneesLayout.setVerticalGroup(
             jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -586,71 +586,54 @@ public class Fenetre extends javax.swing.JFrame {
                 .addGroup(jPanel_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_naissance, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel_mail))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel_adresse)
-                .addGap(18, 18, 18)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel_visi_info)
+                .addGap(13, 13, 13)
                 .addComponent(jLabel_tel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jLabel1_coordonnees_visible, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jPanel_Diplomes.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), " Mes diplômes   ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
 
-        jLabel1_diplome_visible.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_diplome_visible.setText("(Cette section est visible par : )");
-
-        jLabel_Diplome_User.setText("jLabel7");
+        jLabel_Diplome_User.setText("Aucuns diplômes ou l'utilisateur ne souhaite pas les afficher");
 
         javax.swing.GroupLayout jPanel_DiplomesLayout = new javax.swing.GroupLayout(jPanel_Diplomes);
         jPanel_Diplomes.setLayout(jPanel_DiplomesLayout);
         jPanel_DiplomesLayout.setHorizontalGroup(
             jPanel_DiplomesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_DiplomesLayout.createSequentialGroup()
-                .addContainerGap(186, Short.MAX_VALUE)
-                .addComponent(jLabel1_diplome_visible)
-                .addGap(77, 77, 77))
             .addGroup(jPanel_DiplomesLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel_Diplome_User)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel_DiplomesLayout.setVerticalGroup(
             jPanel_DiplomesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_DiplomesLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel_Diplome_User)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
-                .addComponent(jLabel1_diplome_visible, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         jPanel_Compétences.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), " Mes Compétences", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
         jPanel_Compétences.setPreferredSize(new java.awt.Dimension(372, 132));
 
-        jLabel1_competences_visible.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_competences_visible.setText("(Cette section est visible par : )");
-
-        jLabel_Competence_User.setText("jLabel8");
+        jLabel_Competence_User.setText("Aucunes compéte,ces ou l'utilisateur ne souhaite pas les afficher");
 
         javax.swing.GroupLayout jPanel_CompétencesLayout = new javax.swing.GroupLayout(jPanel_Compétences);
         jPanel_Compétences.setLayout(jPanel_CompétencesLayout);
         jPanel_CompétencesLayout.setHorizontalGroup(
             jPanel_CompétencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_CompétencesLayout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
-                .addComponent(jLabel1_competences_visible)
-                .addGap(85, 85, 85))
             .addGroup(jPanel_CompétencesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel_Competence_User)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         jPanel_CompétencesLayout.setVerticalGroup(
             jPanel_CompétencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_CompétencesLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel_Competence_User)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1_competences_visible, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout Panel_UserLayout = new javax.swing.GroupLayout(Panel_User);
@@ -707,7 +690,6 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_naissance1.setText("Année de Naissance : ");
 
         jLabel1_coordonnees_visible1.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_coordonnees_visible1.setText("(Cette section est visible par : )");
 
         jLabel_modier_coordonnees.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         jLabel_modier_coordonnees.setForeground(new java.awt.Color(51, 153, 255));
@@ -760,9 +742,6 @@ public class Fenetre extends javax.swing.JFrame {
 
         jPanel_Diplomes1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), " Mes diplômes   ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
 
-        jLabel1_diplome_visible1.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_diplome_visible1.setText("(Cette section est visible par : )");
-
         jLabel_modier_diplome.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         jLabel_modier_diplome.setForeground(new java.awt.Color(51, 153, 255));
         jLabel_modier_diplome.setText("Modifier cette section");
@@ -773,7 +752,7 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jLabel_mesDiplomes.setText("jLabel7");
+        jLabel_mesDiplomes.setText("Vous n'avez saisi aucuns diplômes");
 
         javax.swing.GroupLayout jPanel_Diplomes1Layout = new javax.swing.GroupLayout(jPanel_Diplomes1);
         jPanel_Diplomes1.setLayout(jPanel_Diplomes1Layout);
@@ -784,16 +763,11 @@ public class Fenetre extends javax.swing.JFrame {
                 .addGroup(jPanel_Diplomes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Diplomes1Layout.createSequentialGroup()
                         .addComponent(jLabel_mesDiplomes)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Diplomes1Layout.createSequentialGroup()
-                        .addGap(0, 176, Short.MAX_VALUE)
-                        .addGroup(jPanel_Diplomes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Diplomes1Layout.createSequentialGroup()
-                                .addComponent(jLabel1_diplome_visible1)
-                                .addGap(77, 77, 77))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Diplomes1Layout.createSequentialGroup()
-                                .addComponent(jLabel_modier_diplome)
-                                .addContainerGap())))))
+                        .addGap(0, 269, Short.MAX_VALUE)
+                        .addComponent(jLabel_modier_diplome)))
+                .addContainerGap())
         );
         jPanel_Diplomes1Layout.setVerticalGroup(
             jPanel_Diplomes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -801,15 +775,11 @@ public class Fenetre extends javax.swing.JFrame {
                 .addComponent(jLabel_modier_diplome)
                 .addGap(16, 16, 16)
                 .addComponent(jLabel_mesDiplomes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1_diplome_visible1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         jPanel_Compétences1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), " Mes Compétences", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 2, 12))); // NOI18N
         jPanel_Compétences1.setPreferredSize(new java.awt.Dimension(372, 132));
-
-        jLabel1_competences_visible1.setFont(new java.awt.Font("Tahoma", 2, 9)); // NOI18N
-        jLabel1_competences_visible1.setText("(Cette section est visible par : )");
 
         jLabel_modier_competence.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         jLabel_modier_competence.setForeground(new java.awt.Color(51, 153, 255));
@@ -821,7 +791,7 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jLabel_mesCompetences.setText("jLabel8");
+        jLabel_mesCompetences.setText("Vous n'avez saisi aucunes compétences ");
 
         javax.swing.GroupLayout jPanel_Compétences1Layout = new javax.swing.GroupLayout(jPanel_Compétences1);
         jPanel_Compétences1.setLayout(jPanel_Compétences1Layout);
@@ -831,14 +801,9 @@ public class Fenetre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel_Compétences1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Compétences1Layout.createSequentialGroup()
-                        .addGap(0, 261, Short.MAX_VALUE)
-                        .addGroup(jPanel_Compétences1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Compétences1Layout.createSequentialGroup()
-                                .addComponent(jLabel1_competences_visible1)
-                                .addGap(85, 85, 85))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Compétences1Layout.createSequentialGroup()
-                                .addComponent(jLabel_modier_competence)
-                                .addContainerGap())))
+                        .addGap(0, 362, Short.MAX_VALUE)
+                        .addComponent(jLabel_modier_competence)
+                        .addContainerGap())
                     .addGroup(jPanel_Compétences1Layout.createSequentialGroup()
                         .addComponent(jLabel_mesCompetences)
                         .addGap(0, 0, Short.MAX_VALUE))))
@@ -849,8 +814,7 @@ public class Fenetre extends javax.swing.JFrame {
                 .addComponent(jLabel_modier_competence)
                 .addGap(17, 17, 17)
                 .addComponent(jLabel_mesCompetences)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
-                .addComponent(jLabel1_competences_visible1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout Panel_CompteLayout = new javax.swing.GroupLayout(Panel_Compte);
@@ -905,7 +869,7 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_modif_visible.setText("Section visible par :");
 
-        jComboBox1_modifier_coor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Privé", "Public", "Utilisateur Connecté" }));
+        jComboBox1_modifier_coor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilisateurCo", "Public" }));
 
         jButton_modifier_coor.setText("Modifier");
         jButton_modifier_coor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1062,12 +1026,16 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel7.setText("Etablissement :");
 
+        jLabel9.setText("Visibiltée :");
+
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilsateurCo", "Public" }));
+
         javax.swing.GroupLayout Panel_Modifier_DiplomeLayout = new javax.swing.GroupLayout(Panel_Modifier_Diplome);
         Panel_Modifier_Diplome.setLayout(Panel_Modifier_DiplomeLayout);
         Panel_Modifier_DiplomeLayout.setHorizontalGroup(
             Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Panel_Modifier_DiplomeLayout.createSequentialGroup()
-                .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel_Modifier_DiplomeLayout.createSequentialGroup()
                         .addGap(392, 392, 392)
                         .addComponent(jLabel_modif_Titre_Diplome))
@@ -1101,16 +1069,21 @@ public class Fenetre extends javax.swing.JFrame {
                         .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBox1, 0, 107, Short.MAX_VALUE)
                             .addComponent(jTextField1))
-                        .addGap(175, 175, 175)
+                        .addGap(96, 96, 96)
                         .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel_annee_dipl, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField_annee_dip, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addComponent(jTextField_etablissement_diplome))
-                        .addGap(57, 57, 57)
-                        .addComponent(jButton_ajouter_dip, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(31, 31, 31)
+                        .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField_etablissement_diplome, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(Panel_Modifier_DiplomeLayout.createSequentialGroup()
+                                .addComponent(jTextField_annee_dip, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_ajouter_dip, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         Panel_Modifier_DiplomeLayout.setVerticalGroup(
@@ -1129,7 +1102,9 @@ public class Fenetre extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel_annee_dipl)
-                                    .addComponent(jTextField_annee_dip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextField_annee_dip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9)
+                                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(Panel_Modifier_DiplomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel_spe_dip)
@@ -1172,11 +1147,16 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_comp_ajou.setText("Quelle compétence ajouter ?");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A améliorer", "Bon", "Très bon", "Dieu" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moyen", "Bon", "TresBon" }));
 
         jLabel_niveau_comp.setText("Niveau :");
 
         jButton_ajouter_comp.setText("Ajouter");
+        jButton_ajouter_comp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                click_add_competence(evt);
+            }
+        });
         jButton_ajouter_comp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ajouter_compActionPerformed(evt);
@@ -1196,6 +1176,11 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_supp_competence.setText("Sélectionner une compétence à supprimer : ");
 
         jButton_supp_comp.setText("Supprimer");
+        jButton_supp_comp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                click_delete_comp(evt);
+            }
+        });
         jButton_supp_comp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_supp_compActionPerformed(evt);
@@ -1209,6 +1194,10 @@ public class Fenetre extends javax.swing.JFrame {
                 click_retour_compte(evt);
             }
         });
+
+        jLabel8.setText("Visibilitée : ");
+
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prive", "UtilisateurCo", "Public" }));
 
         javax.swing.GroupLayout Panel_Modifier_CompetencesLayout = new javax.swing.GroupLayout(Panel_Modifier_Competences);
         Panel_Modifier_Competences.setLayout(Panel_Modifier_CompetencesLayout);
@@ -1226,15 +1215,6 @@ public class Fenetre extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(jLabel_ajout_comp))
                     .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jLabel_comp_ajou)
-                        .addGap(47, 47, 47)
-                        .addComponent(jTextField_ajout_comp, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(198, 198, 198)
-                        .addComponent(jLabel_niveau_comp, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jLabel_supp_comp))
                     .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
@@ -1250,8 +1230,24 @@ public class Fenetre extends javax.swing.JFrame {
                         .addGap(106, 106, 106)
                         .addComponent(jButton_supp_comp))
                     .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
-                        .addGap(445, 445, 445)
-                        .addComponent(jButton_ajouter_comp, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(68, 68, 68)
+                        .addGroup(Panel_Modifier_CompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_Modifier_CompetencesLayout.createSequentialGroup()
+                                .addComponent(jLabel_comp_ajou)
+                                .addGap(47, 47, 47))
+                            .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(131, 131, 131)))
+                        .addGroup(Panel_Modifier_CompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextField_ajout_comp, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(Panel_Modifier_CompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_Modifier_CompetencesLayout.createSequentialGroup()
+                                .addComponent(jLabel_niveau_comp, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton_ajouter_comp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         Panel_Modifier_CompetencesLayout.setVerticalGroup(
@@ -1267,15 +1263,18 @@ public class Fenetre extends javax.swing.JFrame {
                     .addComponent(jLabel_niveau_comp)
                     .addComponent(jTextField_ajout_comp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton_ajouter_comp)
                 .addGroup(Panel_Modifier_CompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_Modifier_CompetencesLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
                         .addComponent(jLabel_supp_competence)
                         .addGap(91, 91, 91))
                     .addGroup(Panel_Modifier_CompetencesLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
+                        .addGroup(Panel_Modifier_CompetencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton_ajouter_comp)
+                            .addComponent(jLabel8)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel_supp_comp)
@@ -1404,7 +1403,8 @@ public class Fenetre extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
         else {
-            javax.swing.JOptionPane.showMessageDialog(null,generer_modif_info());
+            javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_modif_info()));
+            construire_monCompte();
             CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
             cardLayout.show(jPanel_Principal, "Panel_Compte"); 
         }
@@ -1417,12 +1417,6 @@ public class Fenetre extends javax.swing.JFrame {
         // TODO add your handling code here:
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Modifier_Diplome");
-        DefaultListModel DLM = new DefaultListModel();
-        for (int i = 0; i < c.listeDiplome.size(); i++)
-            {
-                 DLM.addElement(c.listeDiplome.get(i)); 
-            }
-        jList1.setModel(DLM);
     }//GEN-LAST:event_click_modifier_diplome
 
     private void jButton_supp_dipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_supp_dipActionPerformed
@@ -1442,11 +1436,11 @@ public class Fenetre extends javax.swing.JFrame {
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Modifier_Competence");  
         DefaultListModel DLM = new DefaultListModel();
-        for (int i = 0; i < c.listeCompetence.size(); i++)
+/*        for (int i = 0; i < c.listeCompetence.size(); i++)
             {
                  DLM.addElement(c.listeCompetence.get(i)); 
             }
-        jList2.setModel(DLM);
+        jList2.setModel(DLM);*/
     }//GEN-LAST:event_click_modif_competence
 
     private void click_retour_compte(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_retour_compte
@@ -1460,18 +1454,23 @@ public class Fenetre extends javax.swing.JFrame {
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Compte");
         construire_monCompte();
-        construire_mesDiplomes();
-        construire_mesCompetences();
     }//GEN-LAST:event_click_compte
 
     private void click_deconnexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_deconnexion
         // TODO add your handling code here:
         construire_entete(0);
-        javax.swing.JOptionPane.showMessageDialog(null, generer_requete_deconnexion());
+        c.envoyerRequete(generer_req_deco());
+        c.deconnexion();
+        javax.swing.JOptionPane.showMessageDialog(null, "Au revoir et à bientôt !");
+        afficherRechercherAcceuil();
+        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        cardLayout.show(jPanel_Principal, "Panel_Recherche");
+        
     }//GEN-LAST:event_click_deconnexion
 
     private void click_inscription(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_inscription
         // TODO add your handling code here:
+        String retour;
         if(!verifier_motdepasse(jTextField_mdp_inscr.getText())){
             javax.swing.JOptionPane.showMessageDialog(null,"Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
@@ -1480,23 +1479,31 @@ public class Fenetre extends javax.swing.JFrame {
         }
         else{
             c.connexion(50005);
-            c.emission(generer_requete_inscription());
-            javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+            retour = c.envoyerRequete(generer_requete_inscription());
             c.deconnexion();
+            javax.swing.JOptionPane.showMessageDialog(null,decouperInscription(retour));
         }
     }//GEN-LAST:event_click_inscription
 
     private void click_connexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion
         // TODO add your handling code here:
+        String retour;
         c.connexion(50001);
-        c.emission(generer_requete_connexion());
-        javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+        retour = c.envoyerRequete(generer_requete_connexion());
         c.deconnexion();
+        javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
+        c.envoyerHello(c.getId_user(), c.getNum_session());
+
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(null,generer_add_diplome());
+        //c.connexion(50003);
+        //c.emission("HELLO#8#9747");
+        //c.reception();
+        //c.emission(generer_add_diplome());
+        //javax.swing.JOptionPane.showMessageDialog(null,c.reception());
+        javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_add_diplome()));
     }//GEN-LAST:event_click_add_diplome
 
     private void click_nom_rech(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_nom_rech
@@ -1522,13 +1529,49 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_recherche(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_recherche
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(null,generer_req_recherche());
+        if(jTextField_Nom_Rechercher.getText().matches("Nom") && jTextField_Prenom_Rechercher.getText().matches("Prenom") && jTextField_Competence_Rechercher.getText().matches("Competence")){
+            CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+            cardLayout.show(jPanel_Principal, "Panel_Recherche");
+            afficherRechercherAcceuil();
+        }
+        else {         
+            CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+            cardLayout.show(jPanel_Principal, "Panel_Recherche");
+            afficherRecherche();
+        }
+      
         
     }//GEN-LAST:event_click_recherche
 
     private void click_delete_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_delete_diplome
         // TODO add your handling code here:
+        javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_delete_diplome()));
     }//GEN-LAST:event_click_delete_diplome
+
+    private void click_add_competence(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_competence
+        // TODO add your handling code here:
+         javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_add_competence()));
+    }//GEN-LAST:event_click_add_competence
+
+    private void click_delete_comp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_delete_comp
+        // TODO add your handling code here:
+         javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_delete_competence()));
+
+    }//GEN-LAST:event_click_delete_comp
+
+    private void click_visiter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_visiter
+        // TODO add your handling code here:
+        if(!c.isConnecte()){
+            c.envoyerHello(0, 0);
+        }
+        String s = c.envoyerRequete(generer_req_visiter());
+        construire_compte_user(s);
+        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        cardLayout.show(jPanel_Principal, "Panel_User");
+        if(!c.isConnecte()){
+            c.deconnexion();
+        }
+    }//GEN-LAST:event_click_visiter
 
     
     /**
@@ -1593,15 +1636,12 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox1_modifier_coor;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox_Niveau_Rechercher;
     private javax.swing.JComboBox<String> jComboBox_visi_inscr;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel1_competences_visible;
-    private javax.swing.JLabel jLabel1_competences_visible1;
-    private javax.swing.JLabel jLabel1_coordonnees_visible;
     private javax.swing.JLabel jLabel1_coordonnees_visible1;
-    private javax.swing.JLabel jLabel1_diplome_visible;
-    private javax.swing.JLabel jLabel1_diplome_visible1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel3_mail_connexion;
@@ -1609,6 +1649,8 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_Bienvenue;
     private javax.swing.JLabel jLabel_Competence_User;
     private javax.swing.JLabel jLabel_Connexion_Inscription;
@@ -1616,7 +1658,6 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_Nom_prenom;
     private javax.swing.JLabel jLabel_Nom_prenom1;
     private javax.swing.JLabel jLabel_Rechercher;
-    private javax.swing.JLabel jLabel_adresse;
     private javax.swing.JLabel jLabel_ajout_comp;
     private javax.swing.JLabel jLabel_ajout_dip;
     private javax.swing.JLabel jLabel_annee_dipl;
@@ -1656,6 +1697,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_supp_dip2;
     private javax.swing.JLabel jLabel_tel;
     private javax.swing.JLabel jLabel_tel1;
+    private javax.swing.JLabel jLabel_visi_info;
     private javax.swing.JLabel jLabel_visi_insc;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
@@ -1728,8 +1770,58 @@ public class Fenetre extends javax.swing.JFrame {
         
     }
     
+    private void construireMesInfos(String chaine){
+        c.initialiserDip();
+        c.initialiserComp();
+        String [] decoupage;
+        String [] decoupageTmp;
+        String [] decoupageTmp2;
+        String [] decoupageTmp3;
+        String [] decoupageDip;
+        String [] decoupageComp;
+        decoupage = chaine.split("#");
+        c.setNom(decoupage[1]);
+        c.setPrenom(decoupage[2]);
+        c.setAdresse_mail(decoupage[3]);
+        if(!decoupage[4].equals("END_I") && decoupage.length > 6){
+            c.setTelephone(decoupage[4]);
+            c.setDateNaiss(decoupage[5]);
+            c.setVisibilite(decoupage[6]);
+        }
+        else{
+            c.setTelephone("");
+            c.setDateNaiss("");
+            c.setVisibilite("");
+        }
+        decoupageTmp = chaine.split("END_I");
+        decoupageTmp3 = decoupageTmp[1].split("#");
+        if(!decoupageTmp3[1].equals("END_C")){
+            decoupageTmp2 = decoupageTmp[1].split("END_C");
+            decoupageComp = decoupageTmp2[0].split("\\$");
+            for (int i = 0; i < decoupageComp.length; i++) {
+                c.listeCompetence[i] = decoupageComp[i];
+            }            
+        }
+        //javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp3[1]);
+        if(!decoupageTmp3[2].equals("END_D")){
+            decoupageTmp2 = decoupageTmp[1].split("END_C");
+            decoupageDip = decoupageTmp2[1].split("\\$");
+            for (int i = 0; i < decoupageDip.length; i++) {
+                c.listeDiplome[i] = decoupageDip[i];
+            }
+        }
+        /*// javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp2[0]);
+        decoupageComp = decoupageTmp2[0].split("\\$");
+        for (int i = 0; i < decoupageComp.length; i++) {
+            c.listeCompetence[i] = decoupageComp[i];
+        }*/
+    }
     
     private void construire_monCompte(){
+        String retour;
+        retour = c.envoyerRequete("VISITER#" + c.getId_user() + "#" + c.getId_user());
+        javax.swing.JOptionPane.showMessageDialog(null,retour);
+        construireMesInfos(retour);
         jLabel_Nom_prenom1.setText(c.getNom() +" "+ c.getPrenom());
         construire_monCompte_infoPerso();
         construire_monCompte_mesDiplomes();
@@ -1739,18 +1831,59 @@ public class Fenetre extends javax.swing.JFrame {
     
     
     private void construire_monCompte_infoPerso(){
+        
         jLabel_mail1.setText("Adresse mail : " + c.getAdresse_mail());
         jLabel_tel1.setText("Numéro de Téléphone : "+c.getTelephone());
         jLabel_naissance1.setText("Année de Naissance : "+c.getDateNaiss());
-        
+        jLabel1_coordonnees_visible1.setText("La visibilite de cette section est : " + c.getVisibilite());
     }
     
     private void construire_monCompte_mesDiplomes(){
-        
+        int i = 0;
+        int j = 0;
+        String [] decoupage;
+        DefaultListModel DLM = new DefaultListModel();
+        jLabel_mesDiplomes.setText("<html>");
+        while(!c.listeDiplome[i].equals("")){
+            j = 0;
+            decoupage = c.listeDiplome[i].split("#");
+            if(i==0){
+               j=1;
+               DLM.addElement(decoupage[1]);
+            }
+            else{
+                DLM.addElement(decoupage[0]);
+            }
+            jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] + " Visibilite : " + decoupage[j+3] +" <br>");
+            i++;
+        }
+        jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "</html>");
+        jList1.setModel(DLM);
     }
     
+       
     private void construire_monCompte_mesCompetences(){
-        
+        int i = 0;
+        int j = 0;
+        String [] decoupage;
+        DefaultListModel DLM = new DefaultListModel();
+        jLabel_mesCompetences.setText("<html>");
+        while(!c.listeCompetence[i].equals("")){
+            j = 0;
+            decoupage = c.listeCompetence[i].split("#");
+            if(i==0){
+               j=1;
+               DLM.addElement(decoupage[1]);
+            }
+            else{
+                DLM.addElement(decoupage[0]);
+            }
+            jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] + " Visibilite : " + decoupage[j+2] +" <br>");
+            i++;
+        }
+        jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "</html>");
+        jList2.setModel(DLM);
+
     }
     
     private void construire_modif_infoPerso(){
@@ -1760,24 +1893,7 @@ public class Fenetre extends javax.swing.JFrame {
         jTextField_modif_tel.setText(c.getTelephone());
     }
     
-    private void construire_mesDiplomes() {
-        int nbDiplomes = c.listeDiplome.size();
-        String dip = "<html>";
-        for (int i = 0; i < nbDiplomes; i++) {
-           // jLabel_mesDiplomes.setText(c.listeDiplome.get(0));
-            jLabel_mesDiplomes.setText("<html>" + jLabel_mesDiplomes.getText() + "Diplome : " + c.listeDiplome.get(i) + " Annee : 2005 <br>");
-        }
-        jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "</html>");
-    }
-    
-    private void construire_mesCompetences(){
-        int nbComp = c.listeCompetence.size();
-        for (int i = 0; i < nbComp; i++) {
-            jLabel_mesCompetences.setText("<html>" + jLabel_mesCompetences.getText() + "Competence : " + c.listeCompetence.get(i) + "Niveau : Bon <br>");
-        }
-        jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "</html>");
-    }   
-   
+
     private String generer_requete_inscription(){
             String req_inscription = "INSCRIPTION#";
             req_inscription += jTextField_mail_inscr.getText() + "#" + jTextField_mdp_inscr.getText() + "#" + jTextField_nom_inscr.getText() + "#" + jTextField_prenom_inscr.getText() + "#" + jTextField_DateN_Inscr.getText() + "#" + jComboBox_visi_inscr.getItemAt(jComboBox_visi_inscr.getSelectedIndex()).toString();
@@ -1798,41 +1914,198 @@ public class Fenetre extends javax.swing.JFrame {
     
     private String generer_modif_info() {
         String req_modif_info = "MODIFIERUTILISATEUR#" + c.getId_user() + "#";
-        req_modif_info += jTextField_modif_adresse.getText() + "#" + jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
+       // req_modif_info += jTextField_modif_adresse.getText() + "#" + jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
+        req_modif_info += jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jTextField_modif_adresse.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
         return req_modif_info;
     }
     
     private String generer_add_diplome(){
-        String req_add_dip = "AJOUTERDIPLOME#" + c.getId_user() + "#";
-        req_add_dip += c.getId_user() + "#" + jTextField_annee_dip.getText() + "#"+ jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).toString() + "#" + jTextField1.getText() + "#" + jTextField_etablissement_diplome.getText();
+        String req_add_dip = "AJOUTERDIPLOME#";
+        req_add_dip += c.getId_user() + "#" + jTextField_annee_dip.getText() + "#"+ jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).toString() + " " + jTextField1.getText() + "#" + jTextField_etablissement_diplome.getText() + "#" + jComboBox4.getItemAt(jComboBox4.getSelectedIndex()).toString();
         return req_add_dip;
     }
     
+    private String generer_add_competence(){
+        String req_add_comp = "AJOUTERCOMP#";
+        req_add_comp += c.getId_user() + "#" + jTextField_ajout_comp.getText() + "#" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()).toString() + "#" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()).toString();
+        return req_add_comp;
+    }
+    
     private String generer_req_recherche(){
-        String req_rech = "RECHERCHER#";
+        String req_rech = "RECHERCHER#" + c.getId_user() + "#";
         if(jTextField_Nom_Rechercher.getText().matches("Nom")){
-            jTextField_Nom_Rechercher.setText("");
+            jTextField_Nom_Rechercher.setText("NULL");
         }
         if(jTextField_Prenom_Rechercher.getText().matches("Prenom")){
-            jTextField_Prenom_Rechercher.setText("");
+            jTextField_Prenom_Rechercher.setText("NULL");
         }
         if(jTextField_Diplome_Rechercher.getText().matches("Diplome")){
-            jTextField_Diplome_Rechercher.setText("");
+            jTextField_Diplome_Rechercher.setText("NULL");
         }
         if(jTextField_Competence_Rechercher.getText().matches("Competence")){
-            jTextField_Competence_Rechercher.setText("");
+            jTextField_Competence_Rechercher.setText("NULL");
         }
         
         req_rech += jTextField_Nom_Rechercher.getText() + "#" + jTextField_Prenom_Rechercher.getText() + "#" + jTextField_Diplome_Rechercher.getText() + "#" + jTextField_Competence_Rechercher.getText() + "#";
         if(jComboBox_Niveau_Rechercher.isEnabled()){
             req_rech += jComboBox_Niveau_Rechercher.getItemAt(jComboBox_Niveau_Rechercher.getSelectedIndex()).toString();
         }
+        else {
+            req_rech += "NULL";
+        }
         return req_rech;
     }
     
     private String generer_delete_diplome(){
-        String req_delete_dip = "";
+        String req_delete_dip = "SUPPDIPLOME#";
+        req_delete_dip += c.getId_user() + "#" + jList1.getSelectedValue();
         return req_delete_dip;
     }
     
+
+    
+    private String generer_delete_competence() {
+        String req_delete_comp = "SUPPCOMPETENCE#";
+        req_delete_comp += c.getId_user() + "#" + jList2.getSelectedValue();
+        return req_delete_comp;
+    }
+    
+    private String effectuerConnexion(String req){
+        String [] decoupageRequete;
+        String retour = "";
+        decoupageRequete = req.split("#");
+        switch(decoupageRequete[0]){
+            case "OK":
+                c.setId_user(Integer.parseInt(decoupageRequete[1]));
+                c.setNum_session(Integer.parseInt(decoupageRequete[3]));
+                c.setPrenom(decoupageRequete[2]);
+                c.setConnecte(true);
+                retour = "Bienvenue " + decoupageRequete[2] + " !" ;
+                construire_entete(1);
+                CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+                cardLayout.show(jPanel_Principal, "Panel_Recherche");
+                break;
+            case "ERROR":
+                retour = decoupageRequete[1];
+        }
+        return retour;
+    }
+    
+    private String decouperInscription(String req){
+        String [] decoupageRequete;
+        decoupageRequete = req.split("#");
+        return decoupageRequete[1];
+    }
+    
+    
+    private void afficherRechercherAcceuil(){
+        c.initialiserRecherche();
+        int longueur;
+        String s = c.envoyerRechercheAcceuil();
+        longueur = decouperRecherche(s);
+
+        DefaultListModel DLM = new DefaultListModel();
+        for (int k = 0; k < longueur; k++)
+            {
+                 DLM.addElement((c.listeRecherche[k].split("#")[1])); 
+            }
+        jList3.setModel(DLM);
+    }
+    
+    private int decouperRecherche(String req){
+        String [] decoupageRequete;
+        String [] decoupageUser;
+        decoupageRequete = req.split("\\$");
+        for (int i = 0; i < decoupageRequete.length; i++) {
+            decoupageUser = decoupageRequete[i].split("#");
+            c.listeRecherche[i] = decoupageUser[0] + "#" + decoupageUser[1] + " "+ decoupageUser[2];
+        }
+
+        return decoupageRequete.length;
+    }
+    
+    private void afficherRecherche(){
+        c.initialiserRecherche();
+        DefaultListModel DLM = new DefaultListModel();
+        int longueur;
+        String s = c.envoyerRequete(generer_req_recherche());
+        if(s.equals("NOBODY")){
+            javax.swing.JOptionPane.showMessageDialog(null,"Aucuns resultats");
+        }
+        else{
+            longueur = decouperRecherche(s);
+            for (int k = 0; k < longueur; k++)
+                {
+                     DLM.addElement((c.listeRecherche[k].split("#")[1])); 
+                }
+        }
+        jList3.setModel(DLM);
+    }
+    
+    private String generer_req_deco(){
+        return "DECONNEXION#" + c.getId_user(); 
+    }
+    
+    private String setIdVisite(){
+        int pos = jList3.getSelectedIndex();
+        return (c.listeRecherche[pos].split("#"))[0];
+    }
+    
+    private String generer_req_visiter(){
+            String id_visite = setIdVisite();
+            String req_visi = "VISITER#";
+            req_visi += c.getId_user() + "#" + id_visite;
+            c.setId_Visite(Integer.parseInt(id_visite));
+            return req_visi;
+    }
+    
+    private void construire_compte_user(String chaine){
+        javax.swing.JOptionPane.showMessageDialog(null,chaine);
+        construireMesInfos(chaine);
+        construireInfosPerso();
+        construireDiplomes();
+        construireCompetences();
+    }
+    
+    private void construireInfosPerso(){
+        jLabel_Nom_prenom.setText(c.getNom() +" "+ c.getPrenom());
+        jLabel_mail.setText("Adresse mail : " + c.getAdresse_mail());
+        jLabel_tel.setText("Numéro de Téléphone : "+c.getTelephone());
+        jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss()); 
+    }
+    
+    private void construireDiplomes(){
+        int i = 0;
+        int j = 0;
+        String [] decoupage;
+        jLabel_Diplome_User.setText("");
+        jLabel_Diplome_User.setText("<html>");
+        while(!c.listeDiplome[i].equals("")){
+            j = 0;
+            decoupage = c.listeDiplome[i].split("#");
+            if(i==0){
+                j = 1;
+            }
+            jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] +" <br>");
+            i++;
+        }
+        jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "</html>");
+    }
+    
+    private void construireCompetences(){
+        int i = 0;
+        int j = 0;
+        String [] decoupage;
+        jLabel_Competence_User.setText("<html>");
+        while(!c.listeCompetence[i].equals("")){
+            j = 0;
+            if(i==0){
+                j=1;
+            }
+            decoupage = c.listeCompetence[i].split("#");
+            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] +" <br>");
+            i++;
+        }
+        jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "</html>");       
+    }
 }
