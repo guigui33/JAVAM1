@@ -1,0 +1,149 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.12deb2+deb8u1
+-- http://www.phpmyadmin.net
+--
+-- Client :  localhost
+-- Généré le :  Lun 08 Février 2016 à 16:41
+-- Version du serveur :  5.5.46-0+deb8u1
+-- Version de PHP :  5.6.17-0+deb8u1
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de données :  `javaguigui`
+--
+CREATE DATABASE IF NOT EXISTS `javaguigui` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `javaguigui`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Competences`
+--
+
+CREATE TABLE IF NOT EXISTS `Competences` (
+  `IdUtilisateur` int(11) NOT NULL,
+  `Matiere` varchar(30) NOT NULL,
+  `Niveau` enum('Moyen','Bon','TresBon') NOT NULL,
+  `VisibleComp` enum('Prive','Public','UtilisateurCo','') NOT NULL DEFAULT 'Prive'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Competences`
+--
+
+INSERT INTO `Competences` (`IdUtilisateur`, `Matiere`, `Niveau`, `VisibleComp`) VALUES
+(3, 'Java', 'Bon', 'Public'),
+(3, 'Routage', 'Moyen', 'Prive');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Diplomes`
+--
+
+CREATE TABLE IF NOT EXISTS `Diplomes` (
+  `IdUtilisateur` int(11) NOT NULL,
+  `AnneeObt` varchar(25) NOT NULL,
+  `Diplome` varchar(30) NOT NULL,
+  `Etablissement` text NOT NULL,
+  `VisibleDip` enum('Prive','Public','UtilisateurCo','') NOT NULL DEFAULT 'Prive'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Diplomes`
+--
+
+INSERT INTO `Diplomes` (`IdUtilisateur`, `AnneeObt`, `Diplome`, `Etablissement`, `VisibleDip`) VALUES
+(3, '2015-11-11', 'BAC S', 'fds', 'Prive'),
+(3, '2015-11-11', 'Licence JKHKH', 'cc', 'Public'),
+(3, '2015-11-11', 'Licence kjkj', 'VBN', 'Public');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Utilisateurs`
+--
+
+CREATE TABLE IF NOT EXISTS `Utilisateurs` (
+`Id` int(11) NOT NULL,
+  `Nom` varchar(25) NOT NULL,
+  `Prenom` varchar(25) NOT NULL,
+  `AddrMail` varchar(30) NOT NULL,
+  `Tel` varchar(10) DEFAULT NULL,
+  `AnneeN` date NOT NULL,
+  `Mdp` varchar(16) NOT NULL,
+  `VisibleInf` enum('Public','UtilisateurCo','Prive','') NOT NULL DEFAULT 'Prive'
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `Utilisateurs`
+--
+
+INSERT INTO `Utilisateurs` (`Id`, `Nom`, `Prenom`, `AddrMail`, `Tel`, `AnneeN`, `Mdp`, `VisibleInf`) VALUES
+(1, 'ADMIN', 'ADMIN', 'ADMIN@hotmail.com', '0658785699', '2016-06-09', 'ADMIN', 'Public'),
+(2, 'CANTAL', 'Guillaume', 'Testmodi@gmail', '00000000', '2014-06-27', 'fffffffff', 'UtilisateurCo'),
+(3, 'BADENS', 'Florian', 'a', '0000000000', '1993-12-25', 'a', 'Prive'),
+(4, 'MASSIP', 'Thomas', 'thomas@test.com', '080000000', '1993-12-25', 'azertyuio', 'Prive'),
+(5, 'test', 'test', 'test', 'null', '0000-00-00', 'testtest', 'Public'),
+(6, 'ty', 'ty', 'ty', NULL, '0000-00-00', 'azertyuio', 'Prive'),
+(7, 'salut', 'salut', 'test@test.com', NULL, '0000-12-12', 'azertyuiop', 'Prive');
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `Competences`
+--
+ALTER TABLE `Competences`
+ ADD PRIMARY KEY (`IdUtilisateur`,`Matiere`);
+
+--
+-- Index pour la table `Diplomes`
+--
+ALTER TABLE `Diplomes`
+ ADD PRIMARY KEY (`IdUtilisateur`,`Diplome`);
+
+--
+-- Index pour la table `Utilisateurs`
+--
+ALTER TABLE `Utilisateurs`
+ ADD PRIMARY KEY (`Id`,`AddrMail`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `Utilisateurs`
+--
+ALTER TABLE `Utilisateurs`
+MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `Competences`
+--
+ALTER TABLE `Competences`
+ADD CONSTRAINT `FK_Competences` FOREIGN KEY (`IdUtilisateur`) REFERENCES `Utilisateurs` (`Id`);
+
+--
+-- Contraintes pour la table `Diplomes`
+--
+ALTER TABLE `Diplomes`
+ADD CONSTRAINT `FK_Diplome` FOREIGN KEY (`IdUtilisateur`) REFERENCES `Utilisateurs` (`Id`),
+ADD CONSTRAINT `FK_Diplomes` FOREIGN KEY (`IdUtilisateur`) REFERENCES `Utilisateurs` (`Id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

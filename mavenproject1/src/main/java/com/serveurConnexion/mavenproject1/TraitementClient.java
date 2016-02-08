@@ -1,81 +1,96 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
+
 package com.serveurConnexion.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
-import com.strim1.mavenproject1.GestionErreurs;
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
+ *cette classe permet de gerer les demandes des clients
  *
- * @author guigui
  */
 class TraitementClient extends Thread{
-    private final Socket connexionCourante;
-    
+
+    /**
+     * la demande du client
+     */
     private String demandeClient;
+    /*
+    * la reponse du serveur
+    */
     private String retourServeur;
+    /**
+     * classe qui gere la reception et l'emission
+     * @see ServicePostal
+     */
     private final ServicePostal servicePostal;
+    
+    /**
+     * la liste des clients connectés
+     * @see Clients
+     */
     private final Clients clients;
     
+    /**
+     * constructeur qui fixe le socket de service, la liste des clients connectés (vide au départ)
+     * et creation du service postal.
+     * @param service le socket de service serveur et du client
+     * @param clients la liste des clients connectés
+     */
     public TraitementClient(Socket service,Clients clients) {
-        this.connexionCourante=service;
         this.clients=clients;
         this.servicePostal=new ServicePostal(service);
     }
-        
-    private void deconnexion(){
-        System.err.println("deconnexion client : "+ connexionCourante);
-        try {
-            connexionCourante.close();// ??? fermeture du socket client client
-        } catch (IOException ex) {
-            Logger.getLogger(TraitementClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-        
+     
+    /**
+     * Creation d'un numero de session associé à la connexion d'un client
+     * Généré aléatoirement
+     * @return un numero de session
+     */
     private Integer generateurNumSession(){
         Integer numSession;
+        //fixe les bornes
         int haut,bas;
         haut=99999;
         bas=1;
-        
+        //generation du numero de session
         numSession=(int)(Math.random()*(haut-bas)+bas);
         
         return numSession;
     }
-    
+    /**
+     * traitement de la demande d'un client à se connecter
+     * @param demande la demande d'un client sous forme de tableau
+     * @return un message au client
+     */
     private String connexion(String[] demande){
-        String retour;
-        Bdd bdd=new Bdd();
-                
+        String retour; //message à retourner au client
+        Bdd bdd=new Bdd(); //creation de l'objet Bdd
+        //se connecte à la bdd
         if(bdd.connexion()){
             retour=bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
             if(!retour.equals("ERROR")){
+                //si le mot de passe et le login  correspondent
                 String []decoupe=retour.split("#");
                 Integer idClient=Integer.parseInt(decoupe[1]);
-                Integer numSession=generateurNumSession();
+                Integer numSession=generateurNumSession();//création d'un nuemero de session
                 
-                if(clients.verification(idClient)) {
-                    try {                
-                        clients.supprimerClient(idClient);
+                if(clients.verification(idClient)) //verification si l'identifiant est present dans la liste
+                {
+                    try {
+                        clients.supprimerClient(idClient);//on supprime si c'est la cas
                     } catch (InterruptedException ex) {
-                        return "ERROR#erreur Serveur :( !";
+                        return "ERROR#erreur Serveur :( !"; // retourne une erreur si probleme
                     }
                 }
                 
                 try {
-                    clients.ajouterClient(idClient,numSession);
+                    clients.ajouterClient(idClient,numSession);// on ajoute l'identifiant et le numero de session à la liste
                 } catch (InterruptedException ex) {
-                    return "ERROR#erreur Serveur :( !";
+                    return "ERROR#erreur Serveur :( !";// retourne une erreur si probleme
                 }
-                retour+="#"+numSession;
+                retour+="#"+numSession;//concatene les informations à retourner au clients
                 return retour;
             }
             else{
@@ -85,6 +100,10 @@ class TraitementClient extends Thread{
         else return "ERROR#Problème serveur, veuillez recommencer plus tard.";
     }
     
+    /**
+     * identification de la requète envoyé par le client
+     * @return le message à retourner au client
+     */
     public String requete(){
         /*decouper la requte en tableau */
         String [] decoupageRequete;
@@ -93,26 +112,26 @@ class TraitementClient extends Thread{
         switch(decoupageRequete[0]){
             case "CONNEXION":
                 if(decoupageRequete.length!=3){
-                    return new GestionErreurs().traitementErreursRequete(decoupageRequete[0]);
+                    return "ERROR#connexion impossible.";
                 }
                 return connexion(decoupageRequete);
             default:
                 return "ERROR#requête inconnue, Usage: motclé#id#demande";
         }
     }
-        
+    
     @Override
     public void run(){
-        boolean fermeture=false;
+        boolean fermeture=false; //boolean permettant de fermer le thread
         while(!fermeture){
-            demandeClient=servicePostal.reception();
+            demandeClient=servicePostal.reception(); //attend la demande du client
             if(demandeClient!=null){
-                retourServeur=requete();
-                servicePostal.emission(retourServeur);
+                retourServeur=requete(); // traite la requète du serveur
+                servicePostal.emission(retourServeur);//Envoie le message au client
             }
-            else fermeture=true;
+            else fermeture=true;// si la demande du client == null on ferme le programme
         }
         System.out.println("demande de deconnexion client.");
-        deconnexion();
+       servicePostal.deconnexion();//on ferme le socket
     }
 }

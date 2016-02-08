@@ -46,7 +46,7 @@ public class Bdd {
         NULL;
     };
     /**
-     * Le nom
+     * Le nom pour la BDD
      */
     private final String host;
     /**
@@ -69,7 +69,10 @@ public class Bdd {
     }
 
     /**
-     * Methode pour se connecter à la BDD
+     * Methode Concernant les connexions
+     * connexion() -> Connexion du serveur a la BDD 
+     * connexionClient(String mail, String mdp) -> Connexion d'un utilisateur avec verification Addrmail , mdp. 
+     * On retourne l'id utilisateur ainsi que son prénom.
      */
     public boolean connexion() {
         try {
@@ -80,6 +83,26 @@ public class Bdd {
         } catch (SQLException e) {
             return false;
         }
+    }
+    
+    public String connexionClient(String mail, String mdp) {
+        try {
+            ResultSet resultat1;
+            int idUtil;
+            String prenom;
+
+            st = co.createStatement();
+            resultat1 = st.executeQuery("SELECT Id, Prenom FROM Utilisateurs WHERE AddrMail='" + mail + "' AND Mdp='" + mdp + "'");
+            if (resultat1.next()) {
+                idUtil = resultat1.getInt("Id");
+                prenom = resultat1.getString("Prenom");
+                return "OK" + "#" + idUtil + "#" + prenom;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            return "ERROR";
+        }
+        return "ERROR#Informations incorrecte";
     }
     //Verification des entrées:
 
@@ -97,6 +120,8 @@ public class Bdd {
      return true;
      }
      */
+     
+     /* Méthode permettand de récuperer le type du visiteur afin de voir les droits qu'il a */
     public String typeVisiteur(int idcourant, int idprofil) {
 
         if (idcourant != 0 && idcourant != 1) {
@@ -111,6 +136,8 @@ public class Bdd {
 
     }
 
+    /*Visibiliter de l'utilisateur en fonction de l'enum  */
+    
     public visibiliter parseVisibiliter(String v) {
 
         switch (v) {
@@ -123,6 +150,7 @@ public class Bdd {
         }
     }
 
+    /*Niveau de la compétence en fonction de l'enum */
     public niveau parseNiveau(String n) {
 
         switch (n) {
@@ -137,6 +165,7 @@ public class Bdd {
         }
     }
 
+    /*Vérifie si la requete retourne 1 ou plusieurs lignes (surement inutiles a vérifier)*/
     public boolean verifierRequete(String requete) {
         ResultSet verif = null;
         try {
@@ -157,7 +186,7 @@ public class Bdd {
         }
         return false;
     }
-
+    
     public int verifierMdp(String mdp) {
         int count = mdp.codePointCount(0, mdp.length());
         if (count < 6) {
@@ -168,8 +197,8 @@ public class Bdd {
             return 3;
         }
     }
-
-    public boolean verifierMail(String mail) {
+    /*L'adresse mail etant une clé primaire, on verifie si elle n'est pas deja présente dans la Base*/
+    /*public boolean verifierMail(String mail) {
         ResultSet verif = null;
         try {
             st = co.createStatement();
@@ -189,7 +218,21 @@ public class Bdd {
         } catch (SQLException e) {
         }
         return false;
+    }*/
+    public boolean verifierMail(String mail) {
+        ResultSet verif;
+        try {
+            st = co.createStatement();
+            verif = st.executeQuery("SELECT AddrMail FROM Utilisateurs WHERE AddrMail='" + mail + "'");
+                while (verif.next()) {
+                    return false;
+                }
+                return true;
+        } catch (SQLException e) {
+            return true;
+        }
     }
+
 
     public String visibiliterInfo(int id) {
         try {
@@ -213,7 +256,8 @@ public class Bdd {
         return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
 
-    //Ajout d'information à la BDD.
+    /*Ajouts-modofications d'information à la BDD.*/
+    
     public String creerUtilisateur(String nom, String prenom, String addrmail, String date, String mdp, visibiliter v) {
         ResultSet resultat1;
         String retour;
@@ -243,8 +287,8 @@ public class Bdd {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            return new GestionRetourBDD().valeurRetour("Erreur creation");
         }
-        return new GestionRetourBDD().valeurRetour("Erreur BDD");
     }
 
     public String ajouterCompetence(int id, String matiere, niveau n, visibiliter v) {
@@ -293,7 +337,7 @@ public class Bdd {
                     st.executeUpdate(sql);
                     return new GestionRetourBDD().valeurRetour("Information modif ok");
                 } else {
-                    return new GestionRetourBDD().valeurRetour("Mail double");
+                    return new GestionRetourBDD().valeurRetour("Mail double")+addrmail;
                 }
             } else {
                 String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "'WHERE Id=" + id + "";
@@ -326,7 +370,7 @@ public class Bdd {
             st = co.createStatement();
             String sql = "UPDATE Diplomes SET  VisibleDip='" + v + "' WHERE IdUtilisateur=" + id + " AND Diplome='" + diplome + "'";
             st.executeUpdate(sql);
-            return new GestionRetourBDD().valeurRetour("Modif competence ok");
+            return new GestionRetourBDD().valeurRetour("Modif diplome ok");
         } catch (SQLException ex) {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return new GestionRetourBDD().valeurRetour("");
@@ -357,26 +401,14 @@ public class Bdd {
             return new GestionRetourBDD().valeurRetour("Erreur suppression competence");
         }
     }
+    
+    /*
+    Méthode recherche: 
+        Cette méthode est complexe, c'est à dire qu'en fonction des parametres recus, on doit envoyer une requete spécifique à la BDD.
+        On test d'abord les valeurs des champs, si NULL alors rien si !NULL alors on insere le parametre dans la requete
+        Il faut concatener les requetes en fonctions des parametres fournis afin d'obtenir uen requete MySQL valide.
+    */
 
-    public String connexionClient(String mail, String mdp) {
-        try {
-            ResultSet resultat1;
-            int idUtil;
-            String prenom;
-
-            st = co.createStatement();
-            resultat1 = st.executeQuery("SELECT Id, Prenom FROM Utilisateurs WHERE AddrMail='" + mail + "' AND Mdp='" + mdp + "'");
-            if (resultat1.next()) {
-                idUtil = resultat1.getInt("Id");
-                prenom = resultat1.getString("Prenom");
-                return "OK" + "#" + idUtil + "#" + prenom;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
-            return "ERROR";
-        }
-        return "ERROR";
-    }
 
     public String recherche(int idcourant, String nom, String prenom, String diplome, String matiere, niveau n) {
 
@@ -441,6 +473,7 @@ public class Bdd {
             whereDiplome += " u.Id IN (SELECT IdUtilisateur FROM Diplomes WHERE Diplome LIKE '" + diplome + "' ";
         }
         
+        /* On verifie si le champs niveau et matiere sont nul ou non. */
         if (n != niveau.NULL && !matiere.equals("NULL")) {
             verif = 1;
         } else if (n != niveau.NULL) {
@@ -450,6 +483,7 @@ public class Bdd {
         }
 
         try {
+            /*Quelque soit la visibilité, si tous les parametres sont a NULL alors on retourne les 5 derniers inscrits.*/
             st = co.createStatement();
             if(nom.equals("NULL") && prenom.equals("NULL") && matiere.equals("NULL") && diplome.equals("NULL") && n== Bdd.niveau.NULL){
                     
@@ -469,8 +503,12 @@ public class Bdd {
                             }
                         }return retour;
                     }
+            
+            /*Le switch (util) nous permet de connaitre le type de l'utilisateur, ADMIN, UtilisateurCo ou bien visiteur.
+                Le switch (verif) nous permet de faire une bonne concaténation de la requete en fonctions des parametres.
+            */
+            
             switch (util) {
-
                 case "Utilisateur":
                     switch (verif) {
                         case 1:
@@ -670,6 +708,14 @@ public class Bdd {
 
     }
 
+    /*
+    visiter profil, si nous sommes en Visiteurs alors on ne récupere que les informations de type Public de l'utilisateur.
+        Si admin ou visite de son propre profil (Idcourant=Idvisite) on récupere tout meme le champs visibilité (en cas de bug l'administrateur peut alors changé la visibilité d'un utilisateur)
+        Si utilisateur, on récupere toutes les informations de type Public ou UtilisateurCo (!Prive)
+        
+        Les champs Information, Compétences et Diplomes sont séparer a l'aide END_I#END_C#END_D
+    
+    */
     public String visiterProfil(int idcourant, int idvisite) {
 
         try {
@@ -810,12 +856,11 @@ public class Bdd {
                 default:
                     st = co.createStatement();
                     resultatInfo = st.executeQuery(r3);
-                    if (!visiInfo.equals("Prive")) {
+                    if (!visiInfo.equals("Public")) {
                         while (resultatInfo.next()) {
                             nom = resultatInfo.getString("Nom");
                             prenom = resultatInfo.getString("Prenom");
                             retourInfo = idvisite + "#" + nom + "#" + prenom + "#" + "END_I#";
-
                         }
                     } else {
                         while (resultatInfo.next()) {
@@ -885,17 +930,18 @@ public class Bdd {
         Bdd bdd = new Bdd();
         bdd.connexion();
                 //bdd.verifierMail("grosse@bite.xxx");
-        //bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
+        //test=bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        //bdd.modifierInformation(6,"Testmodi@trrtr","","fffffffff", Bdd.visibiliter.Public,Bdd.visibiliter.Prive,Bdd.visibiliter.Public);
+        test=bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive);
+        //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
         //test=bdd.visiterProfil(1,1);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
-        //System.out.println(test);
+        System.out.println(test);
     }
 }
