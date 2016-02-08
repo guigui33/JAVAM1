@@ -917,11 +917,12 @@ public class Bdd {
                                 annee = resultatDip.getDate("AnneeObt");
                                 eta = resultatDip.getString("Etablissement");
                                 retourDip = retourDip + Diplome + "#" + eta + "#" + annee + "#END_D";
-                            }
+                            }else{
                             Diplome = resultatDip.getString("Diplome");
                             annee = resultatDip.getDate("AnneeObt");
                             eta = resultatDip.getString("Etablissement");
                             retourDip = retourDip + Diplome + "#" + eta + "#" + annee + "$";
+                            }
                             
                         }
 
