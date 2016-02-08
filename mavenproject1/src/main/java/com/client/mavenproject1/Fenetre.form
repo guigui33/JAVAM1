@@ -307,11 +307,10 @@
     <Component class="javax.swing.JComboBox" name="jComboBox_Niveau_Rechercher">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="A am&#xe9;liorer"/>
+          <StringArray count="3">
+            <StringItem index="0" value="Moyen"/>
             <StringItem index="1" value="Bon"/>
-            <StringItem index="2" value="Tr&#xe8;s Bon"/>
-            <StringItem index="3" value="Dieu"/>
+            <StringItem index="2" value="TresBon"/>
           </StringArray>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
@@ -605,9 +604,9 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <StringItem index="0" value="Priv&#xe9;e"/>
-                    <StringItem index="1" value="Public"/>
-                    <StringItem index="2" value="Utilisateur Connect&#xe9;"/>
+                    <StringItem index="0" value="Prive"/>
+                    <StringItem index="1" value="UtilisateurCo"/>
+                    <StringItem index="2" value="Public"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -707,6 +706,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Visiter"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="click_visiter"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -805,10 +807,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel_adresse" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel_tel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel_tel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -819,10 +818,10 @@
                               </Group>
                           </Group>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
+                          <Component id="jLabel_visi_info" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1_coordonnees_visible" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -834,12 +833,11 @@
                               <Component id="jLabel_naissance" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel_mail" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel_adresse" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                          <Component id="jLabel_visi_info" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                           <Component id="jLabel_tel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="24" max="32767" attributes="0"/>
-                          <Component id="jLabel1_coordonnees_visible" min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace pref="35" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -848,11 +846,6 @@
                 <Component class="javax.swing.JLabel" name="jLabel_mail">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Adresse mail : "/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="jLabel_adresse">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Adresse :"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_tel">
@@ -865,12 +858,9 @@
                     <Property name="text" type="java.lang.String" value="Ann&#xe9;e de Naissance : "/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel1_coordonnees_visible">
+                <Component class="javax.swing.JLabel" name="jLabel_visi_info">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="9" style="2"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
+                    <Property name="text" type="java.lang.String" value="L&apos;utilisateur ne souhaite pas partag&#xe9; ses informations personnelles"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -892,15 +882,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="186" max="32767" attributes="0"/>
-                          <Component id="jLabel1_diplome_visible" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jLabel_Diplome_User" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="87" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -909,24 +894,15 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                           <Component id="jLabel_Diplome_User" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="168" max="32767" attributes="0"/>
-                          <Component id="jLabel1_diplome_visible" min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace pref="179" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1_diplome_visible">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="9" style="2"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_Diplome_User">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel7"/>
+                    <Property name="text" type="java.lang.String" value="Aucuns dipl&#xf4;mes ou l&apos;utilisateur ne souhaite pas les afficher"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -951,15 +927,10 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="271" max="32767" attributes="0"/>
-                          <Component id="jLabel1_competences_visible" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel_Competence_User" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="166" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -968,24 +939,15 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="jLabel_Competence_User" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1_competences_visible" min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace pref="181" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1_competences_visible">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="9" style="2"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_Competence_User">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel8"/>
+                    <Property name="text" type="java.lang.String" value="Aucunes comp&#xe9;te,ces ou l&apos;utilisateur ne souhaite pas les afficher"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1152,7 +1114,6 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="9" style="2"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_modier_coordonnees">
@@ -1199,22 +1160,14 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel_mesDiplomes" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="176" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel1_diplome_visible1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel_modier_diplome" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <EmptySpace min="0" pref="269" max="32767" attributes="0"/>
+                                  <Component id="jLabel_modier_diplome" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1224,21 +1177,12 @@
                           <Component id="jLabel_modier_diplome" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jLabel_mesDiplomes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel1_diplome_visible1" min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace pref="127" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1_diplome_visible1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="9" style="2"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_modier_diplome">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1261,7 +1205,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_mesDiplomes">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel7"/>
+                    <Property name="text" type="java.lang.String" value="Vous n&apos;avez saisi aucuns dipl&#xf4;mes"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1290,17 +1234,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="261" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel1_competences_visible1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel_modier_competence" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                                  <EmptySpace min="0" pref="362" max="32767" attributes="0"/>
+                                  <Component id="jLabel_modier_competence" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel_mesCompetences" min="-2" max="-2" attributes="0"/>
@@ -1316,21 +1252,12 @@
                           <Component id="jLabel_modier_competence" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           <Component id="jLabel_mesCompetences" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="115" max="32767" attributes="0"/>
-                          <Component id="jLabel1_competences_visible1" min="-2" pref="11" max="-2" attributes="0"/>
+                          <EmptySpace pref="126" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1_competences_visible1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="9" style="2"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="(Cette section est visible par : )"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_modier_competence">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1353,7 +1280,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel_mesCompetences">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jLabel8"/>
+                    <Property name="text" type="java.lang.String" value="Vous n&apos;avez saisi aucunes comp&#xe9;tences "/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1501,9 +1428,9 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <StringItem index="0" value="Priv&#xe9;"/>
-                    <StringItem index="1" value="Public"/>
-                    <StringItem index="2" value="Utilisateur Connect&#xe9;"/>
+                    <StringItem index="0" value="Prive"/>
+                    <StringItem index="1" value="UtilisateurCo"/>
+                    <StringItem index="2" value="Public"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -1828,8 +1755,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <StringItem index="0" value="Priv&#xe9;"/>
-                    <StringItem index="1" value="Connect&#xe9; uniquement"/>
+                    <StringItem index="0" value="Prive"/>
+                    <StringItem index="1" value="UtilsateurCo"/>
                     <StringItem index="2" value="Public"/>
                   </StringArray>
                 </Property>
@@ -2007,11 +1934,10 @@
             <Component class="javax.swing.JComboBox" name="jComboBox2">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="A am&#xe9;liorer"/>
+                  <StringArray count="3">
+                    <StringItem index="0" value="Moyen"/>
                     <StringItem index="1" value="Bon"/>
-                    <StringItem index="2" value="Tr&#xe8;s bon"/>
-                    <StringItem index="3" value="Dieu"/>
+                    <StringItem index="2" value="TresBon"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -2031,6 +1957,7 @@
                 <Property name="text" type="java.lang.String" value="Ajouter"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="click_add_competence"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_ajouter_compActionPerformed"/>
               </Events>
             </Component>
@@ -2077,6 +2004,7 @@
                 <Property name="text" type="java.lang.String" value="Supprimer"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="click_delete_comp"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_supp_compActionPerformed"/>
               </Events>
             </Component>
@@ -2102,8 +2030,8 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="3">
-                    <StringItem index="0" value="Priv&#xe9;e"/>
-                    <StringItem index="1" value="Connect&#xe9; uniquement"/>
+                    <StringItem index="0" value="Prive"/>
+                    <StringItem index="1" value="UtilisateurCo"/>
                     <StringItem index="2" value="Public"/>
                   </StringArray>
                 </Property>

@@ -21,7 +21,8 @@ import java.util.logging.Logger;
  */
 public class Client {
     private Socket socket;
-    private int id_user = 8;
+    private int id_user = 0;
+    private int id_Visite = 0;
     private int num_session = 0;
     private String nom;
     private String prenom;
@@ -29,32 +30,47 @@ public class Client {
     private String mdp;
     private String telephone;
     private String DateNaiss;
-    ArrayList<String> listeDiplome = new ArrayList<>();
-    ArrayList<String> listeCompetence = new ArrayList<>();
+    String listeRecherche[] = new String[100];
+    String listeDiplome[] = new String[100];
+    String listeCompetence[] = new String[100];
+    private String Visibilite;
     
-    private boolean Connecte;
+    private boolean Connecte = false;
     
     private boolean quitter;
     
     public Client(){
         this.socket=null;
         this.quitter=false;
-         this.nom = "BADENS";
-        this.prenom = "Florian";
-        this.adresse_mail = "jean.marc@gmail.com";
-        this.mdp = "tasoeur";
-        this.telephone = "06010203040";
-        this.DateNaiss = "25/12/1800";
         this.Connecte = false;
-        listeDiplome.add("");
-        listeDiplome.add("BAC Pro Java");
-        listeDiplome.add("Master STRI");
-        listeCompetence.add("");
-        listeCompetence.add("Java");
-        listeCompetence.add("Routage Dynamique");
+        initialiserTableau();
     }
     
-    private void connexion(int port){
+    private void initialiserTableau(){
+        initialiserRecherche();
+        initialiserDip();
+        initialiserComp();
+        
+    }
+    
+    public void initialiserRecherche(){
+        for (int i = 0; i < 100; i++) {
+            listeRecherche[i] = "";
+        }
+    }
+    
+    public void initialiserDip(){
+       for (int i = 0; i < 100; i++) {
+            listeDiplome[i] = "";
+        }
+    }
+    
+    public void initialiserComp(){
+        for (int i = 0; i < 100; i++) {
+            listeCompetence[i] = "";
+        }
+    }
+    public void connexion(int port){
         try {
             this.socket = new Socket("localhost", port);
         } catch (IOException ex) {
@@ -72,9 +88,10 @@ public class Client {
         return new ServicePostal(socket).reception();
     }
     
-    private void deconnexion(){
+    public void deconnexion(){
           System.out.println("deconnexion...");
           System.out.println("fin client.");
+          Connecte = false;
         try {
             socket.close();
         } catch (IOException ex) {
@@ -83,19 +100,37 @@ public class Client {
     }
     
     
-    public String envoyerRequete(int Port, String req) {
+    public String envoyerRequete(String req) {
         String retourReq;
-        connexion(Port);
         emission(req);
         retourReq = reception();
-        deconnexion();
         return retourReq;
 
     }
     
+    
     public void envoyerHello(int id, int num){
         connexion(50003);
         emission("HELLO#" + id + "#" + num);
+        reception();
+
+    }
+    
+    
+    public String envoyerRechercheAcceuil(){
+        String retourReq;
+        if(!Connecte){
+            connexion(50003);
+            emission("HELLO#0#0");
+            reception();
+        }
+
+        emission("RECHERCHER#0#NULL#NULL#NULL#NULL#NULL");
+        retourReq = reception();
+        if(!Connecte){
+            deconnexion();
+       }
+        return retourReq;
     }
     
     
@@ -168,6 +203,27 @@ public class Client {
         this.DateNaiss = DateNaiss;
     }
 
+    public void setConnecte(boolean Connecte) {
+        this.Connecte = Connecte;
+    }
+
+    public String getVisibilite() {
+        return Visibilite;
+    }
+
+    public void setVisibilite(String Visibilite) {
+        this.Visibilite = Visibilite;
+    }
+
+    public int getId_Visite() {
+        return id_Visite;
+    }
+
+    public void setId_Visite(int id_Visite) {
+        this.id_Visite = id_Visite;
+    }
+
+    
     
 
 }
