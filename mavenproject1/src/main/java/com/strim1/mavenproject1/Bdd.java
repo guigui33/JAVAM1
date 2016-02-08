@@ -840,7 +840,7 @@ public class Bdd {
 
                     }
                     }else{
-                        retourComp = "END_C#";
+                        retourAdmin += "END_C#";
                     }
                     resultatAdmin = st.executeQuery(r5);
                     vr = verifierRequete(r5);
@@ -862,7 +862,7 @@ public class Bdd {
 
                     }
                     }else{
-                        retourComp = "END_C";
+                        retourAdmin += "END_D";
                     }
 
                     return retourAdmin;
