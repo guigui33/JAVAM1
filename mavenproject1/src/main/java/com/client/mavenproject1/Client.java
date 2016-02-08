@@ -129,6 +129,8 @@ public class Client {
         retourReq = reception();
         if(!Connecte){
             deconnexion();
+            id_user = 0;
+            id_Visite = 0;
        }
         return retourReq;
     }

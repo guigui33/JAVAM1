@@ -1492,7 +1492,8 @@ public class Fenetre extends javax.swing.JFrame {
         retour = c.envoyerRequete(generer_requete_connexion());
         c.deconnexion();
         javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
-        
+        c.envoyerHello(c.getId_user(), c.getNum_session());
+
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
@@ -1560,10 +1561,16 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_visiter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_visiter
         // TODO add your handling code here:
+        if(!c.isConnecte()){
+            c.envoyerHello(0, 0);
+        }
         String s = c.envoyerRequete(generer_req_visiter());
         construire_compte_user(s);
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_User");
+        if(!c.isConnecte()){
+            c.deconnexion();
+        }
     }//GEN-LAST:event_click_visiter
 
     
@@ -1769,32 +1776,49 @@ public class Fenetre extends javax.swing.JFrame {
         String [] decoupage;
         String [] decoupageTmp;
         String [] decoupageTmp2;
+        String [] decoupageTmp3;
         String [] decoupageDip;
         String [] decoupageComp;
         decoupage = chaine.split("#");
         c.setNom(decoupage[1]);
         c.setPrenom(decoupage[2]);
         c.setAdresse_mail(decoupage[3]);
-        c.setTelephone(decoupage[4]);
-        c.setDateNaiss(decoupage[5]);
-        c.setVisibilite(decoupage[6]);
+        if(!decoupage[4].equals("END_I") && decoupage.length > 6){
+            c.setTelephone(decoupage[4]);
+            c.setDateNaiss(decoupage[5]);
+            c.setVisibilite(decoupage[6]);
+        }
+        else{
+            c.setTelephone("");
+            c.setDateNaiss("");
+            c.setVisibilite("");
+        }
         decoupageTmp = chaine.split("END_I");
-        decoupageTmp2 = decoupageTmp[1].split("END_C");
-        if(decoupageTmp2.length > 1){
+        decoupageTmp3 = decoupageTmp[1].split("#");
+        if(!decoupageTmp3[1].equals("END_C")){
+            decoupageTmp2 = decoupageTmp[1].split("END_C");
+            decoupageComp = decoupageTmp2[0].split("\\$");
+            for (int i = 0; i < decoupageComp.length; i++) {
+                c.listeCompetence[i] = decoupageComp[i];
+            }            
+        }
+        //javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp3[1]);
+        if(!decoupageTmp3[2].equals("END_D")){
+            decoupageTmp2 = decoupageTmp[1].split("END_C");
             decoupageDip = decoupageTmp2[1].split("\\$");
             for (int i = 0; i < decoupageDip.length; i++) {
                 c.listeDiplome[i] = decoupageDip[i];
             }
-            decoupageComp = decoupageTmp2[0].split("\\$");
-            for (int i = 0; i < decoupageComp.length; i++) {
-                c.listeCompetence[i] = decoupageComp[i];
-            }
         }
+        /*// javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp2[0]);
+        decoupageComp = decoupageTmp2[0].split("\\$");
+        for (int i = 0; i < decoupageComp.length; i++) {
+            c.listeCompetence[i] = decoupageComp[i];
+        }*/
     }
     
     private void construire_monCompte(){
         String retour;
-        c.envoyerHello(c.getId_user(), c.getNum_session());
         retour = c.envoyerRequete("VISITER#" + c.getId_user() + "#" + c.getId_user());
         javax.swing.JOptionPane.showMessageDialog(null,retour);
         construireMesInfos(retour);
@@ -2045,24 +2069,9 @@ public class Fenetre extends javax.swing.JFrame {
     
     private void construireInfosPerso(){
         jLabel_Nom_prenom.setText(c.getNom() +" "+ c.getPrenom());
-        javax.swing.JOptionPane.showMessageDialog(null,c.getVisibilite());
-        javax.swing.JOptionPane.showMessageDialog(null,c.isConnecte());
-
-        if(c.getVisibilite().equals("Public") || (c.getVisibilite().equals("UtilisateurCo") && c.isConnecte())){
-            jLabel_mail.setVisible(true);
-            jLabel_tel.setVisible(true);
-            jLabel_naissance.setVisible(true);
-            jLabel_visi_info.setVisible(false);
-            jLabel_mail.setText("Adresse mail : " + c.getAdresse_mail());
-            jLabel_tel.setText("Numéro de Téléphone : "+c.getTelephone());
-            jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss()); 
-        }
-        else {
-            jLabel_mail.setVisible(false);
-            jLabel_tel.setVisible(false);
-            jLabel_naissance.setVisible(false);
-            jLabel_visi_info.setVisible(true);            
-        }
+        jLabel_mail.setText("Adresse mail : " + c.getAdresse_mail());
+        jLabel_tel.setText("Numéro de Téléphone : "+c.getTelephone());
+        jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss()); 
     }
     
     private void construireDiplomes(){
@@ -2075,11 +2084,9 @@ public class Fenetre extends javax.swing.JFrame {
             j = 0;
             decoupage = c.listeDiplome[i].split("#");
             if(i==0){
-               j=1;
+                j = 1;
             }
-            if(decoupage[j+3].equals("Public") || (decoupage[j+3].equals("UtilisateurCo") && c.isConnecte())){
-                jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] +" <br>");                
-            }
+            jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] +" <br>");
             i++;
         }
         jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "</html>");
@@ -2092,13 +2099,11 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_Competence_User.setText("<html>");
         while(!c.listeCompetence[i].equals("")){
             j = 0;
-            decoupage = c.listeCompetence[i].split("#");
             if(i==0){
-               j=1;
+                j=1;
             }
-            if(decoupage[j+2].equals("Public") || (decoupage[j+2].equals("UtilisateurCo") && c.isConnecte())){
-                jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] +" <br>");
-            }
+            decoupage = c.listeCompetence[i].split("#");
+            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] +" <br>");
             i++;
         }
         jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "</html>");       
