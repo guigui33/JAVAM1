@@ -757,7 +757,7 @@ public class Bdd {
                             nom = resultatInfo.getString("Nom");
                             prenom = resultatInfo.getString("Prenom");
                             mail = resultatInfo.getString("AddrMail");
-                            retourInfo = idvisite + "#" + nom + "#" + prenom + "#" + mail + "END_I#";
+                            retourInfo = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + "END_I#";
                         }
                     }
 
@@ -809,6 +809,8 @@ public class Bdd {
                 case "Admin":
                 case "MonProfil":
                     resultatAdmin = st.executeQuery(r3);
+                    
+                    
                     while (resultatAdmin.next()) {
                         nom = resultatAdmin.getString("Nom");
                         prenom = resultatAdmin.getString("Prenom");
@@ -818,7 +820,11 @@ public class Bdd {
                         visibiliter = resultatAdmin.getString("VisibleInf");
                         retourAdmin = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter + "#END_I#";
                     }
+                    ;
                     resultatAdmin = st.executeQuery(r4);
+                    vr = verifierRequete(r4);
+                    
+                    if(vr == true){
                     while (resultatAdmin.next()) {
                         if (resultatAdmin.isLast()) {
                             matiere = resultatAdmin.getString("Matiere");
@@ -833,7 +839,12 @@ public class Bdd {
                         }
 
                     }
+                    }else{
+                        retourAdmin += "END_C#";
+                    }
                     resultatAdmin = st.executeQuery(r5);
+                    vr = verifierRequete(r5);
+                    if(vr==true){
                     while (resultatAdmin.next()) {
                         if (resultatAdmin.isLast()) {
                             Diplome = resultatAdmin.getString("Diplome");
@@ -849,6 +860,9 @@ public class Bdd {
                             retourAdmin = retourAdmin + Diplome + "#" + eta + "#" + annee + "#" + visibiliter + "$";
                         }
 
+                    }
+                    }else{
+                        retourAdmin += "END_D";
                     }
 
                     return retourAdmin;
@@ -929,18 +943,18 @@ public class Bdd {
         String test;
         Bdd bdd = new Bdd();
         bdd.connexion();
-                //bdd.verifierMail("grosse@bite.xxx");
+        //bdd.verifierMail("grosse@bite.xxx");
         //test=bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        test=bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive);
+        //bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive);
         //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
-        //test=bdd.visiterProfil(1,1);
+        test=bdd.visiterProfil(9,9);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         System.out.println(test);
     }
