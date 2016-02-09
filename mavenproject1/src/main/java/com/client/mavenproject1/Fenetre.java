@@ -301,7 +301,7 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jComboBox_Niveau_Rechercher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moyen", "Bon", "TresBon" }));
+        jComboBox_Niveau_Rechercher.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Moyen", "Bon", "TresBon", "NULL" }));
         jComboBox_Niveau_Rechercher.setEnabled(false);
 
         jButton_Rechercher.setText("Rechercher");
