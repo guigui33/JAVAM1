@@ -105,21 +105,6 @@ public class Bdd {
         return "ERROR#Informations incorrecte";
     }
     //Verification des entrées:
-
-    /*public boolean estValide(int annee, int mois, int jour){
-     Calendar c = Calendar.getInstance();
-     c.setLenient(false);
-     c.set(annee,mois,jour);
-     try{
-     c.getTime();
-     }
-     catch(IllegalArgumentException iAE){
-     return false;
-     }
-    
-     return true;
-     }
-     */
      
      /* Méthode permettand de récuperer le type du visiteur afin de voir les droits qu'il a */
     public String typeVisiteur(int idcourant, int idprofil) {
@@ -198,27 +183,7 @@ public class Bdd {
         }
     }
     /*L'adresse mail etant une clé primaire, on verifie si elle n'est pas deja présente dans la Base*/
-    /*public boolean verifierMail(String mail) {
-        ResultSet verif = null;
-        try {
-            st = co.createStatement();
-            verif = st.executeQuery("SELECT AddrMail FROM Utilisateurs WHERE AddrMail='" + mail + "'");
-            if (verif != null) {
-                int nbLignes = 0;
-                while (verif.next()) {
-                    nbLignes++;
-                }
-                if (nbLignes == 0) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-            }
-        } catch (SQLException e) {
-        }
-        return false;
-    }*/
+
     public boolean verifierMail(String mail) {
         ResultSet verif;
         try {
@@ -946,7 +911,6 @@ public class Bdd {
         String test;
         Bdd bdd = new Bdd();
         bdd.connexion();
-        //bdd.verifierMail("grosse@bite.xxx");
         //test=bdd.creerUtilisateur("Testconnexion", "Thomas", "accbc","1994-12-12", "123456",visibiliter.Prive);
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
