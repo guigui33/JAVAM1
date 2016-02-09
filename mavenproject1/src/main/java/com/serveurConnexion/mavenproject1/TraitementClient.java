@@ -70,9 +70,9 @@ class TraitementClient extends Thread{
         //se connecte à la bdd
         if(bdd.connexion()){
             retour=bdd.connexionClient(demande[1],demande[2]); //verification du mot de passe et login de l'utilisateur
-            if(!retour.equals("ERROR")){
+            String []decoupe=retour.split("#");
+            if(!decoupe[0].equals("ERROR")){
                 //si le mot de passe et le login  correspondent
-                String []decoupe=retour.split("#");
                 Integer idClient=Integer.parseInt(decoupe[1]);
                 Integer numSession=generateurNumSession();//création d'un nuemero de session
                 
