@@ -31,6 +31,7 @@ public class Fenetre extends javax.swing.JFrame {
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
         construire_entete(0);
         afficherRechercherAcceuil();
+        c.envoyerHello(0, 0);
     }
 
     /**
@@ -1456,6 +1457,7 @@ public class Fenetre extends javax.swing.JFrame {
         afficherRechercherAcceuil();
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
+        c.envoyerHello(0, 0);
         
     }//GEN-LAST:event_click_deconnexion
 
@@ -1478,6 +1480,7 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_connexion(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion
         // TODO add your handling code here:
+        c.deconnexion();
         String retour;
         c.connexion(50001);
         retour = c.envoyerRequete(generer_requete_connexion());
@@ -1552,16 +1555,16 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_visiter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_visiter
         // TODO add your handling code here:
-        if(!c.isConnecte()){
+        /*if(!c.isConnecte()){
             c.envoyerHello(0, 0);
-        }
+        }*/
         String s = c.envoyerRequete(generer_req_visiter());
         construire_compte_user(s);
         CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_User");
-        if(!c.isConnecte()){
+        /*if(!c.isConnecte()){
             c.deconnexion();
-        }
+        }*/
     }//GEN-LAST:event_click_visiter
 
     
