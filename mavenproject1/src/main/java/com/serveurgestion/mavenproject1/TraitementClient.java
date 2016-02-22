@@ -22,6 +22,12 @@ public class TraitementClient extends Thread {
      * le reponse du serveur au client
      */
     private String retourServeur;
+    
+    /**
+     * identifiant de l'utilisateur
+     */
+    private int id;
+    
     /**
      * le constructeur créé le service postal qui va gérer le dialogue entre le serveur et le client
      * à partir d'un socket de service
@@ -37,15 +43,16 @@ public class TraitementClient extends Thread {
         //classe qui va traiter la demande du client
         TraitementDemande traitementDemande=new TraitementDemande();
         demandeClient=servicePostal.reception();//receptionne la première requète du client
-        
+         
         //verification si la première requete est correcte
-        if(!traitementDemande.verificationConnexion(demandeClient)){
+        id=traitementDemande.verificationConnexion(demandeClient);
+        if(id<0){
             //si la première requète est incorrecte on ferme la connexion
             retourServeur="ERROR";
             fermeture=true;
         }
         else {
-            retourServeur="OK";//si non on informe le client que la connexion est verifiée
+            retourServeur="OK";//si non on informe le client que la connexion est verifiée 
         }
         servicePostal.emission(retourServeur);
         while(!fermeture){
@@ -59,6 +66,9 @@ public class TraitementClient extends Thread {
             else fermeture=true;
         }
         System.out.println("demande de deconnexion client.");
+        if(id>0){
+            traitementDemande.requete("DECONNEXION#"+Integer.toString(id));
+        }
         servicePostal.deconnexion();//on ferme le socket d'ecoute
     }
 }

@@ -29,33 +29,33 @@ public class ServicePostal {
      * @return la demande reçue
      */
     public String reception(){
-        String demandeClient=null;
+        String msg=null;
         InputStreamReader fluxEntree=null;
         try {
             fluxEntree = new InputStreamReader(connexionCourante.getInputStream());
             BufferedReader lecture=new BufferedReader(fluxEntree);
             
             try {
-                demandeClient=lecture.readLine();
-                System.out.println("demande client: "+demandeClient);
+                msg=lecture.readLine();
+                System.out.println("reception: "+msg);
             } catch (IOException ex) {
                 Logger.getLogger(ServicePostal.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (IOException ex) {
             Logger.getLogger(ServicePostal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return demandeClient;
+        return msg;
     }
     /**
      * emet une demande vers une entité
-     * @param retourServeur le message à émettre
+     * @param msg le message à émettre
      */
-    public void emission(String retourServeur){
+    public void emission(String msg){
         PrintStream fluxSortie;
         try {
             fluxSortie = new PrintStream(connexionCourante.getOutputStream());
-            System.out.println("retour Serveur: "+retourServeur);
-            fluxSortie.println(retourServeur);
+            System.out.println("emission: "+msg);
+            fluxSortie.println(msg);
             
         } catch (IOException ex) {
             Logger.getLogger(ServicePostal.class.getName()).log(Level.SEVERE, null, ex);
