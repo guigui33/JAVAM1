@@ -66,14 +66,14 @@ class TraitementDemande {
      * si le client en anonyme pas de verification 
      * sinon demande au serveur de connexion si il le client a le droit d'acceder au serveur Gestion
      * @param demandeClient la demande du client 
-     * @return true si le client s'est connecté au serveur Connexion ou si le client est anonyme,
-     *            false sinon
+     * @return retourne l'identifiant du client qui s'est connecté au serveur Connexion ou si le client est anonyme,
+     *            -1 si une erreur est rencontrée
      */
-    public boolean verificationConnexion(String demandeClient){
+    public int verificationConnexion(String demandeClient){
         String []demande=demandeClient.split("#");//decoupe la demande du client 
-        if(!demande[0].equals("HELLO")) return false; // si la demande n'est pas  une requète HELLO
+        if(!demande[0].equals("HELLO")) return -1; // si la demande n'est pas  une requète HELLO
         if(Integer.parseInt(demande[1])==0){
-            return true;//si s'est un client anonyme 
+            return 0;//si s'est un client anonyme 
         }
         try {
             //ouverture d'un session avec le serveur Connexion
@@ -90,10 +90,16 @@ class TraitementDemande {
             String reponse= servicePostalCo.reception();
             System.out.println("Reponse du serveur connexion: " + reponse);
             servicePostalCo.deconnexion();//ferme le socket 
-            return reponse.equals("OK");//si la reponse est ok ou error
             
+            if(reponse.equals("OK"))//si la reponse est ok
+            {
+                return Integer.parseInt(demande[1]);
+            }
+            else {
+                return -1;//si l'utilisateur n'est pas référencé 
+            }
         } catch (IOException ex) {
-            return false;//si une erreur arrive on retourne par défaut false
+            return -1;//si une erreur arrive on retourne par défaut false
         }
     }
     /**
