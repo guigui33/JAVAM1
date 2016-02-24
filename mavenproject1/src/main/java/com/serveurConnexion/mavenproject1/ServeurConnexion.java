@@ -13,7 +13,7 @@ public class ServeurConnexion {
     private final int portClient;
     
     /**
-     * le port d'ecoute du servuer pour les autres serveurs
+     * le port d'ecoute du serveur pour les autres serveurs
      */
     private final int portServeur;
     

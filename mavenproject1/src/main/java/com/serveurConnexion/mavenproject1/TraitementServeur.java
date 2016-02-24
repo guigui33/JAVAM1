@@ -1,7 +1,6 @@
 package com.serveurConnexion.mavenproject1;
 
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
