@@ -137,7 +137,7 @@ class TraitementDemande {
     private String modifierUtilisateur(String[] decoupageRequete) {
         //se connecte avec la bdd
         if(bdd.connexion()){ 
-            return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3],decoupageRequete[4],bdd.parseVisibiliter(decoupageRequete[5]));
+            return bdd.modifierInformation(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3],decoupageRequete[4],bdd.parseVisibiliter(decoupageRequete[5]),decoupageRequete[6]);
         }
         return "ERROR";
     }
