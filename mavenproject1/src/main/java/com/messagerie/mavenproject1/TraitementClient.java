@@ -25,45 +25,51 @@ public class TraitementClient extends Thread{
         this.servicePostal=new ServicePostal(service);
         this.clients=clients;
     }
-   
+    
     private String traitementRequete(){
-         String[] decoupageRequete;
+        String[] decoupageRequete;
         //decoupe la requète
         decoupageRequete=demandeClient.split("#");
-           switch(decoupageRequete[0]){
+        switch(decoupageRequete[0]){
+            case "HELLO":
+                return ajoutUilisateur(decoupageRequete);
             case "INFO":
-                 return informationClient(decoupageRequete);
+                return informationClient(decoupageRequete);
             case "LIRE":
                 return lire(decoupageRequete);
             case "POSTER":
-                   return poster(decoupageRequete);
+                return poster(decoupageRequete);
             case "APPEL":
-                    return appel(decoupageRequete);
+                return appel(decoupageRequete);
             case "CONTACT":
                 return contact(decoupageRequete);
             default:
                 return "ERRROR#requête inconnue.";
         }
     }
-
+    
     private String informationClient(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private String lire(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private String poster(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private String appel(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     private String contact(String[] decoupageRequete) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    private String ajoutUilisateur(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

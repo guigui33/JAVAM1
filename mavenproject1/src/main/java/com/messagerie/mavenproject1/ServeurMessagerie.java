@@ -24,9 +24,11 @@ public class ServeurMessagerie {
     private ServerSocket ecoute;
 
     public ServeurMessagerie(int port){
-        this.service=new Socket();
+        
         try {
+            this.service=new Socket();
             this.ecoute=new ServerSocket(port);
+            this.clients=new Vector<>();
         } catch (IOException ex) {
             Logger.getLogger(ServeurMessagerie.class.getName()).log(Level.SEVERE, null, ex);
         }

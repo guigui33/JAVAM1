@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.strim1.mavenproject1;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -21,7 +15,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author guigui
+ * 
  */
 public class ServicePostalUDP {
     private DatagramSocket datagramme;
@@ -62,7 +56,7 @@ public class ServicePostalUDP {
             DatagramPacket paquetEntrant=new DatagramPacket(tabDonneeEntrante,tabDonneeEntrante.length);
             datagramme.receive(paquetEntrant);
             
-            ByteArrayInputStream byteEntrante=new ByteInputStream(tabDonneeEntrante,0,paquetEntrant.getLength());
+            ByteArrayInputStream byteEntrante=new ByteArrayInputStream(tabDonneeEntrante,0,paquetEntrant.getLength());
             DataInputStream donneeEntrante= new DataInputStream(byteEntrante);
             
             String msg=donneeEntrante.readUTF();
