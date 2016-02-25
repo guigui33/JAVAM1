@@ -683,7 +683,7 @@ public class Bdd {
 
             String nom, prenom, mail, tel, matiere, niveau, diplome, eta, Diplome, visibiliter, retourInfo = "", retourComp = "", retourDip = "", retourAdmin = "", retourVisiteur;
             String visiteur = typeVisiteur(idcourant, idvisite);
-
+            boolean disponible;
             Date annee;
 
             String retourUtilisateur;
@@ -776,7 +776,8 @@ public class Bdd {
                         annee = resultatAdmin.getDate("AnneeN");
                         tel = resultatAdmin.getString("Tel");
                         visibiliter = resultatAdmin.getString("VisibleInf");
-                        retourAdmin = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter + "#END_I#";
+                        disponible=resultatAdmin.getBoolean("Disponible");
+                        retourAdmin = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter + "#" +disponible+ "#END_I#";
                     }
                     ;
                     resultatAdmin = st.executeQuery(r4);
@@ -902,14 +903,16 @@ public class Bdd {
         
         //////////////////////////********************************************V2 MESSAGERIE ******************************//////////////////////////////////
         
-        public void envoyerMessage(int idcourant, int idrecepteur, String objet, String message){
+        public String envoyerMessage(int idcourant, int idrecepteur, String objet, String message){
         
             try {
             st = co.createStatement();
             String sql = "INSERT INTO `Message`(`IdEmetteur`, `IdRecepteur`, `Objet`, `Message`) VALUES ("+idcourant+", "+idrecepteur+", '"+objet+"' , '"+message+"') ";
             st.executeUpdate(sql);
+            return "OK";
             } catch (SQLException ex) {
                 Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+                return "ERROR";
             }
         }
     
