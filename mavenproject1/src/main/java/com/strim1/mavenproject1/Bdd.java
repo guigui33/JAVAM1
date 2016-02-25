@@ -972,13 +972,13 @@ public class Bdd {
             return retour;
         }
         
-        public String utilisateur(){
+        public String utilisateurs(int idCourant){
             String nomRetour,prenomRetour,retour="";
             int id;
             ResultSet r1;
             try {
             st = co.createStatement();
-            String sql = "SELECT Id, Nom, Prenom FROM Utilisateurs";
+            String sql = "SELECT Id, Nom, Prenom FROM Utilisateurs WHERE Id!="+idCourant+"";
             r1 = st.executeQuery(sql);
                 while(r1.next()){
                         if(r1.isLast()){
