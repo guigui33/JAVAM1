@@ -47,9 +47,9 @@ public class TraitementServeur extends Thread {
      * @param demande la demande du serveur contenant l'identifiant du client et son numero de session
      * @return une chaine de caractère: ok si le client est connecté , error sinon
      */
- 
+    
     private String verificationConnexion(String[] demande) {
-                
+        
         if (clients.verification(Integer.parseInt(demande[1]), Integer.parseInt(demande[2]))){
             return "OK"; //si le numero correspond
         }
@@ -71,8 +71,30 @@ public class TraitementServeur extends Thread {
                 Logger.getLogger(TraitementServeur.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        avertirDeconnexionClient(demande[1]);
+        
         return "OK";
     }
+    
+    private void avertirDeconnexionClient(String idClient){
+        try {
+            Socket serveurMessagerie;
+            
+            serveurMessagerie = new Socket("localhost",50007);
+            ServicePostal servicePostalMsg = new ServicePostal(serveurMessagerie);
+            
+            String requete="DECONNEXION#"+idClient;
+            System.out.println("requete au serveur de messagerie: "+requete);
+            servicePostalMsg.emission(requete);//emission de la requete
+            
+            String reponse= servicePostalMsg.reception();//recoit la reponse du serveur
+            System.out.println("Reponse du serveur connexion: " + reponse);
+        } catch (IOException ex) {
+            Logger.getLogger(TraitementServeur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * decoupe la demande du client et en fonction du mot clé redirige vers le service correspondant
      * @return la reponse pour le client
@@ -102,7 +124,7 @@ public class TraitementServeur extends Thread {
     public void run() {
         boolean fermeture = false;
         while (!fermeture) {
-            demandeServeur = servicePostal.reception();//receptionne la demande  
+            demandeServeur = servicePostal.reception();//receptionne la demande
             if (demandeServeur != null) {
                 retourServeur = requete();//traite la demande
                 servicePostal.emission(retourServeur);//emet la reponse

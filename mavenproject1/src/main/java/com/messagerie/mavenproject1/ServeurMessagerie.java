@@ -1,54 +1,45 @@
 
 package com.messagerie.mavenproject1;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.strim1.mavenproject1.ServicePostalUDP;
+import java.util.Hashtable;
 
 /**
  *
  * 
  */
 public class ServeurMessagerie {
-    private Vector <Client> clients;
-    
-     /**
-     * le socket de service entre un client et serveur
-     */
-    private Socket service;
     /**
-     * le socket d'ecoute du serveur
+     * le port d'ecoute du serveur pour les clients
      */
-    private ServerSocket ecoute;
-
-    public ServeurMessagerie(int port){
-        
-        try {
-            this.service=new Socket();
-            this.ecoute=new ServerSocket(port);
-            this.clients=new Vector<>();
-        } catch (IOException ex) {
-            Logger.getLogger(ServeurMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private final int portClient;
+    
+    /**
+     * le port d'ecoute du serveur pour les autres serveurs
+     */
+    private final int portServeur;
+    
+    private final Hashtable <Integer,Client> clients;
+    
+    private final ServicePostalUDP servicePostalUDP=new ServicePostalUDP(50008);
+    
+    public ServeurMessagerie(int portClient,int portServeur){
+        this.clients=new Hashtable<>();
+        this.portClient=portClient;
+        this.portServeur=portServeur;
     }
     
-     public void fonctionnementService(){
-        while(true){
-            System.out.println("attente client...");
-           
-            try {
-                service=ecoute.accept();//accepte un client
-                System.out.println("Nouvelle connexion : "+ service);
-                new TraitementClient(service,clients).start();//ouvre un thread pour traiter un client
-            } catch (IOException ex) {
-                Logger.getLogger(ServeurMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-            }                     
-        }
+    /**
+     * création des deux threads qui traiteront les serveurs et les clients
+     */
+    public void fonctionnementService(){
+        AccueilClientMessagerie acm=new AccueilClientMessagerie(portClient, clients,servicePostalUDP);
+        AccueilServeurMessagerie asm=new AccueilServeurMessagerie(portServeur,clients,servicePostalUDP);
+        acm.start();
+        asm.start();
     }
-     public static void main(String[] args) {
+    
+    public static void main(String[] args) {
         System.out.println("debut serveur Connexion");
-        new ServeurMessagerie(50006).fonctionnementService();
+        new ServeurMessagerie(50006,50007).fonctionnementService();
     }
 }
