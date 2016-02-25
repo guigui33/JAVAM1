@@ -135,6 +135,10 @@ public class TraitementClient extends Thread{
     }
 
     private String utilisateurs(String[] decoupageRequete) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Bdd bdd=new Bdd();
+        if(bdd.connexion()){
+            return bdd.utilisateurs(Integer.valueOf(decoupageRequete[1]));
+        }
+        return "ERROR";
     }
 }
