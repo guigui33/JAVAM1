@@ -38,7 +38,7 @@ public class TraitementClient extends Thread{
         if(decoupageRequete[0].equals("HELLO")){
             return ajoutUilisateur(decoupageRequete);
         }
-        else if(!contenuListe(Integer.valueOf(decoupageRequete[1]))){
+        else if(contenuListe(Integer.valueOf(decoupageRequete[1]))){
             switch(decoupageRequete[0]){
                 case "LISTEMSG":
                     return ListeMsg(decoupageRequete);
