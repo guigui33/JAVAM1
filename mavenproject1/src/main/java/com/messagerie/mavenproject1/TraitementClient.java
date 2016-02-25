@@ -52,7 +52,7 @@ public class TraitementClient extends Thread{
                     break;
             }
         }
-        return "ERRROR#requête inconnue.";
+        return "ERROR#requête inconnue.";
     }
     
     private String ListeMsg(String[] decoupageRequete) {
