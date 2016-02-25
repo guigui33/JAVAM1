@@ -54,12 +54,16 @@ public class TraitementServeur extends Thread {
     
     private String deconnexionClient(String[] demande) {
         Integer idClientSupp = Integer.parseInt(demande[1]);
+        Client cSupp=clients.get(idClientSupp);
         clients.remove(idClientSupp);
-        for (Integer idClient : clients.keySet())
-        {
-            Client c=clients.get(idClient);
-            if(c.isDisponible())
-                servicePostalUDP.envoyer(idClient.toString()+c.getInformations(idClient), c.getIp(), c.getPort());
+        if(cSupp.isDisponible()){           
+            
+            for (Integer idClient : clients.keySet())
+            {
+                Client c=clients.get(idClient);
+                if(c.isDisponible())
+                    servicePostalUDP.envoyer(idClient.toString()+c.getInformations(idClient), c.getIp(), c.getPort());
+            }
         }
         return "OK";
     }
