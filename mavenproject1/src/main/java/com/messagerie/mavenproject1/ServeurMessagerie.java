@@ -4,7 +4,6 @@ import com.strim1.mavenproject1.ServicePostalUDP;
 import java.util.Hashtable;
 
 /**
- *
  * 
  */
 public class ServeurMessagerie {

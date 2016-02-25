@@ -48,6 +48,8 @@ public class TraitementClient extends Thread{
                     return poster(decoupageRequete);
                 case "CONTACT":
                     return contact(decoupageRequete);
+                case "":
+                    return utilisateurs(decoupageRequete);
                 default:
                     return "ERROR#requète inconnue.";
             }
@@ -130,5 +132,9 @@ public class TraitementClient extends Thread{
         }
         System.out.println("demande de deconnexion client.");
         servicePostal.deconnexion();//on ferme le socket
+    }
+
+    private String utilisateurs(String[] decoupageRequete) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
