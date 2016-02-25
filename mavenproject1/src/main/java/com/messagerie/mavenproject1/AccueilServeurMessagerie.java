@@ -36,8 +36,8 @@ public class AccueilServeurMessagerie extends Thread {
             this.ecoute=new ServerSocket(portClient);
         } catch (IOException ex) {
             Logger.getLogger(AccueilServeurMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-           exit(1);
+             exit(1);
+        }                  
        }   
       
       public void run(){

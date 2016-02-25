@@ -50,9 +50,8 @@ public class AccueilClientMessagerie extends Thread{
             this.ecoute=new ServerSocket(portClient);
         } catch (IOException ex) {
             Logger.getLogger(AccueilClientMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-            
+            exit(1);
         }
-        exit(1);
     }
     
     /**
