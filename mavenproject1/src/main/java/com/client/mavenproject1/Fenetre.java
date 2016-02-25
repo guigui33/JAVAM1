@@ -89,7 +89,6 @@ public class Fenetre extends javax.swing.JFrame {
         jList3 = new javax.swing.JList<>();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton_Message = new javax.swing.JButton();
         Panel_User = new javax.swing.JPanel();
         jLabel_Nom_prenom = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -513,13 +512,6 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jButton_Message.setText("Envoyer un message");
-        jButton_Message.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_MessageMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout Panel_RechercheLayout = new javax.swing.GroupLayout(Panel_Recherche);
         Panel_Recherche.setLayout(Panel_RechercheLayout);
         Panel_RechercheLayout.setHorizontalGroup(
@@ -535,8 +527,6 @@ public class Fenetre extends javax.swing.JFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_RechercheLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton_Message)
-                .addGap(52, 52, 52)
                 .addComponent(jButton1)
                 .addGap(401, 401, 401))
         );
@@ -548,9 +538,7 @@ public class Fenetre extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(Panel_RechercheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton_Message))
+                .addComponent(jButton1)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -1579,11 +1567,6 @@ public class Fenetre extends javax.swing.JFrame {
         }*/
     }//GEN-LAST:event_click_visiter
 
-    private void jButton_MessageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_MessageMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton_MessageMouseClicked
-
     
     /**
      * @param args the command line arguments
@@ -1637,7 +1620,6 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel Photo_profil;
     private javax.swing.JTextField TextField_mail_connexion;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton_Message;
     private javax.swing.JButton jButton_Rechercher;
     private javax.swing.JButton jButton_ajouter_comp;
     private javax.swing.JButton jButton_ajouter_dip;
