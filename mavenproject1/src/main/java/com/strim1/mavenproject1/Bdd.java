@@ -5,6 +5,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
 
 /**
  * Classe gÃ©rant la BDD
@@ -30,7 +31,7 @@ public class Bdd {
         Bon,
         Tresbon,
         NULL;
-    };
+    }
     /**
      * Le nom pour la BDD
      */
@@ -135,7 +136,7 @@ public class Bdd {
                 return niveau.NULL;
         }
     }
-
+    
     /*Vérifie si la requete retourne 1 ou plusieurs lignes (surement inutiles a vérifier)*/
     public boolean verifierRequete(String requete) {
         ResultSet verif = null;
@@ -267,8 +268,14 @@ public class Bdd {
         }
     }
 
-    public String modifierInformation(int id, String mdp, String tel, String addrmail, visibiliter vi) {
+    public String modifierInformation(int id, String mdp, String tel, String addrmail, visibiliter vi,String d) {
 
+        if(d.equals("Oui")){
+            d="TRUE";
+        }else{
+            d="FALSE";
+        }
+        
         try {
             int i;
             int val = 0;
@@ -284,7 +291,7 @@ public class Bdd {
                     val = ((Number) resultat1.getObject(1)).intValue();
                 }
                 if (val == 1) {
-                    String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "' WHERE Id=" + id + "";
+                    String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "', Disponible="+d+" WHERE Id=" + id + "";
                     st.executeUpdate(sql);
                     return new GestionRetourBDD().valeurRetour("Information modif ok");
                 } else {
@@ -676,7 +683,7 @@ public class Bdd {
 
             String nom, prenom, mail, tel, matiere, niveau, diplome, eta, Diplome, visibiliter, retourInfo = "", retourComp = "", retourDip = "", retourAdmin = "", retourVisiteur;
             String visiteur = typeVisiteur(idcourant, idvisite);
-
+            boolean disponible;
             Date annee;
 
             String retourUtilisateur;
@@ -769,7 +776,8 @@ public class Bdd {
                         annee = resultatAdmin.getDate("AnneeN");
                         tel = resultatAdmin.getString("Tel");
                         visibiliter = resultatAdmin.getString("VisibleInf");
-                        retourAdmin = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter + "#END_I#";
+                        disponible=resultatAdmin.getBoolean("Disponible");
+                        retourAdmin = idvisite + "#" + nom + "#" + prenom + "#" + mail + "#" + tel + "#" + annee + "#" + visibiliter + "#" +disponible+ "#END_I#";
                     }
                     ;
                     resultatAdmin = st.executeQuery(r4);
@@ -889,10 +897,156 @@ public class Bdd {
             Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
             return new GestionRetourBDD().valeurRetour("Erreur Visite");
         }
-    }
 
+    }
+        
+        
+        //////////////////////////********************************************V2 MESSAGERIE ******************************//////////////////////////////////
+        
+        public String envoyerMessage(int idcourant, int idrecepteur, String objet, String message){
+        
+            try {
+            st = co.createStatement();
+            String sql = "INSERT INTO `Message`(`IdEmetteur`, `IdRecepteur`, `Objet`, `Message`) VALUES ("+idcourant+", "+idrecepteur+", '"+objet+"' , '"+message+"') ";
+            st.executeUpdate(sql);
+            return "OK";
+            } catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+                return "ERROR";
+            }
+        }
     
+        public String afficherMessage(int idMsg){
+        
+            String nomRetour,prenomRetour,retour="", objet , message ;
+            ResultSet r1;
+            try {
+            st = co.createStatement();
+            String sql = "SELECT  Objet, Message, Nom, Prenom FROM Message m, Utilisateurs u WHERE IdMessage="+idMsg+" AND u.Id=m.IdEmetteur";
+            r1 = st.executeQuery(sql);
+            while(r1.next()){
+                                objet = r1.getString("objet");
+                                nomRetour = r1.getString("Nom");
+                                prenomRetour = r1.getString("Prenom");
+                                message=r1.getString("Message");
+                                retour = idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#" + message ;
+            }
+            /*on change d'etat le message*/
+            String sql1 = "UPDATE Message SET Lu=TRUE WHERE IdMessage="+idMsg+"";
+            st.executeUpdate(sql1);
+            
+            } catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return retour;
+        }
     
+        public String messagerie(int idCourant){
+            String nomRetour,prenomRetour,retour="", objet, idMsg ;
+            ResultSet r1;
+            try {
+            st = co.createStatement();
+            String sql = "SELECT  IdMessage, Objet, Nom, Prenom  FROM Message m, Utilisateurs u WHERE m.IdRecepteur="+idCourant+" AND Nom IN (SELECT Nom From Utilisateurs WHERE m.IdEmetteur=u.Id)";
+            r1 = st.executeQuery(sql);
+            while(r1.next()){
+                    if(r1.isLast()){
+                                objet = r1.getString("objet");
+                                nomRetour = r1.getString("Nom");
+                                prenomRetour = r1.getString("Prenom");
+                                idMsg=r1.getString("IdMessage");
+                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet;
+                        
+                    }else{
+                                objet = r1.getString("objet");
+                                nomRetour = r1.getString("Nom");
+                                prenomRetour = r1.getString("Prenom");
+                                idMsg=r1.getString("IdMessage");
+                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#";
+                    }
+            }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            return retour;
+        }
+        
+        public String utilisateur(){
+            String nomRetour,prenomRetour,retour="";
+            int id;
+            ResultSet r1;
+            try {
+            st = co.createStatement();
+            String sql = "SELECT Id, Nom, Prenom FROM Utilisateurs";
+            r1 = st.executeQuery(sql);
+                while(r1.next()){
+                        if(r1.isLast()){
+                                    id=r1.getInt("Id");
+                                    nomRetour = r1.getString("Nom");
+                                    prenomRetour = r1.getString("Prenom");
+                                    retour += id + "#" +nomRetour + "#" + prenomRetour;
+
+                        }else{
+                                    id=r1.getInt("Id");
+                                    nomRetour = r1.getString("Nom");
+                                    prenomRetour = r1.getString("Prenom");
+                                    retour += id + "#" + nomRetour + "#" + prenomRetour +"#";
+                        }
+                }
+            }catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return retour;   
+        }
+
+        
+        public String getNomPrenom(int idcourant){
+            
+            ResultSet r1;
+            String nomRetour, prenomRetour, retour="ERROR";
+           try {
+
+            st = co.createStatement();
+            String sql = "SELECT Nom, Prenom FROM Utilisateurs WHERE Id="+idcourant+"";
+            r1 = st.executeQuery(sql);
+                while(r1.next()){
+                        nomRetour = r1.getString("Nom");
+                        prenomRetour = r1.getString("Prenom");
+                        retour = nomRetour + "#" + prenomRetour;
+                }
+            }catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             return retour;
+        }
+        
+        
+        public boolean estDisponible(int idcourant){
+            
+            ResultSet r1;
+            boolean dispo=false;
+           try {
+            st = co.createStatement();
+            String sql = "SELECT Disponible FROM Utilisateurs WHERE Id="+idcourant+"";
+            r1 = st.executeQuery(sql);
+                while(r1.next()){
+                        dispo=r1.getBoolean("Disponible");
+                }
+            if (dispo != true){
+                System.out.println("False");
+                return false;
+            }else{
+                System.out.println("True");
+                return true;
+            }
+            }catch (SQLException ex) {
+                Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            return false;
+        }
+        
     public static void main(String[] args) {
         String test;
         Bdd bdd = new Bdd();
@@ -901,14 +1055,19 @@ public class Bdd {
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        //bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive);
+        //bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive,"Oui");
         //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
         //bdd.supprimerDiplome(1,"fr");
         //test=bdd.connexionClient("abc", "123456");
-        test=bdd.visiterProfil(0,9);
+        //bdd.envoyerMessage(3, 2, "Test 5 objet", "Test 5 message");
+        //test= bdd.messagerie(2);
+        //test=bdd.utilisateur();
+        //test=bdd.visiterProfil(0,9);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
-        System.out.println(test);
+        //bdd.estDisponible(3);
+        //test=bdd.getNomPrenom(2);
+        //System.out.println(test);
     }
 }
