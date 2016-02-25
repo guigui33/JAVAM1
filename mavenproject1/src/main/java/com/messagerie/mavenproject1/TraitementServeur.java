@@ -58,8 +58,8 @@ public class TraitementServeur extends Thread {
         for (Integer idClient : clients.keySet())
         {
             Client c=clients.get(idClient);
-            if(c.isDirect())
-                servicePostalUDP.envoyer(idClient.toString()+c.getInformations(), c.getIp(), c.getPort());
+            if(c.isDisponible())
+                servicePostalUDP.envoyer(idClient.toString()+c.getInformations(idClient), c.getIp(), c.getPort());
         }
         return "OK";
     }
