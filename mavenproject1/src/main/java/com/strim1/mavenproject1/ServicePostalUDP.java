@@ -14,12 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * 
+ *permet de gerer l'emission, la reception en UDP
  */
 public class ServicePostalUDP {
+    /**
+     * Le datagramme UDP
+     */
     private DatagramSocket datagramme;
     
+    /**
+     * Construteur, qui definit le datagramSocket à partir d'un port déterminé
+     * @param port le port  
+     */
     public ServicePostalUDP(int port){
         try {
             datagramme=new DatagramSocket(port);
@@ -27,6 +33,13 @@ public class ServicePostalUDP {
             Logger.getLogger(ServicePostalUDP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * envoit d'un message en fonction d'un ip et d'un port
+     * @param msg le message à envoyer 
+     * @param addrDest l'adresse du destinataire
+     * @param portDest  le prot du destinataire
+     */
     public void envoyer(String msg,String addrDest,int portDest){
         
         try {
@@ -50,6 +63,10 @@ public class ServicePostalUDP {
         }
     }
     
+    /**
+     * la reception d'un message udp 
+     * @return le message réçu
+     */
     public String recevoir(){
         try {
             byte[] tabDonneeEntrante = new byte[1024];
