@@ -77,6 +77,10 @@ public class TraitementServeur extends Thread {
         return "OK";
     }
     
+    /**
+     * avertir le serveur Messagerie de la deconnexion d'un utilisateur
+     * @param idClient identifiant Bdd de l'utilisateur
+     */
     private void avertirDeconnexionClient(String idClient){
         try {
             Socket serveurMessagerie;
