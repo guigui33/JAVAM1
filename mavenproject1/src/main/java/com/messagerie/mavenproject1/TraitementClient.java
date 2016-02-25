@@ -81,7 +81,7 @@ public class TraitementClient extends Thread{
     
     private String contact(String[] decoupageRequete) {
         int idClient=Integer.valueOf(decoupageRequete[1]);
-        String retour="";
+        String retour="LISTE#";
         for (Integer id : clients.keySet())
         {
             if(id!=idClient){
