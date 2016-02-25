@@ -25,6 +25,7 @@ public class AccueilClientMessagerie extends Thread{
      *le Servie Postal permettant de gérer les envois et les receptions en UDP
      */
     private final ServicePostalUDP servicePostalUDP;
+    
     /**
      * le socket de service entre un client et serveur
      */

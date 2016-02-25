@@ -24,15 +24,24 @@ public class AccueilServeurMessagerie extends Thread {
      * le socket d'ecoute du serveur de connexion
      */
     private ServerSocket ecoute;
+    
     /**
      * Le service postal qui gere les emissions et receptions en UDP
      */
     private final ServicePostalUDP servicePostalUDP;
+    
     /**
-     *
+     *la liste des clients déclarés au Serveur Messagerie, partagée par tous les Threads 
      */
     private final Hashtable <Integer,Client> clients;
     
+    /**
+     * Le contrcteur de la classe.
+     * 
+     * @param portClient le port d'ecoute du Serveur Messagerie pour les demandes des autres Serveurs
+     * @param clients la liste des clients déclarés au Serveur Messagerie
+     * @param servicePostalUDP le service postal gérant les échanges en UDP
+     */
     public AccueilServeurMessagerie(int portClient, Hashtable <Integer,Client> clients,ServicePostalUDP servicePostalUDP){
         this.clients=clients;
         this.service=new Socket();
@@ -45,9 +54,13 @@ public class AccueilServeurMessagerie extends Thread {
         }
     }
     
+    /**
+     * Fonctionnement de la classe
+     * attend qu'un serveur se connecte à messagerie.
+     * ouvre un thead pour traiter la demande du serveur
+     */
     public void run(){
-        while(true){
-            
+        while(true){            
             try {
                 System.out.println("attente serveur...");
                 //attend qu'un serveur se connecte
