@@ -59,7 +59,7 @@ public class TraitementClient extends Thread{
     private String ListeMsg(String[] decoupageRequete) {
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-            return bdd.messagerie(Integer.valueOf(decoupageRequete[2]));
+            return bdd.messagerie(Integer.valueOf(decoupageRequete[1]));
         }
         return "ERROR";
     }
@@ -67,7 +67,7 @@ public class TraitementClient extends Thread{
     private String lire(String[] decoupageRequete) {
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[1]));
+            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[2]));
         }
         return "ERROR";
     }
