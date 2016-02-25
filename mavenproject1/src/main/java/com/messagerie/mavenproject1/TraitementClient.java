@@ -86,8 +86,8 @@ public class TraitementClient extends Thread{
         {
             if(id!=idClient){
                 Client c=clients.get(idClient);
-                if(c.isDirect()){
-                    retour+=("#"+Integer.toString(idClient)+c.getInformations());
+                if(c.isDisponible()){
+                    retour+=("#"+Integer.toString(idClient)+c.getInformations(id));
                 }
             }
         }
@@ -105,8 +105,8 @@ public class TraitementClient extends Thread{
         for (Integer idClient : clients.keySet())
         {
             Client c=clients.get(idClient);
-            if(c.isDirect())
-                servicePostalUDP.envoyer(decoupageRequete[1]+cAjout.getInformations(), c.getIp(), c.getPort());
+            if(c.isDisponible())
+                servicePostalUDP.envoyer(decoupageRequete[1]+cAjout.getInformations(idClient), c.getIp(), c.getPort());
         }
         clients.put(idClientAjout,cAjout);
         return "OK";

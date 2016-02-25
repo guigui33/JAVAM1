@@ -9,25 +9,24 @@ import com.strim1.mavenproject1.Bdd;
 public class Client {
     private int port;
     private String  ip;
-    private boolean direct;
-    private int id;
+    private boolean disponible;
     
     public Client(String ip,int port,int id){
         this.port=port;
         this.ip=ip;
-        this.id=id;
-        initialiserDirect();
+        this.disponible=initialiserDirect(id);
     }
 
-    private void initialiserDirect(){
+    private boolean initialiserDirect(int id){
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-           direct=bdd.etreAppelDirectement(id);
+           return bdd.estDisponible(id);
         }
         else 
-            direct=false;
+            return false;
     }
-    public String getInformations(){
+    
+    public String getInformations(int id){
         String nom_prenom=null;
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
@@ -45,8 +44,8 @@ public class Client {
         return ip;
     }
 
-    public boolean isDirect() {
-        return direct;
+    public boolean isDisponible() {
+        return disponible;
     }
     
     
