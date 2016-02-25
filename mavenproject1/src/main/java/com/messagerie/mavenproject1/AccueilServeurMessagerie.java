@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.messagerie.mavenproject1;
 
 import com.strim1.mavenproject1.ServicePostalUDP;
@@ -15,8 +10,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author guigui
+ *Cette classe permet d'attendre les connexions des autres Serveurs de l'application.
+ * La liste des clients délarés au serveur de Messagerie et le service postal UDP sont partagés par les differents Thread de la Messagerie
+ * La classe attend qu'un autre serveur se connecte 
  */
 public class AccueilServeurMessagerie extends Thread {
     /**
