@@ -74,7 +74,7 @@ public class TraitementClient extends Thread{
     private String poster(String[] decoupageRequete) {
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-            return bdd.envoyerMessage(Integer.valueOf(decoupageRequete[1]),Integer.valueOf(decoupageRequete[2]),decoupageRequete[3],decoupageRequete[4]);
+            //return bdd.envoyerMessage(Integer.valueOf(decoupageRequete[1]),Integer.valueOf(decoupageRequete[2]),decoupageRequete[3],decoupageRequete[4]);
         }
         return "ERROR";
     }

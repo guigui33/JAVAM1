@@ -22,7 +22,8 @@ public class Client {
     private void initialiserDirect(){
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-           direct=bdd.etreAppelDirectement(id);
+           //direct=bdd.etreAppelDirectement(id);
+           direct=true;
         }
         else 
             direct=false;
