@@ -942,7 +942,7 @@ public class Bdd {
         }
     
         public String messagerie(int idCourant){
-            String nomRetour,prenomRetour,retour="", objet, idMsg ;
+            String nomRetour,prenomRetour,retour="Pas demessage", objet, idMsg ;
             ResultSet r1;
             try {
             st = co.createStatement();
