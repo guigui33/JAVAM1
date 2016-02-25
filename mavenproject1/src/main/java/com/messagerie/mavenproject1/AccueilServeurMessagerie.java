@@ -55,7 +55,9 @@ public class AccueilServeurMessagerie extends Thread {
     }
     
     /**
-     * 
+     * Fonctionnement de la classe
+     * attend qu'un serveur se connecte à messagerie.
+     * ouvre un thead pour traiter la demande du serveur
      */
     public void run(){
         while(true){            

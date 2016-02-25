@@ -49,16 +49,17 @@ public class TraitementClient extends Thread{
                 case "CONTACT":
                     return contact(decoupageRequete);
                 default:
-                    break;
+                    return "ERROR#requète inconnue.";
             }
         }
-        return "ERROR#requête inconnue.";
+        else 
+            return "ERROR#Vous devez etre connecté.";
     }
     
     private String ListeMsg(String[] decoupageRequete) {
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
-            return bdd.messagerie(Integer.valueOf(decoupageRequete[1]));
+            return bdd.messagerie(Integer.valueOf(decoupageRequete[2]));
         }
         return "ERROR";
     }

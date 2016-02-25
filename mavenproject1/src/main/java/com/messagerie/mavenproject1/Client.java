@@ -3,10 +3,16 @@ package com.messagerie.mavenproject1;
 import com.strim1.mavenproject1.Bdd;
 
 /**
+ *Information sur un client délaré au Serveur Messagerie
+ * Les variales: 
+ *      -le port UDP permettant de le contacter et son ip.
+ *      -si le client est disponible pour être contacter directement
  *
- * @author guigui
  */
 public class Client {
+    /**
+     * le port du client pour 
+     */
     private int port;
     private String  ip;
     private boolean disponible;
