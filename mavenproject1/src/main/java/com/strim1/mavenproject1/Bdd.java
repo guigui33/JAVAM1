@@ -946,7 +946,7 @@ public class Bdd {
             ResultSet r1;
             try {
             st = co.createStatement();
-            String sql = "SELECT Nom, Prenom, objet FROM Message m, Utilisateurs u WHERE m.IdRecepteur="+idCourant+" AND u.Id IN (SELECT Id FROM Utilisateurs WHERE u.Id=m.IdEmetteur)";
+            String sql = "SELECT Nom, Prenom, objet, IdMessage FROM Message m, Utilisateurs u WHERE m.IdRecepteur="+idCourant+" AND u.Id IN (SELECT Id FROM Utilisateurs WHERE u.Id=m.IdEmetteur)";
             r1 = st.executeQuery(sql);
             while(r1.next()){
                     if(r1.isLast()){
