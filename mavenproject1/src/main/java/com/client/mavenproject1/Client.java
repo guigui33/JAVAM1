@@ -34,6 +34,7 @@ public class Client {
     String listeDiplome[] = new String[100];
     String listeCompetence[] = new String[100];
     private String Visibilite;
+    private String Contact;
     
     private boolean Connecte = false;
     
@@ -72,7 +73,7 @@ public class Client {
     }
     public void connexion(int port){
         try {
-            this.socket = new Socket("192.168.1.2", port);
+            this.socket = new Socket("127.0.0.1", port);
         } catch (IOException ex) {
             System.out.print("erreur de connexion. Serveur non accessible.");
             quitter=true;
@@ -223,6 +224,14 @@ public class Client {
 
     public void setId_Visite(int id_Visite) {
         this.id_Visite = id_Visite;
+    }
+
+    public String getContact() {
+        return Contact;
+    }
+
+    public void setContact(String Contact) {
+        this.Contact = Contact;
     }
 
     

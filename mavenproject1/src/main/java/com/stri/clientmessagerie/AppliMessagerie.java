@@ -5,21 +5,27 @@
  */
 package com.stri.clientmessagerie;
 
+import com.client.mavenproject1.Client;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author AFBD
  */
 public class AppliMessagerie {
     
-    public AppliMessagerie() {
-        
+    public AppliMessagerie(final Client c) {
+        String[] args = null;
+        main(args, c);
     }
     
         
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[], final Client c) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -48,12 +54,17 @@ public class AppliMessagerie {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FenetreMessagerie().setVisible(true);
+                try {
+                    new FenetreMessagerie(c).setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(AppliMessagerie.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         });
-              while(true)
-        System.out.println("Salut je suis le main");
+              //while(true)
+        //System.out.println("Salut je suis le main");
     }
-    
+
+
 }

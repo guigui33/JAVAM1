@@ -13,8 +13,8 @@ public class AccueilMessage extends Thread{
     
     
     public void run(){
-      while(true)
-        System.out.println("Salut ta fdfze");
+//      while(true)
+  //      System.out.println("Salut ta fdfze");
     }
     
 }

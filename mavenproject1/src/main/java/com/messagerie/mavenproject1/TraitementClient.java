@@ -1,4 +1,4 @@
-package com.messagerie.mavenproject1;
+    package com.messagerie.mavenproject1;
 
 import com.strim1.mavenproject1.Bdd;
 import com.strim1.mavenproject1.ServicePostal;

@@ -5,6 +5,7 @@
  */
 package com.stri.clientmessagerie;
 
+import com.client.mavenproject1.Client;
 import com.strim1.mavenproject1.ServicePostal;
 import  javax.swing.*;
 import  java.awt.*;
@@ -23,12 +24,19 @@ import javax.swing.text.html.HTMLEditorKit;
  */
 public class FenetreMessagerie extends javax.swing.JFrame{
 
-    
+    private final Socket s;
+    private Integer id_user;
+    private Integer num_session;
 
     /**
      * Creates new form NewJFrame
      */
-    public FenetreMessagerie() {
+    public FenetreMessagerie(Client c) throws IOException {
+        this.s = new Socket("127.0.0.1", 50006);
+        this.id_user = c.getId_user();
+        this.num_session = c.getNum_session();
+        new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#50008");
+        new ServicePostal(s).reception();
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -47,6 +55,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jFrame1 = new javax.swing.JFrame();
         jLabel1 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -54,6 +63,9 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -77,6 +89,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jLabel5.setText("jLabel5");
         jLabel5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
+        jLabel9.setText("Message :");
+
         javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
         jFrame2.getContentPane().setLayout(jFrame2Layout);
         jFrame2Layout.setHorizontalGroup(
@@ -91,7 +105,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                         .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
         jFrame2Layout.setVerticalGroup(
@@ -103,9 +118,11 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                 .addComponent(jLabel3)
                 .addGap(38, 38, 38)
                 .addComponent(jLabel4)
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jFrame1.setTitle("Envoyer un message");
@@ -116,18 +133,31 @@ public class FenetreMessagerie extends javax.swing.JFrame{
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jTextField1.setText("jTextField1");
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Envoyer !");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Destinataire :");
+
+        jLabel7.setText("Objet du message :");
+
+        jLabel8.setText("Message :");
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(108, 108, 108))
             .addGroup(jFrame1Layout.createSequentialGroup()
                 .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jFrame1Layout.createSequentialGroup()
@@ -138,30 +168,38 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                         .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextField1)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)))
+                    .addGroup(jFrame1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel8))))
                 .addContainerGap(162, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFrame1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(108, 108, 108))
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jFrame1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(23, 23, 23)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Application messagerie");
         setResizable(false);
 
@@ -299,21 +337,21 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        /*jFrame2.setVisible(true);
-        jFrame2.setLocationRelativeTo(null);*/
-        Socket s;
-        try {
-            s = new Socket("127.0.0.1", 50006);
-            new ServicePostal(s).emission("HELLO#3#38670#127.0.0.1#50008");
-            new ServicePostal(s).reception();
-        } catch (IOException ex) {
-            Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        
+   
+             
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        Integer id_recepteur = 1;
+        String Objet = jTextField1.getText();
+        String Message = jTextArea1.getText();
+        new ServicePostal(s).emission("POSTER#3#" + id_recepteur + "#" + Objet + "#" +Message);
+        new ServicePostal(s).reception();
+        jTextField1.setText("");
+        jTextArea1.setText("");
+        jFrame1.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 /*
               Component com = jTabbedPane1.getComponentAt(2);
        JTextField j = (JTextField) com.getComponentAt(21, 21);
@@ -337,6 +375,10 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;

@@ -5,6 +5,7 @@
  */
 package com.client.mavenproject1;
 
+import com.stri.clientmessagerie.AppliMessagerie;
 import com.strim1.mavenproject1.ServicePostal;
 import java.awt.CardLayout;
 import static java.lang.Boolean.TRUE;
@@ -109,6 +110,7 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_naissance1 = new javax.swing.JLabel();
         jLabel1_coordonnees_visible1 = new javax.swing.JLabel();
         jLabel_modier_coordonnees = new javax.swing.JLabel();
+        jLabel_contact = new javax.swing.JLabel();
         jPanel_Diplomes1 = new javax.swing.JPanel();
         jLabel_modier_diplome = new javax.swing.JLabel();
         jLabel_mesDiplomes = new javax.swing.JLabel();
@@ -129,6 +131,8 @@ public class Fenetre extends javax.swing.JFrame {
         jTextField_modif_mdp = new javax.swing.JTextField();
         jTextField_modif_confirm_mdp = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox_contact = new javax.swing.JComboBox<>();
         Panel_Modifier_Diplome = new javax.swing.JPanel();
         jLabel_modif_Titre_Diplome = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -693,6 +697,8 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
+        jLabel_contact.setText("Etre joingnable :");
+
         javax.swing.GroupLayout jPanel_Coordonnees1Layout = new javax.swing.GroupLayout(jPanel_Coordonnees1);
         jPanel_Coordonnees1.setLayout(jPanel_Coordonnees1Layout);
         jPanel_Coordonnees1Layout.setHorizontalGroup(
@@ -700,9 +706,6 @@ public class Fenetre extends javax.swing.JFrame {
             .addGroup(jPanel_Coordonnees1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Coordonnees1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_Coordonnees1Layout.createSequentialGroup()
-                        .addComponent(jLabel_tel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Coordonnees1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel_Coordonnees1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -716,7 +719,12 @@ public class Fenetre extends javax.swing.JFrame {
                         .addComponent(jLabel_mail1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                         .addComponent(jLabel_naissance1)
-                        .addGap(188, 188, 188))))
+                        .addGap(188, 188, 188))
+                    .addGroup(jPanel_Coordonnees1Layout.createSequentialGroup()
+                        .addComponent(jLabel_tel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel_contact)
+                        .addGap(216, 216, 216))))
         );
         jPanel_Coordonnees1Layout.setVerticalGroup(
             jPanel_Coordonnees1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -727,7 +735,9 @@ public class Fenetre extends javax.swing.JFrame {
                     .addComponent(jLabel_naissance1)
                     .addComponent(jLabel_mail1))
                 .addGap(50, 50, 50)
-                .addComponent(jLabel_tel1)
+                .addGroup(jPanel_Coordonnees1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_tel1)
+                    .addComponent(jLabel_contact))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addComponent(jLabel1_coordonnees_visible1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -887,6 +897,10 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setText("Etre joignable :");
+
+        jComboBox_contact.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Non", "Oui" }));
+
         javax.swing.GroupLayout Panel_Modifier_CoordonneesLayout = new javax.swing.GroupLayout(Panel_Modifier_Coordonnees);
         Panel_Modifier_Coordonnees.setLayout(Panel_Modifier_CoordonneesLayout);
         Panel_Modifier_CoordonneesLayout.setHorizontalGroup(
@@ -896,38 +910,44 @@ public class Fenetre extends javax.swing.JFrame {
                 .addComponent(jLabel_modif_Titre)
                 .addGap(391, 391, 391))
             .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
-                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_modif_visible)
-                            .addComponent(jLabel_modif_adresse)
-                            .addComponent(jLabel_modif_tel))
-                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField_modif_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
-                                .addGap(430, 430, 430)
-                                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox1_modifier_coor, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_modif_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
-                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_modif_mdp)
-                            .addComponent(jLabel_modif_confirm_mdp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField_modif_mdp)
-                            .addComponent(jTextField_modif_confirm_mdp, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))))
-                .addGap(196, 196, 196))
-            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
                 .addGap(373, 373, 373)
                 .addComponent(jButton_modifier_coor)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_modif_visible)
+                                    .addComponent(jLabel_modif_adresse)
+                                    .addComponent(jLabel_modif_tel))
+                                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jTextField_modif_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                                        .addGap(430, 430, 430)
+                                        .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jComboBox1_modifier_coor, 0, 149, Short.MAX_VALUE)
+                                            .addComponent(jTextField_modif_tel, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                                            .addComponent(jComboBox_contact, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(Panel_Modifier_CoordonneesLayout.createSequentialGroup()
+                                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_modif_mdp)
+                                    .addComponent(jLabel_modif_confirm_mdp))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField_modif_mdp)
+                                    .addComponent(jTextField_modif_confirm_mdp, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))))
+                        .addGap(196, 196, 196))))
         );
         Panel_Modifier_CoordonneesLayout.setVerticalGroup(
             Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -954,7 +974,11 @@ public class Fenetre extends javax.swing.JFrame {
                 .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_modif_visible)
                     .addComponent(jComboBox1_modifier_coor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addGroup(Panel_Modifier_CoordonneesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboBox_contact, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jButton_modifier_coor)
                 .addGap(63, 63, 63))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_Modifier_CoordonneesLayout.createSequentialGroup()
@@ -1487,7 +1511,6 @@ public class Fenetre extends javax.swing.JFrame {
         c.deconnexion();
         javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
         c.envoyerHello(c.getId_user(), c.getNum_session());
-
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
@@ -1633,8 +1656,10 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox_Niveau_Rechercher;
+    private javax.swing.JComboBox<String> jComboBox_contact;
     private javax.swing.JComboBox<String> jComboBox_visi_inscr;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel1_coordonnees_visible1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1658,6 +1683,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_bonjour_nom;
     private javax.swing.JLabel jLabel_comp_ajou;
     private javax.swing.JLabel jLabel_confirm_mdp_inscr;
+    private javax.swing.JLabel jLabel_contact;
     private javax.swing.JLabel jLabel_dateN_inscr;
     private javax.swing.JLabel jLabel_deco;
     private javax.swing.JLabel jLabel_mail;
@@ -1776,15 +1802,17 @@ public class Fenetre extends javax.swing.JFrame {
         c.setNom(decoupage[1]);
         c.setPrenom(decoupage[2]);
         c.setAdresse_mail(decoupage[3]);
-        if(!decoupage[4].equals("END_I") && decoupage.length > 6){
+        if(!decoupage[4].equals("END_I") && decoupage.length > 7){
             c.setTelephone(decoupage[4]);
             c.setDateNaiss(decoupage[5]);
             c.setVisibilite(decoupage[6]);
+            c.setContact(decoupage[7]);
         }
         else{
             c.setTelephone("");
             c.setDateNaiss("");
             c.setVisibilite("");
+            c.setContact("");
         }
         decoupageTmp = chaine.split("END_I");
         decoupageTmp3 = decoupageTmp[1].split("#");
@@ -1829,6 +1857,7 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_tel1.setText("Numéro de Téléphone : "+c.getTelephone());
         jLabel_naissance1.setText("Année de Naissance : "+c.getDateNaiss());
         jLabel1_coordonnees_visible1.setText("La visibilite de cette section est : " + c.getVisibilite());
+        jLabel_contact.setText("Etre joingnable :" + c.getContact());
     }
     
     private void construire_monCompte_mesDiplomes(){
@@ -1908,7 +1937,7 @@ public class Fenetre extends javax.swing.JFrame {
     private String generer_modif_info() {
         String req_modif_info = "MODIFIERUTILISATEUR#" + c.getId_user() + "#";
        // req_modif_info += jTextField_modif_adresse.getText() + "#" + jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
-        req_modif_info += jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jTextField_modif_adresse.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
+        req_modif_info += jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jTextField_modif_adresse.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString() + "#" + jComboBox_contact.getItemAt(jComboBox_contact.getSelectedIndex()).toString();
         return req_modif_info;
     }
     
@@ -1977,6 +2006,7 @@ public class Fenetre extends javax.swing.JFrame {
                 construire_entete(1);
                 CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
                 cardLayout.show(jPanel_Principal, "Panel_Recherche");
+                new AppliMessagerie(c);
                 break;
             case "ERROR":
                 retour = decoupageRequete[1];
@@ -2064,7 +2094,8 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_Nom_prenom.setText(c.getNom() +" "+ c.getPrenom());
         jLabel_mail.setText("Adresse mail : " + c.getAdresse_mail());
         jLabel_tel.setText("Numéro de Téléphone : "+c.getTelephone());
-        jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss()); 
+        jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss());
+        
     }
     
     private void construireDiplomes(){
