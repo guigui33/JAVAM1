@@ -291,7 +291,7 @@ public class Bdd {
                     val = ((Number) resultat1.getObject(1)).intValue();
                 }
                 if (val == 1) {
-                    String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "', Disponible="+d+" WHERE Id=" + id + "";
+                    String sql = "UPDATE Utilisateurs SET AddrMail='" + addrmail + "', Tel='" + tel + "', Mdp='" + mdp + "',VisibleInf='" + vi + "', Disponible= "+d+" WHERE Id=" + id + "";
                     st.executeUpdate(sql);
                     return new GestionRetourBDD().valeurRetour("Information modif ok");
                 } else {
@@ -972,13 +972,13 @@ public class Bdd {
             return retour;
         }
         
-        public String utilisateur(){
+        public String utilisateurs(int idCourant){
             String nomRetour,prenomRetour,retour="";
             int id;
             ResultSet r1;
             try {
             st = co.createStatement();
-            String sql = "SELECT Id, Nom, Prenom FROM Utilisateurs";
+            String sql = "SELECT Id, Nom, Prenom FROM Utilisateurs WHERE Id!="+idCourant+"";
             r1 = st.executeQuery(sql);
                 while(r1.next()){
                         if(r1.isLast()){
@@ -1055,7 +1055,7 @@ public class Bdd {
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        //bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive,"Oui");
+        bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive,"Oui");
         //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
@@ -1064,7 +1064,7 @@ public class Bdd {
         //bdd.envoyerMessage(3, 2, "Test 5 objet", "Test 5 message");
         //test= bdd.messagerie(2);
         //test=bdd.utilisateur();
-        //test=bdd.visiterProfil(0,9);
+        //test=bdd.visiterProfil(3,3);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         //bdd.estDisponible(3);
         //test=bdd.getNomPrenom(2);

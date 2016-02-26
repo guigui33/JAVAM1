@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *permet de gerer l'emission, la reception et la deconnexion à travers un socket
+ *permet de gerer l'emission, la reception et la deconnexion à travers un socket en TCP
  */
 public class ServicePostal {
     /**

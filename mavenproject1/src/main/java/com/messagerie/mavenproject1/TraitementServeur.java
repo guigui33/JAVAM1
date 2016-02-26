@@ -6,36 +6,52 @@ import java.net.Socket;
 import java.util.Hashtable;
 
 /**
- *
- * @author guigui
+ *Classe qui traite des demandes des autres serveurs 
  */
 public class TraitementServeur extends Thread {
     /**
-     * la demande du client
+     * la demande 
      */
     private String demandeServeur;
     /*
-    * la reponse du serveur
+    * la reponse du serveur Messagerie
     */
     private String retourServeur;
     
     /**
-     * classe qui gere la reception et l'emission
+     * classe qui gere la reception et l'emission en TCP
      * @see ServicePostal
      */
     private final ServicePostal servicePostal;
     
+    /**
+     * Le service qui gere les receptions et emissions en UDP, partagée par les threads
+     */
     private final ServicePostalUDP servicePostalUDP;
     
+    /**
+     * La liste des clients déclarée au serveur Messagerie
+     */
     private final Hashtable <Integer,Client> clients;
     
-    
+    /**
+     * Le constructeur, creation du service postal avec le socket passé en paramètre
+     * La liste des clients et le service postal UDP sont deja créés
+     * @param service le socket
+     * @param clients la liste des clients
+     * @param servicePostalUDP le service postal UDP
+     */
     public TraitementServeur(Socket service,Hashtable <Integer,Client> clients,ServicePostalUDP servicePostalUDP){
         this.servicePostal=new ServicePostal(service);
         this.servicePostalUDP=servicePostalUDP;
         this.clients=clients;
     }
     
+    /**
+     * Traite la demande du serveur
+     * en fonction d'un mot clé, dirige vers le service concerné.
+     * @return une chaine de caractère
+     */
     public String requete() {
         /*decouper la requte en tableau */
         String[] decoupageRequete;
@@ -52,14 +68,28 @@ public class TraitementServeur extends Thread {
         }
     }
     
+    /**
+     * traite d'un demande de déconnexion d'un client
+     * il faut supprimer le client de la liste et avertir les autres utilisateurs que le client n'est 
+     * plus disponible.
+     * utilisation du service UDP
+     * @param demande la demande
+     * @return une chaine de caractère
+     */
     private String deconnexionClient(String[] demande) {
+        //recupère l'identifiant du client à supprimer
         Integer idClientSupp = Integer.parseInt(demande[1]);
+        //reupère les informations sur le client dans la liste
         Client cSupp=clients.get(idClientSupp);
+        //supprime le client
         clients.remove(idClientSupp);
         if(cSupp.isDisponible()){           
-            
+            //si le client était visible des autres utilisateurs
+            //on avertit les autres utilisateurs 
             for (Integer idClient : clients.keySet())
             {
+                //recuperation des informations des clients
+                //si le client est visible, on lui envoit sur l'adresse ip et port enregistrés
                 Client c=clients.get(idClient);
                 if(c.isDisponible())
                     servicePostalUDP.envoyer(idClient.toString()+c.getInformations(idClient), c.getIp(), c.getPort());
@@ -68,6 +98,9 @@ public class TraitementServeur extends Thread {
         return "OK";
     }
     
+    /**
+     * la methoder run qui permet de recevoir une requète, de la traiter et de retourner une reponse.
+     */
     @Override
     public void run() {
         boolean fermeture = false;
