@@ -145,7 +145,7 @@ public class TraitementClient extends Thread{
                     //test si l'utilsateur est disponible pour le chat
                     if(c.isDisponible()){
                         //obtient les informatons: #id#nom#prenom#ip#port
-                        retour+=("#"+Integer.toString(idClient)+c.getInformations(id));
+                        retour+=('$'+Integer.toString(idClient)+c.getInformations(id));
                     }
                 }
             }
