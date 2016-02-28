@@ -25,6 +25,7 @@ public class ServicePostalUDP {
     /**
      * Construteur, qui definit le datagramSocket à partir d'un port déterminé
      * @param port le port  
+     *             si le port n'est pas disponible, il incremente le port jusqu'à en trouver un.
      */
     public ServicePostalUDP(int port){
         boolean trouve = false;
