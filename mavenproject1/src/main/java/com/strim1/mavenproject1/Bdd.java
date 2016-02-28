@@ -991,7 +991,7 @@ public class Bdd {
                                     id=r1.getInt("Id");
                                     nomRetour = r1.getString("Nom");
                                     prenomRetour = r1.getString("Prenom");
-                                    retour += id + "#" + nomRetour + "#" + prenomRetour +"#";
+                                    retour += id + "#" + nomRetour + "#" + prenomRetour +"$";
                         }
                 }
             }catch (SQLException ex) {

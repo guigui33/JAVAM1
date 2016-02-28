@@ -37,6 +37,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         this.num_session = c.getNum_session();
         new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#50008");
         new ServicePostal(s).reception();
+        new ServicePostal(s).emission("UTILISATEURS#3");
+        construireListeAllUsers(new ServicePostal(s).reception());
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -391,7 +393,9 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-    
+    private void construireListeAllUsers(String s){
+        
+    }
         private void fermerMouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
             int numTab = jTabbedPane1.getSelectedIndex();
