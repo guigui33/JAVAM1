@@ -7,11 +7,13 @@ package com.stri.clientmessagerie;
 
 import com.client.mavenproject1.Client;
 import com.strim1.mavenproject1.ServicePostal;
+import com.strim1.mavenproject1.ServicePostalUDP;
 import  javax.swing.*;
 import  java.awt.*;
 import  java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
@@ -27,20 +29,26 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private final Socket s;
     private Integer id_user;
     private Integer num_session;
+    private Hashtable<Integer, String> listeUsers = new Hashtable<>();
+    private Hashtable<Integer, String> listeMessage = new Hashtable<>();
+    private ServicePostalUDP sp;
 
     /**
      * Creates new form NewJFrame
      */
-    public FenetreMessagerie(Client c) throws IOException {
+    public FenetreMessagerie(Client c, ServicePostalUDP sp) throws IOException {
         this.s = new Socket("127.0.0.1", 50006);
         this.id_user = c.getId_user();
         this.num_session = c.getNum_session();
         new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#50008");
         new ServicePostal(s).reception();
+        initComponents();
         new ServicePostal(s).emission("UTILISATEURS#3");
         construireListeAllUsers(new ServicePostal(s).reception());
-        initComponents();
+        new ServicePostal(s).emission("LISTEMSG#" + id_user);
+        construireListeMessage(new ServicePostal(s).reception());
         this.setLocationRelativeTo(null);
+        this.sp = sp;
     }
 
     /**
@@ -133,8 +141,6 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Envoyer un Message");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
@@ -200,6 +206,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                 .addComponent(jButton3)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jComboBox1.getAccessibleContext().setAccessibleParent(this);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Application messagerie");
@@ -345,22 +353,57 @@ public class FenetreMessagerie extends javax.swing.JFrame{
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        Integer id_recepteur = 1;
+        Integer id_recepteur = getId_recepteur();
         String Objet = jTextField1.getText();
         String Message = jTextArea1.getText();
-        new ServicePostal(s).emission("POSTER#3#" + id_recepteur + "#" + Objet + "#" +Message);
+        new ServicePostal(s).emission("POSTER#" + id_user + "#" + id_recepteur + "#" + Objet + "#" +Message);
         new ServicePostal(s).reception();
         jTextField1.setText("");
         jTextArea1.setText("");
         jFrame1.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
-/*
+
+    private Integer getId_recepteur(){
+        String x = String.valueOf(jComboBox1.getSelectedItem());
+        for(Integer i : listeUsers.keySet()){
+            if(listeUsers.get(i).equals(x))
+                return i;
+        }
+        return -1;
+    }
+    /*
               Component com = jTabbedPane1.getComponentAt(2);
        JTextField j = (JTextField) com.getComponentAt(21, 21);
        j.setText("test");
     
 */
-    
+    private void construireListeMessage(String s){
+        String [] decoupage;
+        String [] decoupageMsg;
+        decoupage = s.split("\\$"); 
+        for (int i = 0; i < decoupage.length; i++) {
+            decoupageMsg = decoupage[i].split("#");
+            listeMessage.put(Integer.valueOf(decoupageMsg[0]), decoupageMsg[2] + " " + decoupageMsg[1]+ " " + " : " + decoupageMsg[3]);
+        }
+        DefaultListModel DLM = new DefaultListModel();
+        for (int i : listeMessage.keySet()) {
+            DLM.addElement(listeMessage.get(i));
+        }
+        jList2.setModel(DLM);
+    }
+    private void construireListeAllUsers(String s){
+        String [] decoupage;
+        String [] decoupageUsers;
+        decoupage = s.split("\\$");
+        for (int i = 0; i < decoupage.length; i++) {
+            decoupageUsers = decoupage[i].split("#");
+            listeUsers.put(Integer.valueOf(decoupageUsers[0]), decoupageUsers[2] + " " + decoupageUsers[1]);
+        }
+        for(Integer id : listeUsers.keySet()){
+            jComboBox1.addItem(listeUsers.get(id));
+        }
+        
+    } 
     
 
 
@@ -393,9 +436,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
-    private void construireListeAllUsers(String s){
-        
-    }
+
         private void fermerMouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
             int numTab = jTabbedPane1.getSelectedIndex();
@@ -417,7 +458,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
         jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(new TraitementEnvoyer());
+        bouton.addActionListener(new TraitementEnvoyer(sp));
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
@@ -436,12 +477,17 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jTabbedPane1.updateUI();       
     }
     
-    
 public  class   TraitementEnvoyer implements   ActionListener
     {
          /**
          * obligatoire car test implémente l'interface ActionListener
          */
+        ServicePostalUDP sp;
+
+        public TraitementEnvoyer(ServicePostalUDP sp) {
+            this.sp = sp;
+        }
+        
         public  void    actionPerformed(ActionEvent e)
         {
             /*int i = jTabbedPane1.getSelectedIndex();
@@ -449,6 +495,7 @@ public  class   TraitementEnvoyer implements   ActionListener
             String texte = recupererTexte();
             try {
                 afficherTexte("Moi", texte);
+                sp.envoyer(texte, "127.0.0.1", 50001);
             } catch (BadLocationException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -478,6 +525,7 @@ public  class   TraitementEnvoyer implements   ActionListener
                Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
     }
 }
 

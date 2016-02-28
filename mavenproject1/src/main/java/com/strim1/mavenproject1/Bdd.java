@@ -942,7 +942,7 @@ public class Bdd {
         }
     
         public String messagerie(int idCourant){
-            String nomRetour,prenomRetour,retour="Pas demessage", objet, idMsg ;
+            String nomRetour,prenomRetour,retour="", objet, idMsg ;
             ResultSet r1;
             try {
             st = co.createStatement();
@@ -961,7 +961,7 @@ public class Bdd {
                                 nomRetour = r1.getString("Nom");
                                 prenomRetour = r1.getString("Prenom");
                                 idMsg=r1.getString("IdMessage");
-                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#";
+                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "$";
                     }
             }
 

@@ -6,7 +6,9 @@
 package com.stri.clientmessagerie;
 
 import com.client.mavenproject1.Client;
+import com.strim1.mavenproject1.ServicePostalUDP;
 import java.io.IOException;
+import java.net.DatagramSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,10 +18,17 @@ import java.util.logging.Logger;
  */
 public class AppliMessagerie {
     
+    private final Integer port;
+    private static ServicePostalUDP sp = new ServicePostalUDP(50000);
+
+
+    
     public AppliMessagerie(final Client c) {
         String[] args = null;
         main(args, c);
+        this.port = 1;
     }
+    
     
         
     /**
@@ -49,13 +58,12 @@ public class AppliMessagerie {
         }
         //</editor-fold>
         //</editor-fold>
-        new AccueilMessage().start();
-
+        new AccueilMessage(50000, sp).start();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new FenetreMessagerie(c).setVisible(true);
+                    new FenetreMessagerie(c, sp).setVisible(true);
                 } catch (IOException ex) {
                     Logger.getLogger(AppliMessagerie.class.getName()).log(Level.SEVERE, null, ex);
                 }

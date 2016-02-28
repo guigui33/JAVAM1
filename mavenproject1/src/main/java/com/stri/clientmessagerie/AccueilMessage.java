@@ -5,16 +5,25 @@
  */
 package com.stri.clientmessagerie;
 
+import com.strim1.mavenproject1.ServicePostalUDP;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+
 /**
  *
  * @author AFBD
  */
 public class AccueilMessage extends Thread{
+
+    private ServicePostalUDP sp;
     
-    
-    public void run(){
-//      while(true)
-  //      System.out.println("Salut ta fdfze");
+    public AccueilMessage(int port, ServicePostalUDP sp){
+        this.sp = sp;
     }
-    
+    public void run() {
+        while(true){
+            System.out.println(sp.recevoir());
+        }
+
+    }
 }

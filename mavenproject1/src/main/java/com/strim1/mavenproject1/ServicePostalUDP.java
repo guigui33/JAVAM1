@@ -27,10 +27,16 @@ public class ServicePostalUDP {
      * @param port le port  
      */
     public ServicePostalUDP(int port){
-        try {
-            datagramme=new DatagramSocket(port);
-        } catch (SocketException ex) {
-            Logger.getLogger(ServicePostalUDP.class.getName()).log(Level.SEVERE, null, ex);
+        boolean trouve = false;
+        while (!trouve) {
+            try {
+                datagramme = new DatagramSocket(port);
+                trouve = true;
+                System.out.println("port " + port + " disponible.");
+            } catch (SocketException ex) {
+                System.out.println("port " + port + " utilisé.");
+                port += 1;
+            }
         }
     }
     
