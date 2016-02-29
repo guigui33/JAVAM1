@@ -929,7 +929,7 @@ public class Bdd {
                                 nomRetour = r1.getString("Nom");
                                 prenomRetour = r1.getString("Prenom");
                                 message=r1.getString("Message");
-                                retour = idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#" + message ;
+                                retour = nomRetour + "#" + prenomRetour + "#" + objet + "#" + message ;
             }
             /*on change d'etat le message*/
             String sql1 = "UPDATE Message SET Lu=TRUE WHERE IdMessage="+idMsg+"";
@@ -942,11 +942,12 @@ public class Bdd {
         }
     
         public String messagerie(int idCourant){
-            String nomRetour,prenomRetour,retour="", objet, idMsg ;
+            String nomRetour,prenomRetour,retour="", objet, idMsg;
+            boolean lu ;
             ResultSet r1;
             try {
             st = co.createStatement();
-            String sql = "SELECT Nom, Prenom, objet, IdMessage FROM Message m, Utilisateurs u WHERE m.IdRecepteur="+idCourant+" AND u.Id IN (SELECT Id FROM Utilisateurs WHERE u.Id=m.IdEmetteur)";
+            String sql = "SELECT Nom, Prenom, objet, IdMessage, Lu FROM Message m, Utilisateurs u WHERE m.IdRecepteur="+idCourant+" AND u.Id IN (SELECT Id FROM Utilisateurs WHERE u.Id=m.IdEmetteur)";
             r1 = st.executeQuery(sql);
             while(r1.next()){
                     if(r1.isLast()){
@@ -954,14 +955,16 @@ public class Bdd {
                                 nomRetour = r1.getString("Nom");
                                 prenomRetour = r1.getString("Prenom");
                                 idMsg=r1.getString("IdMessage");
-                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet;
+                                lu=r1.getBoolean("lu");
+                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#" + lu;
                         
                     }else{
                                 objet = r1.getString("objet");
                                 nomRetour = r1.getString("Nom");
                                 prenomRetour = r1.getString("Prenom");
                                 idMsg=r1.getString("IdMessage");
-                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "$";
+                                lu=r1.getBoolean("lu");
+                                retour += idMsg + "#" + nomRetour + "#" + prenomRetour + "#" + objet + "#" + lu + "$";
                     }
             }
 
@@ -1055,7 +1058,7 @@ public class Bdd {
         //bdd.verifierMdp("aajjjjjjjj");
         //bdd.ajouterCompetence(1, "Okok", Bdd.niveau.Bon,Bdd.visibiliter.UtilisateurCo);
         //test=bdd.ajouterDiplome(2, "1994-12-12" , "BTS Informatique", "bbb" ,visibiliter.Prive);
-        bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive,"Oui");
+        //bdd.modifierInformation(8,"azzz", "", "accbc",visibiliter.Prive,"Oui");
         //int id, String mdp, String tel, String addrmail, visibiliter vi
         //test=bdd.modifierCompetence(1,"fr", Bdd.niveau.Tresbon, Bdd.visibiliter.Prive);
         //bdd.supprimerCompetence(1, "Rugby");
@@ -1068,6 +1071,7 @@ public class Bdd {
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         //bdd.estDisponible(3);
         //test=bdd.getNomPrenom(2);
-        //System.out.println(test);
+        test=bdd.afficherMessage(6);
+        System.out.println(test);
     }
 }
