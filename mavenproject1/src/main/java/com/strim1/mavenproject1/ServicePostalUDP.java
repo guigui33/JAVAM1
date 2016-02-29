@@ -21,7 +21,7 @@ public class ServicePostalUDP {
      * Le datagramme UDP
      */
     private DatagramSocket datagramme;
-    
+    private int port;
     /**
      * Construteur, qui definit le datagramSocket à partir d'un port déterminé
      * @param port le port  
@@ -37,6 +37,7 @@ public class ServicePostalUDP {
                 System.out.println("port " + port + " utilisé.");
                 port += 1;
             }
+         this.port = port;
         }
     }
     
@@ -90,4 +91,10 @@ public class ServicePostalUDP {
         }
         return "ERROR";
     }
+
+    public int getPort() {
+        return port;
+    }
+    
+    
 }

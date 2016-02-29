@@ -31,24 +31,26 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private Integer num_session;
     private Hashtable<Integer, String> listeUsers = new Hashtable<>();
     private Hashtable<Integer, String> listeMessage = new Hashtable<>();
-    private ServicePostalUDP sp;
+    private ServicePostalUDP sp1;
 
     /**
      * Creates new form NewJFrame
      */
     public FenetreMessagerie(Client c, ServicePostalUDP sp) throws IOException {
+        this.sp1 = sp;
         this.s = new Socket("127.0.0.1", 50006);
         this.id_user = c.getId_user();
         this.num_session = c.getNum_session();
-        new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#50008");
+        new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#" + sp1.getPort());
         new ServicePostal(s).reception();
         initComponents();
         new ServicePostal(s).emission("UTILISATEURS#3");
         construireListeAllUsers(new ServicePostal(s).reception());
         new ServicePostal(s).emission("LISTEMSG#" + id_user);
         construireListeMessage(new ServicePostal(s).reception());
+        new ServicePostal(s).emission("CONTACT#" + id_user);
+        new ServicePostal(s).reception();
         this.setLocationRelativeTo(null);
-        this.sp = sp;
     }
 
     /**
@@ -306,7 +308,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTabbedPane1)
                 .addContainerGap())
@@ -404,7 +406,12 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         }
         
     } 
-    
+
+    public JTabbedPane getjTabbedPane1() {
+        return jTabbedPane1;
+    }
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -444,7 +451,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
             jTabbedPane1.setSelectedIndex(0);
     }                                    
 
-    private void construireTab(){
+    public void construireTab(){
 
         JPanel Jpanel = new javax.swing.JPanel();
         Jpanel.setLayout(null);
@@ -458,7 +465,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
         jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(new TraitementEnvoyer(sp));
+        bouton.addActionListener(new TraitementEnvoyer(sp1,jList1.getSelectedValue()) );
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
@@ -477,15 +484,32 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jTabbedPane1.updateUI();       
     }
     
+        public void afficherTexte(String nom, String texte) throws BadLocationException{
+            int numTab = jTabbedPane1.getSelectedIndex();
+            Component com = jTabbedPane1.getComponentAt(numTab);
+            JEditorPane j = (JEditorPane) com.getComponentAt(23, 21);
+            try {
+                HTMLEditorKit kit = (HTMLEditorKit) j.getEditorKit();
+                HTMLDocument doc = (HTMLDocument) j.getDocument();
+                kit.insertHTML(doc, doc.getLength(), "<b> " + nom + " </b> : " + texte + " <br>", 0, 0, null);
+            } catch (BadLocationException ex) {
+                Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
+            }catch (IOException ex) {
+               Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    
 public  class   TraitementEnvoyer implements   ActionListener
     {
          /**
          * obligatoire car test implémente l'interface ActionListener
          */
         ServicePostalUDP sp;
+        String titleTab;
 
-        public TraitementEnvoyer(ServicePostalUDP sp) {
+        public TraitementEnvoyer(ServicePostalUDP sp, String titleTab) {
             this.sp = sp;
+            this.titleTab = titleTab;
         }
         
         public  void    actionPerformed(ActionEvent e)
@@ -495,7 +519,7 @@ public  class   TraitementEnvoyer implements   ActionListener
             String texte = recupererTexte();
             try {
                 afficherTexte("Moi", texte);
-                sp.envoyer(texte, "127.0.0.1", 50001);
+                sp.envoyer(titleTab + "#" + texte, "127.0.0.1", 50001);
             } catch (BadLocationException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -511,20 +535,7 @@ public  class   TraitementEnvoyer implements   ActionListener
             return s;
         }
         
-        private void afficherTexte(String nom, String texte) throws BadLocationException{
-            int numTab = jTabbedPane1.getSelectedIndex();
-            Component com = jTabbedPane1.getComponentAt(numTab);
-            JEditorPane j = (JEditorPane) com.getComponentAt(23, 21);
-            try {
-                HTMLEditorKit kit = (HTMLEditorKit) j.getEditorKit();
-                HTMLDocument doc = (HTMLDocument) j.getDocument();
-                kit.insertHTML(doc, doc.getLength(), "<b> " + nom + " </b> : " + texte + " <br>", 0, 0, null);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (IOException ex) {
-               Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+
 
     }
 }

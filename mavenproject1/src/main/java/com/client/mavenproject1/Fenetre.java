@@ -8,7 +8,10 @@ package com.client.mavenproject1;
 import com.stri.clientmessagerie.AppliMessagerie;
 import com.strim1.mavenproject1.ServicePostal;
 import java.awt.CardLayout;
+import java.io.IOException;
 import static java.lang.Boolean.TRUE;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 
@@ -1509,7 +1512,11 @@ public class Fenetre extends javax.swing.JFrame {
         c.connexion(50001);
         retour = c.envoyerRequete(generer_requete_connexion());
         c.deconnexion();
-        javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
+        try {
+            javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
+        } catch (IOException ex) {
+            Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
+        }
         c.envoyerHello(c.getId_user(), c.getNum_session());
     }//GEN-LAST:event_click_connexion
 
@@ -1992,7 +1999,7 @@ public class Fenetre extends javax.swing.JFrame {
         return req_delete_comp;
     }
     
-    private String effectuerConnexion(String req){
+    private String effectuerConnexion(String req) throws IOException{
         String [] decoupageRequete;
         String retour = "";
         decoupageRequete = req.split("#");
