@@ -51,6 +51,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         new ServicePostal(s).emission("CONTACT#" + id_user);
         new ServicePostal(s).reception();
         this.setLocationRelativeTo(null);
+        new ServicePostal(s).deconnexion();
     }
 
     /**

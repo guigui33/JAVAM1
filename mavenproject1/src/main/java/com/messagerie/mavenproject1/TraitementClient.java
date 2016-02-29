@@ -107,7 +107,7 @@ public class TraitementClient extends Thread{
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
             //l'identifiant du message
-            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[2]));
+            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[1]));
         }
         return "ERROR";
     }
@@ -141,11 +141,11 @@ public class TraitementClient extends Thread{
             for (Integer id : clients.keySet())
             {
                 if(id!=idClient){
-                    Client c=clients.get(idClient);
+                    Client c=clients.get(id);
                     //test si l'utilsateur est disponible pour le chat
                     if(c.isDisponible()){
                         //obtient les informatons: #id#nom#prenom#ip#port
-                        retour+=('$'+Integer.toString(idClient)+c.getInformations(id));
+                        retour+=('$'+Integer.toString(id)+c.getInformations(id));
                     }
                 }
             }
@@ -179,10 +179,10 @@ public class TraitementClient extends Thread{
             if(cAjout.isDisponible()){
                 for (Integer idClient : clients.keySet())
                 {
-                    Client c=clients.get(idClient);
+                    Client cAPrevenir=clients.get(idClient);
                     //pour tous les utilisateurs disponibles on envoit les informations sur le nouveau client
-                    if(c.isDisponible())
-                        servicePostalUDP.envoyer(decoupageRequete[1]+cAjout.getInformations(idClient), c.getIp(), c.getPort());
+                    if(cAPrevenir.isDisponible())
+                        servicePostalUDP.envoyer("AJOUTCLIENT#"+decoupageRequete[1]+cAjout.getInformations(idClientAjout), cAPrevenir.getIp(), cAPrevenir.getPort());
                 }
             }
             //ajout du client dans la liste
