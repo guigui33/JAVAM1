@@ -21,9 +21,9 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel5" alignment="0" min="-2" pref="566" max="-2" attributes="0"/>
+                              <Component id="jLabel_Objet" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel_Emetteur" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel_message" alignment="0" min="-2" pref="566" max="-2" attributes="0"/>
                               <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -38,13 +38,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel_Emetteur" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel_Objet" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel5" min="-2" pref="118" max="-2" attributes="0"/>
+                  <Component id="jLabel_message" min="-2" pref="118" max="-2" attributes="0"/>
                   <EmptySpace pref="66" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -59,17 +59,17 @@
             <Property name="text" type="java.lang.String" value="Message"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel3">
+        <Component class="javax.swing.JLabel" name="jLabel_Emetteur">
           <Properties>
             <Property name="text" type="java.lang.String" value="Emetteur :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel4">
+        <Component class="javax.swing.JLabel" name="jLabel_Objet">
           <Properties>
             <Property name="text" type="java.lang.String" value="Objet :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel5">
+        <Component class="javax.swing.JLabel" name="jLabel_message">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel5"/>
             <Property name="verticalAlignment" type="int" value="1"/>

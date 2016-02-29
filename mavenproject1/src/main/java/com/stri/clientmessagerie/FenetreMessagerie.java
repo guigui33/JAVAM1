@@ -44,7 +44,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         new ServicePostal(s).emission("HELLO#" + id_user + "#" + num_session + "#127.0.0.1#" + sp1.getPort());
         new ServicePostal(s).reception();
         initComponents();
-        new ServicePostal(s).emission("UTILISATEURS#3");
+        new ServicePostal(s).emission("UTILISATEURS#" + id_user);
         construireListeAllUsers(new ServicePostal(s).reception());
         new ServicePostal(s).emission("LISTEMSG#" + id_user);
         construireListeMessage(new ServicePostal(s).reception());
@@ -64,9 +64,9 @@ public class FenetreMessagerie extends javax.swing.JFrame{
 
         jFrame2 = new javax.swing.JFrame();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel_Emetteur = new javax.swing.JLabel();
+        jLabel_Objet = new javax.swing.JLabel();
+        jLabel_message = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jFrame1 = new javax.swing.JFrame();
         jLabel1 = new javax.swing.JLabel();
@@ -94,12 +94,12 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Message");
 
-        jLabel3.setText("Emetteur :");
+        jLabel_Emetteur.setText("Emetteur :");
 
-        jLabel4.setText("Objet :");
+        jLabel_Objet.setText("Objet :");
 
-        jLabel5.setText("jLabel5");
-        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel_message.setText("jLabel5");
+        jLabel_message.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jLabel9.setText("Message :");
 
@@ -115,9 +115,9 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                     .addGroup(jFrame2Layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addGroup(jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_Objet)
+                            .addComponent(jLabel_Emetteur)
+                            .addComponent(jLabel_message, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9))))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
@@ -127,13 +127,13 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(52, 52, 52)
-                .addComponent(jLabel3)
+                .addComponent(jLabel_Emetteur)
                 .addGap(38, 38, 38)
-                .addComponent(jLabel4)
+                .addComponent(jLabel_Objet)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_message, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
@@ -348,8 +348,28 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jFrame1.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private Integer getId_message(){
+        String x = jList2.getSelectedValue();
+        for(Integer i : listeMessage.keySet()){
+            if(listeMessage.get(i).equals(x))
+                return i;
+        }
+        return -1;
+    }       
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-   
+        Integer id_message = getId_message();
+        new ServicePostal(s).emission("LIRE#" +id_user + "#"+ id_message);
+        String message = new ServicePostal(s).reception();
+        System.out.println(message);
+        
+        String [] decoupage = message.split("#");
+        jLabel_Emetteur.setText("Emetteur : " + decoupage[1] + " " + decoupage[0]);
+        jLabel_Objet.setText("Objet : " + decoupage[2]);
+        jLabel_message.setText(decoupage[3]);
+        jFrame2.setVisible(true);
+        jFrame2.setLocationRelativeTo(null);
+        
              
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -424,13 +444,13 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private javax.swing.JFrame jFrame2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_Emetteur;
+    private javax.swing.JLabel jLabel_Objet;
+    private javax.swing.JLabel jLabel_message;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JPanel jPanel1;

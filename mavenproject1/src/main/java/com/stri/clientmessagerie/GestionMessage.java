@@ -48,14 +48,14 @@ public class GestionMessage extends Thread{
                         tabActif = true;
                     }
                 }
-                if(!tabActif){
+                /*if(!tabActif){
                     frame.construireTab();
                     try {
                         frame.afficherTexte(titleTab.split(" ")[0], texte);
                     } catch (BadLocationException ex) {
                         Logger.getLogger(GestionMessage.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }
+                }*/
                 message.remove(0);
 
             }
