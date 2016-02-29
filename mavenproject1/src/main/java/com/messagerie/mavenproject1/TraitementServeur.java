@@ -90,9 +90,9 @@ public class TraitementServeur extends Thread {
             {
                 //recuperation des informations des clients
                 //si le client est visible, on lui envoit sur l'adresse ip et port enregistrés
-                Client c=clients.get(idClient);
-                if(c.isDisponible())
-                    servicePostalUDP.envoyer(idClient.toString()+c.getInformations(idClient), c.getIp(), c.getPort());
+                Client cAPrevenir=clients.get(idClient);
+                if(cAPrevenir.isDisponible())
+                    servicePostalUDP.envoyer("SUPPCLIENT#"+idClientSupp.toString(), cAPrevenir.getIp(), cAPrevenir.getPort());
             }
         }
         return "OK";
