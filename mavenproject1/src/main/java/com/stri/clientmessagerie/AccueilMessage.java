@@ -8,6 +8,7 @@ package com.stri.clientmessagerie;
 import com.strim1.mavenproject1.ServicePostalUDP;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Hashtable;
 
 /**
  *
@@ -16,13 +17,17 @@ import java.net.SocketException;
 public class AccueilMessage extends Thread{
 
     private ServicePostalUDP sp;
+    private Hashtable<Integer, String> message;
     
-    public AccueilMessage(int port, ServicePostalUDP sp){
+    public AccueilMessage(ServicePostalUDP sp, Hashtable message){
         this.sp = sp;
+        this.message = message;
     }
     public void run() {
         while(true){
-            System.out.println(sp.recevoir());
+            String texte = sp.recevoir();
+            System.out.println("J'ai reçu : " + texte);
+            message.put(0, texte);
         }
 
     }

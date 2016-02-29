@@ -21,10 +21,11 @@ public class ServicePostalUDP {
      * Le datagramme UDP
      */
     private DatagramSocket datagramme;
-    
+    private int port;
     /**
      * Construteur, qui definit le datagramSocket à partir d'un port déterminé
      * @param port le port  
+     *             si le port n'est pas disponible, il incremente le port jusqu'à en trouver un.
      */
     public ServicePostalUDP(int port){
         boolean trouve = false;
@@ -37,6 +38,7 @@ public class ServicePostalUDP {
                 System.out.println("port " + port + " utilisé.");
                 port += 1;
             }
+         this.port = port;
         }
     }
     
@@ -90,4 +92,10 @@ public class ServicePostalUDP {
         }
         return "ERROR";
     }
+
+    public int getPort() {
+        return port;
+    }
+    
+    
 }

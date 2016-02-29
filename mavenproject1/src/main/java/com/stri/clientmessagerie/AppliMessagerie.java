@@ -8,9 +8,10 @@ package com.stri.clientmessagerie;
 import com.client.mavenproject1.Client;
 import com.strim1.mavenproject1.ServicePostalUDP;
 import java.io.IOException;
-import java.net.DatagramSocket;
+import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -18,15 +19,14 @@ import java.util.logging.Logger;
  */
 public class AppliMessagerie {
     
-    private final Integer port;
     private static ServicePostalUDP sp = new ServicePostalUDP(50000);
-
+    private static final Hashtable<Integer, String> message = new Hashtable<>();
+    private static FenetreMessagerie frame;
 
     
-    public AppliMessagerie(final Client c) {
+    public AppliMessagerie(final Client c) throws IOException {
         String[] args = null;
         main(args, c);
-        this.port = 1;
     }
     
     
@@ -58,19 +58,23 @@ public class AppliMessagerie {
         }
         //</editor-fold>
         //</editor-fold>
-        new AccueilMessage(50000, sp).start();
+        new AccueilMessage(sp, message).start();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new FenetreMessagerie(c, sp).setVisible(true);
+                    frame = new FenetreMessagerie(c, sp);
                 } catch (IOException ex) {
                     Logger.getLogger(AppliMessagerie.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+               
+                frame.setVisible(true);
+                new GestionMessage(frame, message).start();
             }
         });
-              //while(true)
+
+
+        
         //System.out.println("Salut je suis le main");
     }
 
