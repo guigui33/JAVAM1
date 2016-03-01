@@ -52,7 +52,6 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         new ServicePostal(s).emission("CONTACT#" + id_user);
         construireListeConnecte(new ServicePostal(s).reception());
         this.setLocationRelativeTo(null);
-        new ServicePostal(s).deconnexion();
     }
 
     /**
@@ -340,7 +339,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
             }
         }
         if(!tabActif){
-            construireTab();
+            construireTab(jList1.getSelectedValue());
         }
     }//GEN-LAST:event_jButton_ContacterActionPerformed
 
@@ -407,25 +406,33 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     }
     
     private void construireListeConnecte(String s){
-        if(!s.equals("LISTE")){
-            String [] decoupage;
-            String [] decoupageContact;
-            decoupage = s.split("\\$");
-            for (int i = 1; i < decoupage.length; i++) {
-                decoupageContact = decoupage[i].split("#");
-                listeContact.put(Integer.valueOf(decoupageContact[0]), decoupageContact[2] + "#" + decoupageContact[1] + "#" + decoupageContact[3] + "#" + decoupageContact[4]);
-            }
+        if(s.contains("ERROR"))
+        {
             DefaultListModel DLM = new DefaultListModel();
-            for (int i : listeContact.keySet()) {
-                String [] nomprenom = listeContact.get(i).split("#");
-                DLM.addElement(nomprenom[0] + " " + nomprenom[1]);
-            }
+            DLM.addElement(s.split("#")[1]);
             jList1.setModel(DLM);
         }
-        else{
-            DefaultListModel DLM = new DefaultListModel();
-            DLM.addElement("Aucuns contacts connectés");
-            jList1.setModel(DLM);
+        else {
+            if(!s.equals("LISTE")){
+                String [] decoupage;
+                String [] decoupageContact;
+                decoupage = s.split("\\$");
+                for (int i = 1; i < decoupage.length; i++) {
+                    decoupageContact = decoupage[i].split("#");
+                    listeContact.put(Integer.valueOf(decoupageContact[0]), decoupageContact[2] + "#" + decoupageContact[1] + "#" + decoupageContact[3] + "#" + decoupageContact[4]);
+                }
+                DefaultListModel DLM = new DefaultListModel();
+                for (int i : listeContact.keySet()) {
+                    String [] nomprenom = listeContact.get(i).split("#");
+                    DLM.addElement(nomprenom[0] + " " + nomprenom[1]);
+                }
+                jList1.setModel(DLM);
+            }
+            else{
+                DefaultListModel DLM = new DefaultListModel();
+                DLM.addElement("Aucuns contacts connectés");
+                jList1.setModel(DLM);
+            }
         }
     }
     private void construireListeMessage(String s){
@@ -529,8 +536,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
             jTabbedPane1.setSelectedIndex(0);
     }                                    
 
-    public void construireTab(){
-
+    public void construireTab(String titleTab){
         JPanel Jpanel = new javax.swing.JPanel();
         Jpanel.setLayout(null);
         JButton bouton = new JButton("Envoyer !");
@@ -543,7 +549,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
         jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(new TraitementEnvoyer(sp1,id_user) );
+        bouton.addActionListener(new TraitementEnvoyer(sp1,id_user, listeContact, titleTab ) );
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
@@ -558,12 +564,12 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         Jpanel.add(jTextArea_texte);
         Jpanel.add(jEditor);
         Jpanel.add(fermer);
-        jTabbedPane1.addTab(jList1.getSelectedValue(), Jpanel); 
+        jTabbedPane1.addTab(titleTab, Jpanel); 
         jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
         jTabbedPane1.updateUI();       
     }
     
-        public void afficherTexte(String nom, String texte, JTabbedPane jTabbedPane1) throws BadLocationException{
+        public void afficherTexte(String nom, String texte) throws BadLocationException{
             int numTab = jTabbedPane1.getSelectedIndex();
             Component com = jTabbedPane1.getComponentAt(numTab);
             JEditorPane j = (JEditorPane) com.getComponentAt(23, 21);
@@ -585,10 +591,16 @@ public  class   TraitementEnvoyer implements   ActionListener
          */
         ServicePostalUDP sp;
         Integer id_user;
+        private Hashtable<Integer, String> listeContact = new Hashtable<>();
+        String titleTab;
+        int port;
+        String ip;
 
-        public TraitementEnvoyer(ServicePostalUDP sp, Integer id_user) {
+        public TraitementEnvoyer(ServicePostalUDP sp, Integer id_user, Hashtable listeContact, String titleTab) {
             this.sp = sp;
             this.id_user = id_user;
+            this.listeContact = listeContact;
+            this.titleTab = titleTab;
         }
         
         public  void    actionPerformed(ActionEvent e)
@@ -597,8 +609,14 @@ public  class   TraitementEnvoyer implements   ActionListener
             System.out.println(jTabbedPane1.getTitleAt(i));*/
             String texte = recupererTexte();
             try {
-                afficherTexte("Moi", texte, getjTabbedPane1());
-                sp.envoyer(id_user + "#" + texte, "127.0.0.1", 50001);
+                for(int id : listeContact.keySet()){
+                    if(listeContact.get(id).contains(titleTab.split(" ")[0])){
+                        port = Integer.valueOf(listeContact.get(id).split("#")[3]);
+                        ip = listeContact.get(id).split("#")[2];
+                    }
+                }
+                afficherTexte("Moi", texte);
+                sp.envoyer(id_user + "#" + texte, ip, port);
             } catch (BadLocationException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -37,7 +37,7 @@ public class GestionMessage extends Thread{
         this.listeUsers = frame.getListeUsers();
     }
     
-    private void construireTab(String titleTab){
+  /*  private void construireTab(String titleTab){
         JTabbedPane tab = frame.getjTabbedPane1();
         JPanel Jpanel = new javax.swing.JPanel();
         Jpanel.setLayout(null);
@@ -66,7 +66,7 @@ public class GestionMessage extends Thread{
         tab.setSelectedIndex(tab.getTabCount()-1);
         tab.updateUI();
         frame.setjTabbedPane1(tab);
-    }
+    }*/
     
     
     private void construireMessage(String [] decoupage){
@@ -79,7 +79,7 @@ public class GestionMessage extends Thread{
         for (int i = 0; i < nbTab; i++) {
             if(tab.getTitleAt(i).equals(titleTab)){
                 try {
-                    frame.afficherTexte(titleTab.split(" ")[0], texte, frame.getjTabbedPane1());
+                    frame.afficherTexte(titleTab.split(" ")[0], texte);
                 } catch (BadLocationException ex) {
                     Logger.getLogger(GestionMessage.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -88,10 +88,10 @@ public class GestionMessage extends Thread{
             }
         }
         if(!tabActif){
-            frame.construireTab();
+            frame.construireTab(titleTab);
             tab = frame.getjTabbedPane1();
             try {
-                frame.afficherTexte(titleTab.split(" ")[0], texte, tab);
+                frame.afficherTexte(titleTab.split(" ")[0], texte);
             } catch (BadLocationException ex) {
                 Logger.getLogger(GestionMessage.class.getName()).log(Level.SEVERE, null, ex);
             }
