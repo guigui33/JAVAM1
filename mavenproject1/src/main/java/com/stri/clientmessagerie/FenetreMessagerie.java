@@ -401,6 +401,10 @@ public class FenetreMessagerie extends javax.swing.JFrame{
        j.setText("test");
     
 */
+
+    public Hashtable<Integer, String> getListeUsers() {
+        return listeUsers;
+    }
     
     private void construireListeConnecte(String s){
         if(!s.equals("LISTE")){
@@ -477,6 +481,14 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         this.listeContact = listeContact;
     }
 
+    public Integer getId_user() {
+        return id_user;
+    }
+
+    public ServicePostalUDP getSp1() {
+        return sp1;
+    }
+
     
 
 
@@ -531,7 +543,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
         jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(new TraitementEnvoyer(sp1,jList1.getSelectedValue()) );
+        bouton.addActionListener(new TraitementEnvoyer(sp1,id_user) );
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
@@ -547,6 +559,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         Jpanel.add(jEditor);
         Jpanel.add(fermer);
         jTabbedPane1.addTab(jList1.getSelectedValue(), Jpanel); 
+        jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
         jTabbedPane1.updateUI();       
     }
     
@@ -571,11 +584,11 @@ public  class   TraitementEnvoyer implements   ActionListener
          * obligatoire car test implémente l'interface ActionListener
          */
         ServicePostalUDP sp;
-        String titleTab;
+        Integer id_user;
 
-        public TraitementEnvoyer(ServicePostalUDP sp, String titleTab) {
+        public TraitementEnvoyer(ServicePostalUDP sp, Integer id_user) {
             this.sp = sp;
-            this.titleTab = titleTab;
+            this.id_user = id_user;
         }
         
         public  void    actionPerformed(ActionEvent e)
@@ -585,7 +598,7 @@ public  class   TraitementEnvoyer implements   ActionListener
             String texte = recupererTexte();
             try {
                 afficherTexte("Moi", texte, getjTabbedPane1());
-                sp.envoyer(titleTab + "#" + texte, "127.0.0.1", 50001);
+                sp.envoyer(id_user + "#" + texte, "127.0.0.1", 50001);
             } catch (BadLocationException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }

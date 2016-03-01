@@ -29,13 +29,15 @@ import javax.swing.text.html.HTMLEditorKit;
 public class GestionMessage extends Thread{
     private FenetreMessagerie frame;
     private Hashtable<Integer, String> message;
+    private Hashtable<Integer, String> listeUsers;
     
     public GestionMessage(FenetreMessagerie frame, Hashtable message){
         this.frame = frame;
         this.message = message;
+        this.listeUsers = frame.getListeUsers();
     }
     
-    private JTabbedPane construireTab(){
+    private void construireTab(String titleTab){
         JTabbedPane tab = frame.getjTabbedPane1();
         JPanel Jpanel = new javax.swing.JPanel();
         Jpanel.setLayout(null);
@@ -49,24 +51,26 @@ public class GestionMessage extends Thread{
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
         jTextArea_texte.setBounds(20, 260, 650, 130);
+        bouton.addActionListener(frame.new TraitementEnvoyer(frame.getSp1(),frame.getId_user()));
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
         fermer.setForeground(new java.awt.Color(0, 102, 255));
         fermer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
+
          Jpanel.add(bouton);
         Jpanel.add(jTextArea_texte);
         Jpanel.add(jEditor);
         Jpanel.add(fermer);
-        tab.addTab("Test", Jpanel); 
+        tab.addTab(titleTab, Jpanel); 
+        tab.setSelectedIndex(tab.getTabCount()-1);
         tab.updateUI();
         frame.setjTabbedPane1(tab);
-        return tab;
     }
     
     
     private void construireMessage(String [] decoupage){
-        String titleTab = decoupage[0];
+        String titleTab = listeUsers.get(Integer.valueOf(decoupage[0]));
         String texte = decoupage[1];
         int nbTab;
         Boolean tabActif = false;
@@ -84,12 +88,13 @@ public class GestionMessage extends Thread{
             }
         }
         if(!tabActif){
-            construireTab();
-            /*try {
+            frame.construireTab();
+            tab = frame.getjTabbedPane1();
+            try {
                 frame.afficherTexte(titleTab.split(" ")[0], texte, tab);
             } catch (BadLocationException ex) {
                 Logger.getLogger(GestionMessage.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
         }
     }
     
