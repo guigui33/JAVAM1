@@ -31,6 +31,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
     private Integer num_session;
     private Hashtable<Integer, String> listeUsers = new Hashtable<>();
     private Hashtable<Integer, String> listeMessage = new Hashtable<>();
+    private Hashtable<Integer, String> listeContact = new Hashtable<>();
     private ServicePostalUDP sp1;
 
     /**
@@ -49,7 +50,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         new ServicePostal(s).emission("LISTEMSG#" + id_user);
         construireListeMessage(new ServicePostal(s).reception());
         new ServicePostal(s).emission("CONTACT#" + id_user);
-        new ServicePostal(s).reception();
+        construireListeConnecte(new ServicePostal(s).reception());
         this.setLocationRelativeTo(null);
         new ServicePostal(s).deconnexion();
     }
@@ -400,6 +401,29 @@ public class FenetreMessagerie extends javax.swing.JFrame{
        j.setText("test");
     
 */
+    
+    private void construireListeConnecte(String s){
+        if(!s.equals("LISTE")){
+            String [] decoupage;
+            String [] decoupageContact;
+            decoupage = s.split("\\$");
+            for (int i = 1; i < decoupage.length; i++) {
+                decoupageContact = decoupage[i].split("#");
+                listeContact.put(Integer.valueOf(decoupageContact[0]), decoupageContact[2] + "#" + decoupageContact[1] + "#" + decoupageContact[3] + "#" + decoupageContact[4]);
+            }
+            DefaultListModel DLM = new DefaultListModel();
+            for (int i : listeContact.keySet()) {
+                String [] nomprenom = listeContact.get(i).split("#");
+                DLM.addElement(nomprenom[0] + " " + nomprenom[1]);
+            }
+            jList1.setModel(DLM);
+        }
+        else{
+            DefaultListModel DLM = new DefaultListModel();
+            DLM.addElement("Aucuns contacts connectés");
+            jList1.setModel(DLM);
+        }
+    }
     private void construireListeMessage(String s){
         String [] decoupage;
         String [] decoupageMsg;
@@ -432,7 +456,28 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         return jTabbedPane1;
     }
 
+    public JList<String> getjList1() {
+        return jList1;
+    }
 
+    public void setjTabbedPane1(JTabbedPane jTabbedPane1) {
+        this.jTabbedPane1 = jTabbedPane1;
+    }
+
+    
+    public void setjList1(JList<String> jList1) {
+        this.jList1 = jList1;
+    }
+
+    public Hashtable<Integer, String> getListeContact() {
+        return listeContact;
+    }
+
+    public void setListeContact(Hashtable<Integer, String> listeContact) {
+        this.listeContact = listeContact;
+    }
+
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -505,7 +550,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jTabbedPane1.updateUI();       
     }
     
-        public void afficherTexte(String nom, String texte) throws BadLocationException{
+        public void afficherTexte(String nom, String texte, JTabbedPane jTabbedPane1) throws BadLocationException{
             int numTab = jTabbedPane1.getSelectedIndex();
             Component com = jTabbedPane1.getComponentAt(numTab);
             JEditorPane j = (JEditorPane) com.getComponentAt(23, 21);
@@ -539,7 +584,7 @@ public  class   TraitementEnvoyer implements   ActionListener
             System.out.println(jTabbedPane1.getTitleAt(i));*/
             String texte = recupererTexte();
             try {
-                afficherTexte("Moi", texte);
+                afficherTexte("Moi", texte, getjTabbedPane1());
                 sp.envoyer(titleTab + "#" + texte, "127.0.0.1", 50001);
             } catch (BadLocationException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
