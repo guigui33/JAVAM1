@@ -107,7 +107,7 @@ public class TraitementClient extends Thread{
         Bdd bdd=new Bdd();
         if(bdd.connexion()){
             //l'identifiant du message
-            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[1]));
+            return bdd.afficherMessage(Integer.valueOf(decoupageRequete[2]));
         }
         return "ERROR";
     }
