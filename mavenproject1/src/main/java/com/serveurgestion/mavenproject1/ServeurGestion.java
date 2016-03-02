@@ -3,6 +3,7 @@ package com.serveurgestion.mavenproject1;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +21,8 @@ public class ServeurGestion {
      * le socket d'ecoute du client
      */
     private ServerSocket ecoute;
+    private Vector<Integer> appels;
+    
     /**
      * contructeur de la classe, definit le socket  d'ecoute du serveur
      * @param portClient le port d'ecoute du serveur
@@ -27,6 +30,7 @@ public class ServeurGestion {
     public ServeurGestion(int portClient){
         try {
             ecoute=new ServerSocket(portClient);
+            appels=new Vector<>();
         } catch (IOException ex) {
             Logger.getLogger(ServeurGestion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -55,5 +59,6 @@ public class ServeurGestion {
     public static void main(String[] args) {
         System.out.println("***debut serveur gestion ***");
         new ServeurGestion(50003).fonctionnementService();
+                
     }
 }
