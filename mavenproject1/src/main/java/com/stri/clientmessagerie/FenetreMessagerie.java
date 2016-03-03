@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.stri.clientmessagerie;
 
 import com.client.mavenproject1.Client;
@@ -20,10 +16,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-/**
- *
- * @author AFBD
- */
+
 public class FenetreMessagerie extends javax.swing.JFrame{
 
     private final Socket s;
@@ -338,8 +331,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                 tabActif = true;
             }
         }
-        if(!tabActif){
-            construireTab(jList1.getSelectedValue());
+        if(!tabActif){         
+           construireTab(jList1.getSelectedValue());
         }
     }//GEN-LAST:event_jButton_ContacterActionPerformed
 
@@ -394,12 +387,6 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         }
         return -1;
     }
-    /*
-              Component com = jTabbedPane1.getComponentAt(2);
-       JTextField j = (JTextField) com.getComponentAt(21, 21);
-       j.setText("test");
-    
-*/
 
     public Hashtable<Integer, String> getListeUsers() {
         return listeUsers;
@@ -548,8 +535,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         jEditor.setDocument(new HTMLDocument());
         jEditor.setText("");
         JTextArea jTextArea_texte = new JTextArea();
-        jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(new TraitementEnvoyer(sp1,id_user, listeContact, titleTab ) );
+        jTextArea_texte.setBounds(20, 260, 650, 130);        
+        bouton.addActionListener(new TraitementEnvoyer(sp1,id_user, listeContact, titleTab ) );        
         bouton.setBounds(680, 300, 150, 50);
         JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
         fermer.setBounds(685, 355, 150, 50);
@@ -566,7 +553,7 @@ public class FenetreMessagerie extends javax.swing.JFrame{
         Jpanel.add(fermer);
         jTabbedPane1.addTab(titleTab, Jpanel); 
         jTabbedPane1.setSelectedIndex(jTabbedPane1.getTabCount()-1);
-        jTabbedPane1.updateUI();       
+        jTabbedPane1.updateUI();     
     }
     
         public void afficherTexte(String nom, String texte) throws BadLocationException{
@@ -577,10 +564,8 @@ public class FenetreMessagerie extends javax.swing.JFrame{
                 HTMLEditorKit kit = (HTMLEditorKit) j.getEditorKit();
                 HTMLDocument doc = (HTMLDocument) j.getDocument();
                 kit.insertHTML(doc, doc.getLength(), "<b> " + nom + " </b> : " + texte + " <br>", 0, 0, null);
-            } catch (BadLocationException ex) {
+            } catch (BadLocationException | IOException ex) {
                 Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (IOException ex) {
-               Logger.getLogger(FenetreMessagerie.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     
@@ -605,8 +590,6 @@ public  class   TraitementEnvoyer implements   ActionListener
         
         public  void    actionPerformed(ActionEvent e)
         {
-            /*int i = jTabbedPane1.getSelectedIndex();
-            System.out.println(jTabbedPane1.getTitleAt(i));*/
             String texte = recupererTexte();
             try {
                 for(int id : listeContact.keySet()){

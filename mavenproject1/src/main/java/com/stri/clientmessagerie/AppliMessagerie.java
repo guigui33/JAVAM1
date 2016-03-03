@@ -11,56 +11,25 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTabbedPane;
 
-/**
- *
- * @author AFBD
- */
-public class AppliMessagerie {
-    
-    private static ServicePostalUDP sp = new ServicePostalUDP(50000);
-    private static final Hashtable<Integer, String> message = new Hashtable<>();
-    private static FenetreMessagerie frame;
 
+public class AppliMessagerie extends Thread {
     
-    public AppliMessagerie(final Client c) throws IOException {
-        String[] args = null;
-        main(args, c);
+    private final ServicePostalUDP sp = new ServicePostalUDP(50000);
+    private final Hashtable<Integer, String> message = new Hashtable<>();
+    private FenetreMessagerie frame;
+    private final Client c;
+    
+    public AppliMessagerie(Client c){
+        this.c=c;
     }
     
-    
-        
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[], final Client c) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FenetreMessagerie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FenetreMessagerie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FenetreMessagerie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FenetreMessagerie.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    @Override
+    public void run() {
         new AccueilMessage(sp, message).start();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     frame = new FenetreMessagerie(c, sp);
@@ -72,10 +41,6 @@ public class AppliMessagerie {
                 new GestionMessage(frame, message).start();
             }
         });
-
-
-        
-        //System.out.println("Salut je suis le main");
     }
 
 

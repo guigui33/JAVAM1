@@ -1,23 +1,15 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
+
 package com.client.mavenproject1;
 
 import com.strim1.mavenproject1.ServicePostal;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author guigui
+ *
  */
 public class Client {
     private Socket socket;
@@ -38,11 +30,9 @@ public class Client {
     
     private boolean Connecte = false;
     
-    private boolean quitter;
     
     public Client(){
         this.socket=null;
-        this.quitter=false;
         this.Connecte = false;
         initialiserTableau();
     }
@@ -76,7 +66,6 @@ public class Client {
             this.socket = new Socket("127.0.0.1", port);
         } catch (IOException ex) {
             System.out.print("erreur de connexion. Serveur non accessible.");
-            quitter=true;
         }
     }
     
@@ -135,8 +124,7 @@ public class Client {
        }
         return retourReq;
     }
-    
-    
+        
     
     public String getNom() {
         return nom;
@@ -232,9 +220,6 @@ public class Client {
 
     public void setContact(String Contact) {
         this.Contact = Contact;
-    }
-
-    
-    
-
+    }  
+   
 }

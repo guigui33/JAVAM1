@@ -5,21 +5,15 @@
  */
 package com.stri.clientmessagerie;
 
-import com.strim1.mavenproject1.ServicePostalUDP;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+
 import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
+
 
     
 /**
@@ -36,39 +30,7 @@ public class GestionMessage extends Thread{
         this.message = message;
         this.listeUsers = frame.getListeUsers();
     }
-    
-  /*  private void construireTab(String titleTab){
-        JTabbedPane tab = frame.getjTabbedPane1();
-        JPanel Jpanel = new javax.swing.JPanel();
-        Jpanel.setLayout(null);
-        JButton bouton = new JButton("Envoyer !");
-        JEditorPane jEditor = new JEditorPane();
-        jEditor.setFocusable(false);
-        jEditor.setBounds(20, 20, 810, 235);
-        jEditor.setContentType("text/html");
-        jEditor.setEditorKit(new HTMLEditorKit());
-        jEditor.setDocument(new HTMLDocument());
-        jEditor.setText("");
-        JTextArea jTextArea_texte = new JTextArea();
-        jTextArea_texte.setBounds(20, 260, 650, 130);
-        bouton.addActionListener(frame.new TraitementEnvoyer(frame.getSp1(),frame.getId_user()));
-        bouton.setBounds(680, 300, 150, 50);
-        JLabel fermer = new JLabel("<html><u><i>Fermer cette conversation</i></u></html>");
-        fermer.setBounds(685, 355, 150, 50);
-        fermer.setForeground(new java.awt.Color(0, 102, 255));
-        fermer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR)); 
 
-         Jpanel.add(bouton);
-        Jpanel.add(jTextArea_texte);
-        Jpanel.add(jEditor);
-        Jpanel.add(fermer);
-        tab.addTab(titleTab, Jpanel); 
-        tab.setSelectedIndex(tab.getTabCount()-1);
-        tab.updateUI();
-        frame.setjTabbedPane1(tab);
-    }*/
-    
-    
     private void construireMessage(String [] decoupage){
         String titleTab = listeUsers.get(Integer.valueOf(decoupage[0]));
         String texte = decoupage[1];
@@ -89,7 +51,11 @@ public class GestionMessage extends Thread{
         }
         if(!tabActif){
             frame.construireTab(titleTab);
-            tab = frame.getjTabbedPane1();
+            try {                
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GestionMessage.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 frame.afficherTexte(titleTab.split(" ")[0], texte);
             } catch (BadLocationException ex) {
@@ -150,9 +116,5 @@ public class GestionMessage extends Thread{
 
             }
         }
-        /*        JTabbedPane tab = frame.getjTabbedPane1();
-            int numTab = tab.getSelectedIndex();
-            System.out.println("Je suis la nouvelle classe :" +numTab);
-            tab.setSelectedIndex(1);*/
     }
 }

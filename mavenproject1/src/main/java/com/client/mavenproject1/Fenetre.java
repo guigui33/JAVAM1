@@ -6,14 +6,12 @@
 package com.client.mavenproject1;
 
 import com.stri.clientmessagerie.AppliMessagerie;
-import com.strim1.mavenproject1.ServicePostal;
 import java.awt.CardLayout;
 import java.io.IOException;
-import static java.lang.Boolean.TRUE;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -24,14 +22,12 @@ public class Fenetre extends javax.swing.JFrame {
     /**
      * Creates new form Fenetre
      */
-    
     Client c = new Client();
-    
-    
+
     public Fenetre() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
         construire_entete(0);
         afficherRechercherAcceuil();
@@ -1379,14 +1375,14 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_image(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_image
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
-        cardLayout.show(jPanel_Principal, "Panel_Recherche");        
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
+        cardLayout.show(jPanel_Principal, "Panel_Recherche");
     }//GEN-LAST:event_click_image
 
     private void click_connexion_inscription(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_connexion_inscription
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
-        cardLayout.show(jPanel_Principal, "Panel_Connexion_Inscription");  
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
+        cardLayout.show(jPanel_Principal, "Panel_Connexion_Inscription");
     }//GEN-LAST:event_click_connexion_inscription
 
     private void jButton_modifier_coorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modifier_coorActionPerformed
@@ -1396,7 +1392,7 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_modifier_coordonnees(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_modifier_coordonnees
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Modifier_Coordonnees");
         construire_modif_infoPerso();
     }//GEN-LAST:event_click_modifier_coordonnees
@@ -1415,26 +1411,23 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_envoyer_modif_coordonnees(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_envoyer_modif_coordonnees
         // TODO add your handling code here:
-        if(!verifier_motdepasse(jTextField_modif_mdp.getText())){
-            javax.swing.JOptionPane.showMessageDialog(null,"Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
-        else if(!mdp_identique(jTextField_modif_confirm_mdp.getText(), jTextField_modif_confirm_mdp.getText())){
-            javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
-        else {
-            javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_modif_info()));
+        if (!verifier_motdepasse(jTextField_modif_mdp.getText())) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else if (!mdp_identique(jTextField_modif_confirm_mdp.getText(), jTextField_modif_confirm_mdp.getText())) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(null, c.envoyerRequete(generer_modif_info()));
             construire_monCompte();
-            CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
-            cardLayout.show(jPanel_Principal, "Panel_Compte"); 
+            CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
+            cardLayout.show(jPanel_Principal, "Panel_Compte");
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_click_envoyer_modif_coordonnees
 
     private void click_modifier_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_modifier_diplome
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Modifier_Diplome");
     }//GEN-LAST:event_click_modifier_diplome
 
@@ -1452,10 +1445,10 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_modif_competence(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_modif_competence
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
-        cardLayout.show(jPanel_Principal, "Panel_Modifier_Competence");  
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
+        cardLayout.show(jPanel_Principal, "Panel_Modifier_Competence");
         DefaultListModel DLM = new DefaultListModel();
-/*        for (int i = 0; i < c.listeCompetence.size(); i++)
+        /*        for (int i = 0; i < c.listeCompetence.size(); i++)
             {
                  DLM.addElement(c.listeCompetence.get(i)); 
             }
@@ -1464,13 +1457,13 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_retour_compte(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_retour_compte
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Compte");
     }//GEN-LAST:event_click_retour_compte
 
     private void click_compte(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_compte
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Compte");
         construire_monCompte();
     }//GEN-LAST:event_click_compte
@@ -1482,26 +1475,24 @@ public class Fenetre extends javax.swing.JFrame {
         c.deconnexion();
         javax.swing.JOptionPane.showMessageDialog(null, "Au revoir et à bientôt !");
         afficherRechercherAcceuil();
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
         c.envoyerHello(0, 0);
-        
+
     }//GEN-LAST:event_click_deconnexion
 
     private void click_inscription(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_inscription
         // TODO add your handling code here:
         String retour;
-        if(!verifier_motdepasse(jTextField_mdp_inscr.getText())){
-            javax.swing.JOptionPane.showMessageDialog(null,"Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
-        else if(!mdp_identique(jTextField_mdp_inscr.getText(), jTextField_confirm_mdp_inscr.getText())){
-            javax.swing.JOptionPane.showMessageDialog(null,"Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
-        else{
+        if (!verifier_motdepasse(jTextField_mdp_inscr.getText())) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Le mot de passe doit faire entre 6 et 16 caractères", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else if (!mdp_identique(jTextField_mdp_inscr.getText(), jTextField_confirm_mdp_inscr.getText())) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Les deux mots de passe ne correspondent pas", "Erreur dans le mot de passe", javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
             c.connexion(50005);
             retour = c.envoyerRequete(generer_requete_inscription());
             c.deconnexion();
-            javax.swing.JOptionPane.showMessageDialog(null,decouperInscription(retour));
+            javax.swing.JOptionPane.showMessageDialog(null, decouperInscription(retour));
         }
     }//GEN-LAST:event_click_inscription
 
@@ -1513,7 +1504,7 @@ public class Fenetre extends javax.swing.JFrame {
         retour = c.envoyerRequete(generer_requete_connexion());
         c.deconnexion();
         try {
-            javax.swing.JOptionPane.showMessageDialog(null,effectuerConnexion(retour));
+            javax.swing.JOptionPane.showMessageDialog(null, effectuerConnexion(retour));
         } catch (IOException ex) {
             Logger.getLogger(Fenetre.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1521,13 +1512,8 @@ public class Fenetre extends javax.swing.JFrame {
     }//GEN-LAST:event_click_connexion
 
     private void click_add_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_diplome
-        // TODO add your handling code here:
-        //c.connexion(50003);
-        //c.emission("HELLO#8#9747");
-        //c.reception();
-        //c.emission(generer_add_diplome());
-        //javax.swing.JOptionPane.showMessageDialog(null,c.reception());
-        javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_add_diplome()));
+
+        javax.swing.JOptionPane.showMessageDialog(null, c.envoyerRequete(generer_add_diplome()));
     }//GEN-LAST:event_click_add_diplome
 
     private void click_nom_rech(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_nom_rech
@@ -1553,84 +1539,57 @@ public class Fenetre extends javax.swing.JFrame {
 
     private void click_recherche(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_recherche
         // TODO add your handling code here:
-        if(jTextField_Nom_Rechercher.getText().matches("Nom") && jTextField_Prenom_Rechercher.getText().matches("Prenom") && jTextField_Competence_Rechercher.getText().matches("Competence")){
-            CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        if (jTextField_Nom_Rechercher.getText().matches("Nom") && jTextField_Prenom_Rechercher.getText().matches("Prenom") && jTextField_Competence_Rechercher.getText().matches("Competence")) {
+            CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
             cardLayout.show(jPanel_Principal, "Panel_Recherche");
             afficherRechercherAcceuil();
-        }
-        else {         
-            CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        } else {
+            CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
             cardLayout.show(jPanel_Principal, "Panel_Recherche");
             afficherRecherche();
         }
-      
-        
+
+
     }//GEN-LAST:event_click_recherche
 
     private void click_delete_diplome(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_delete_diplome
         // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_delete_diplome()));
+        javax.swing.JOptionPane.showMessageDialog(null, c.envoyerRequete(generer_delete_diplome()));
     }//GEN-LAST:event_click_delete_diplome
 
     private void click_add_competence(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_add_competence
         // TODO add your handling code here:
-         javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_add_competence()));
+        javax.swing.JOptionPane.showMessageDialog(null, c.envoyerRequete(generer_add_competence()));
     }//GEN-LAST:event_click_add_competence
 
     private void click_delete_comp(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_delete_comp
         // TODO add your handling code here:
-         javax.swing.JOptionPane.showMessageDialog(null,c.envoyerRequete(generer_delete_competence()));
+        javax.swing.JOptionPane.showMessageDialog(null, c.envoyerRequete(generer_delete_competence()));
 
     }//GEN-LAST:event_click_delete_comp
 
     private void click_visiter(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_visiter
-        // TODO add your handling code here:
-        /*if(!c.isConnecte()){
-            c.envoyerHello(0, 0);
-        }*/
+
         String s = c.envoyerRequete(generer_req_visiter());
         construire_compte_user(s);
-        CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+        CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_User");
-        /*if(!c.isConnecte()){
-            c.deconnexion();
-        }*/
     }//GEN-LAST:event_click_visiter
 
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Fenetre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Fenetre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Fenetre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Fenetre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        new Thread() {
             public void run() {
-                new Fenetre().setVisible(true);
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new Fenetre().setVisible(true);
+                    }
+                });
             }
-        });
+        }.start();
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1763,59 +1722,50 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_prenom_inscr;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    
     //Méthodes créées pour gérer l'interface 
-    
-    
     private boolean verifier_motdepasse(String mdp) {
         if (mdp.length() > 6 && mdp.length() < 16) {
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
-    
-    private boolean mdp_identique(String mdp1, String mdp2){
+
+    private boolean mdp_identique(String mdp1, String mdp2) {
         return mdp1.equals(mdp2);
     }
-    
-    private void construire_entete(int status){
-        if(status == 0) {
-            CardLayout cardLayout = (CardLayout)(jPanel_Entete.getLayout());
-            cardLayout.show(jPanel_Entete, "Entete_anonyme"); 
-        }
-        else if (status == 1) {
-            CardLayout cardLayout = (CardLayout)(jPanel_Entete.getLayout());
-            cardLayout.show(jPanel_Entete, "Entete_connect"); 
+
+    private void construire_entete(int status) {
+        if (status == 0) {
+            CardLayout cardLayout = (CardLayout) (jPanel_Entete.getLayout());
+            cardLayout.show(jPanel_Entete, "Entete_anonyme");
+        } else if (status == 1) {
+            CardLayout cardLayout = (CardLayout) (jPanel_Entete.getLayout());
+            cardLayout.show(jPanel_Entete, "Entete_connect");
             jLabel_bonjour_nom.setText("Bonjour " + c.getPrenom() + " !");
-            
+
         }
-        
+
     }
-    
-    private void construireMesInfos(String chaine){
+
+    private void construireMesInfos(String chaine) {
         c.initialiserDip();
         c.initialiserComp();
-        String [] decoupage;
-        String [] decoupageTmp;
-        String [] decoupageTmp2;
-        String [] decoupageTmp3;
-        String [] decoupageDip;
-        String [] decoupageComp;
+        String[] decoupage;
+        String[] decoupageTmp;
+        String[] decoupageTmp2;
+        String[] decoupageTmp3;
+        String[] decoupageDip;
+        String[] decoupageComp;
         decoupage = chaine.split("#");
         c.setNom(decoupage[1]);
         c.setPrenom(decoupage[2]);
         c.setAdresse_mail(decoupage[3]);
-        if(!decoupage[4].equals("END_I") && decoupage.length > 7){
+        if (!decoupage[4].equals("END_I") && decoupage.length > 7) {
             c.setTelephone(decoupage[4]);
             c.setDateNaiss(decoupage[5]);
             c.setVisibilite(decoupage[6]);
             c.setContact(decoupage[7]);
-        }
-        else{
+        } else {
             c.setTelephone("");
             c.setDateNaiss("");
             c.setVisibilite("");
@@ -1823,320 +1773,308 @@ public class Fenetre extends javax.swing.JFrame {
         }
         decoupageTmp = chaine.split("END_I");
         decoupageTmp3 = decoupageTmp[1].split("#");
-        if(!decoupageTmp3[1].equals("END_C")){
+        if (!decoupageTmp3[1].equals("END_C")) {
             decoupageTmp2 = decoupageTmp[1].split("END_C");
             decoupageComp = decoupageTmp2[0].split("\\$");
             for (int i = 0; i < decoupageComp.length; i++) {
                 c.listeCompetence[i] = decoupageComp[i];
-            }            
+            }
         }
         //javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp3[1]);
-        if(!decoupageTmp3[2].equals("END_D")){
+        if (!decoupageTmp3[2].equals("END_D")) {
             decoupageTmp2 = decoupageTmp[1].split("END_C");
             decoupageDip = decoupageTmp2[1].split("\\$");
             for (int i = 0; i < decoupageDip.length; i++) {
                 c.listeDiplome[i] = decoupageDip[i];
             }
         }
-        /*// javax.swing.JOptionPane.showMessageDialog(null,decoupageTmp2[0]);
-        decoupageComp = decoupageTmp2[0].split("\\$");
-        for (int i = 0; i < decoupageComp.length; i++) {
-            c.listeCompetence[i] = decoupageComp[i];
-        }*/
     }
-    
-    private void construire_monCompte(){
+
+    private void construire_monCompte() {
         String retour;
         retour = c.envoyerRequete("VISITER#" + c.getId_user() + "#" + c.getId_user());
-        javax.swing.JOptionPane.showMessageDialog(null,retour);
+        javax.swing.JOptionPane.showMessageDialog(null, retour);
         construireMesInfos(retour);
-        jLabel_Nom_prenom1.setText(c.getNom() +" "+ c.getPrenom());
+        jLabel_Nom_prenom1.setText(c.getNom() + " " + c.getPrenom());
         construire_monCompte_infoPerso();
         construire_monCompte_mesDiplomes();
         construire_monCompte_mesCompetences();
     }
-    
-    
-    
-    private void construire_monCompte_infoPerso(){
-        
+
+    private void construire_monCompte_infoPerso() {
+
         jLabel_mail1.setText("Adresse mail : " + c.getAdresse_mail());
-        jLabel_tel1.setText("Numéro de Téléphone : "+c.getTelephone());
-        jLabel_naissance1.setText("Année de Naissance : "+c.getDateNaiss());
+        jLabel_tel1.setText("Numéro de Téléphone : " + c.getTelephone());
+        jLabel_naissance1.setText("Année de Naissance : " + c.getDateNaiss());
         jLabel1_coordonnees_visible1.setText("La visibilite de cette section est : " + c.getVisibilite());
         jLabel_contact.setText("Etre joingnable :" + c.getContact());
     }
-    
-    private void construire_monCompte_mesDiplomes(){
+
+    private void construire_monCompte_mesDiplomes() {
         int i = 0;
         int j = 0;
-        String [] decoupage;
+        String[] decoupage;
         DefaultListModel DLM = new DefaultListModel();
         jLabel_mesDiplomes.setText("<html>");
-        while(!c.listeDiplome[i].equals("")){
+        while (!c.listeDiplome[i].equals("")) {
             j = 0;
             decoupage = c.listeDiplome[i].split("#");
-            if(i==0){
-               j=1;
-               DLM.addElement(decoupage[1]);
-            }
-            else{
+            if (i == 0) {
+                j = 1;
+                DLM.addElement(decoupage[1]);
+            } else {
                 DLM.addElement(decoupage[0]);
             }
-            jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] + " Visibilite : " + decoupage[j+3] +" <br>");
+            jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j + 1] + " Année : " + decoupage[j + 2] + " Visibilite : " + decoupage[j + 3] + " <br>");
             i++;
         }
         jLabel_mesDiplomes.setText(jLabel_mesDiplomes.getText() + "</html>");
         jList1.setModel(DLM);
     }
-    
-       
-    private void construire_monCompte_mesCompetences(){
+
+    private void construire_monCompte_mesCompetences() {
         int i = 0;
         int j = 0;
-        String [] decoupage;
+        String[] decoupage;
         DefaultListModel DLM = new DefaultListModel();
         jLabel_mesCompetences.setText("<html>");
-        while(!c.listeCompetence[i].equals("")){
+        while (!c.listeCompetence[i].equals("")) {
             j = 0;
             decoupage = c.listeCompetence[i].split("#");
-            if(i==0){
-               j=1;
-               DLM.addElement(decoupage[1]);
-            }
-            else{
+            if (i == 0) {
+                j = 1;
+                DLM.addElement(decoupage[1]);
+            } else {
                 DLM.addElement(decoupage[0]);
             }
-            jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] + " Visibilite : " + decoupage[j+2] +" <br>");
+            jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " Visibilite : " + decoupage[j + 2] + " <br>");
             i++;
         }
         jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "</html>");
         jList2.setModel(DLM);
 
     }
-    
-    private void construire_modif_infoPerso(){
+
+    private void construire_modif_infoPerso() {
         jTextField_modif_adresse.setText(c.getAdresse_mail());
         jTextField_modif_mdp.setText(c.getMdp());
         jTextField_modif_confirm_mdp.setText(c.getMdp());
         jTextField_modif_tel.setText(c.getTelephone());
     }
-    
 
-    private String generer_requete_inscription(){
-            String req_inscription = "INSCRIPTION#";
-            req_inscription += jTextField_mail_inscr.getText() + "#" + jTextField_mdp_inscr.getText() + "#" + jTextField_nom_inscr.getText() + "#" + jTextField_prenom_inscr.getText() + "#" + jTextField_DateN_Inscr.getText() + "#" + jComboBox_visi_inscr.getItemAt(jComboBox_visi_inscr.getSelectedIndex()).toString();
-            return req_inscription;
+    private String generer_requete_inscription() {
+        String req_inscription = "INSCRIPTION#";
+        req_inscription += jTextField_mail_inscr.getText() + "#" + jTextField_mdp_inscr.getText() + "#" + jTextField_nom_inscr.getText() + "#" + jTextField_prenom_inscr.getText() + "#" + jTextField_DateN_Inscr.getText() + "#" + jComboBox_visi_inscr.getItemAt(jComboBox_visi_inscr.getSelectedIndex()).toString();
+        return req_inscription;
     }
-    
-    private String generer_requete_connexion(){
+
+    private String generer_requete_connexion() {
         String req_connexion = "CONNEXION#";
-        req_connexion += TextField_mail_connexion.getText() +"#" + jPassword_connexion.getText();
+        req_connexion += TextField_mail_connexion.getText() + "#" + jPassword_connexion.getText();
         return req_connexion;
     }
-    
-    private String generer_requete_deconnexion(){
+
+    private String generer_requete_deconnexion() {
         String req_deco = "DECONNEXION#";
         req_deco += c.getId_user();
         return req_deco;
     }
-    
+
     private String generer_modif_info() {
         String req_modif_info = "MODIFIERUTILISATEUR#" + c.getId_user() + "#";
-       // req_modif_info += jTextField_modif_adresse.getText() + "#" + jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
+        // req_modif_info += jTextField_modif_adresse.getText() + "#" + jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString();
         req_modif_info += jTextField_modif_mdp.getText() + "#" + jTextField_modif_tel.getText() + "#" + jTextField_modif_adresse.getText() + "#" + jComboBox1_modifier_coor.getItemAt(jComboBox1_modifier_coor.getSelectedIndex()).toString() + "#" + jComboBox_contact.getItemAt(jComboBox_contact.getSelectedIndex()).toString();
         return req_modif_info;
     }
-    
-    private String generer_add_diplome(){
+
+    private String generer_add_diplome() {
         String req_add_dip = "AJOUTERDIPLOME#";
-        req_add_dip += c.getId_user() + "#" + jTextField_annee_dip.getText() + "#"+ jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).toString() + " " + jTextField1.getText() + "#" + jTextField_etablissement_diplome.getText() + "#" + jComboBox4.getItemAt(jComboBox4.getSelectedIndex()).toString();
+        req_add_dip += c.getId_user() + "#" + jTextField_annee_dip.getText() + "#" + jComboBox1.getItemAt(jComboBox1.getSelectedIndex()).toString() + " " + jTextField1.getText() + "#" + jTextField_etablissement_diplome.getText() + "#" + jComboBox4.getItemAt(jComboBox4.getSelectedIndex()).toString();
         return req_add_dip;
     }
-    
-    private String generer_add_competence(){
+
+    private String generer_add_competence() {
         String req_add_comp = "AJOUTERCOMP#";
         req_add_comp += c.getId_user() + "#" + jTextField_ajout_comp.getText() + "#" + jComboBox2.getItemAt(jComboBox2.getSelectedIndex()).toString() + "#" + jComboBox3.getItemAt(jComboBox3.getSelectedIndex()).toString();
         return req_add_comp;
     }
-    
-    private String generer_req_recherche(){
+
+    private String generer_req_recherche() {
         String req_rech = "RECHERCHER#" + c.getId_user() + "#";
-        if(jTextField_Nom_Rechercher.getText().matches("Nom")){
+        if (jTextField_Nom_Rechercher.getText().matches("Nom")) {
             jTextField_Nom_Rechercher.setText("NULL");
         }
-        if(jTextField_Prenom_Rechercher.getText().matches("Prenom")){
+        if (jTextField_Prenom_Rechercher.getText().matches("Prenom")) {
             jTextField_Prenom_Rechercher.setText("NULL");
         }
-        if(jTextField_Diplome_Rechercher.getText().matches("Diplome")){
+        if (jTextField_Diplome_Rechercher.getText().matches("Diplome")) {
             jTextField_Diplome_Rechercher.setText("NULL");
         }
-        if(jTextField_Competence_Rechercher.getText().matches("Competence")){
+        if (jTextField_Competence_Rechercher.getText().matches("Competence")) {
             jTextField_Competence_Rechercher.setText("NULL");
         }
-        
+
         req_rech += jTextField_Nom_Rechercher.getText() + "#" + jTextField_Prenom_Rechercher.getText() + "#" + jTextField_Diplome_Rechercher.getText() + "#" + jTextField_Competence_Rechercher.getText() + "#";
-        if(jComboBox_Niveau_Rechercher.isEnabled()){
+        if (jComboBox_Niveau_Rechercher.isEnabled()) {
             req_rech += jComboBox_Niveau_Rechercher.getItemAt(jComboBox_Niveau_Rechercher.getSelectedIndex()).toString();
-        }
-        else {
+        } else {
             req_rech += "NULL";
         }
         return req_rech;
     }
-    
-    private String generer_delete_diplome(){
+
+    private String generer_delete_diplome() {
         String req_delete_dip = "SUPPDIPLOME#";
         req_delete_dip += c.getId_user() + "#" + jList1.getSelectedValue();
         return req_delete_dip;
     }
-    
 
-    
     private String generer_delete_competence() {
         String req_delete_comp = "SUPPCOMPETENCE#";
         req_delete_comp += c.getId_user() + "#" + jList2.getSelectedValue();
         return req_delete_comp;
     }
-    
-    private String effectuerConnexion(String req) throws IOException{
-        String [] decoupageRequete;
+
+    private String effectuerConnexion(String req) throws IOException {
+        String[] decoupageRequete;
         String retour = "";
         decoupageRequete = req.split("#");
-        switch(decoupageRequete[0]){
+        switch (decoupageRequete[0]) {
             case "OK":
                 c.setId_user(Integer.parseInt(decoupageRequete[1]));
                 c.setNum_session(Integer.parseInt(decoupageRequete[3]));
                 c.setPrenom(decoupageRequete[2]);
                 c.setConnecte(true);
-                retour = "Bienvenue " + decoupageRequete[2] + " !" ;
+                retour = "Bienvenue " + decoupageRequete[2] + " !";
                 construire_entete(1);
-                CardLayout cardLayout = (CardLayout)(jPanel_Principal.getLayout());
+                CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
                 cardLayout.show(jPanel_Principal, "Panel_Recherche");
-                new AppliMessagerie(c);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppliMessagerie ap = new AppliMessagerie(c);
+                        ap.start();
+                    }
+                });
                 break;
             case "ERROR":
                 retour = decoupageRequete[1];
         }
         return retour;
     }
-    
-    private String decouperInscription(String req){
-        String [] decoupageRequete;
+
+    private String decouperInscription(String req) {
+        String[] decoupageRequete;
         decoupageRequete = req.split("#");
         return decoupageRequete[1];
     }
-    
-    
-    private void afficherRechercherAcceuil(){
+
+    private void afficherRechercherAcceuil() {
         c.initialiserRecherche();
         int longueur;
         String s = c.envoyerRechercheAcceuil();
         longueur = decouperRecherche(s);
 
         DefaultListModel DLM = new DefaultListModel();
-        for (int k = 0; k < longueur; k++)
-            {
-                 DLM.addElement((c.listeRecherche[k].split("#")[1])); 
-            }
+        for (int k = 0; k < longueur; k++) {
+            DLM.addElement((c.listeRecherche[k].split("#")[1]));
+        }
         jList3.setModel(DLM);
     }
-    
-    private int decouperRecherche(String req){
-        String [] decoupageRequete;
-        String [] decoupageUser;
+
+    private int decouperRecherche(String req) {
+        String[] decoupageRequete;
+        String[] decoupageUser;
         decoupageRequete = req.split("\\$");
         for (int i = 0; i < decoupageRequete.length; i++) {
             decoupageUser = decoupageRequete[i].split("#");
-            c.listeRecherche[i] = decoupageUser[0] + "#" + decoupageUser[1] + " "+ decoupageUser[2];
+            c.listeRecherche[i] = decoupageUser[0] + "#" + decoupageUser[1] + " " + decoupageUser[2];
         }
 
         return decoupageRequete.length;
     }
-    
-    private void afficherRecherche(){
+
+    private void afficherRecherche() {
         c.initialiserRecherche();
         DefaultListModel DLM = new DefaultListModel();
         int longueur;
         String s = c.envoyerRequete(generer_req_recherche());
-        if(s.equals("NOBODY")){
-            javax.swing.JOptionPane.showMessageDialog(null,"Aucuns resultats");
-        }
-        else{
+        if (s.equals("NOBODY")) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Aucuns resultats");
+        } else {
             longueur = decouperRecherche(s);
-            for (int k = 0; k < longueur; k++)
-                {
-                     DLM.addElement((c.listeRecherche[k].split("#")[1])); 
-                }
+            for (int k = 0; k < longueur; k++) {
+                DLM.addElement((c.listeRecherche[k].split("#")[1]));
+            }
         }
         jList3.setModel(DLM);
     }
-    
-    private String generer_req_deco(){
-        return "DECONNEXION#" + c.getId_user(); 
+
+    private String generer_req_deco() {
+        return "DECONNEXION#" + c.getId_user();
     }
-    
-    private String setIdVisite(){
+
+    private String setIdVisite() {
         int pos = jList3.getSelectedIndex();
         return (c.listeRecherche[pos].split("#"))[0];
     }
-    
-    private String generer_req_visiter(){
-            String id_visite = setIdVisite();
-            String req_visi = "VISITER#";
-            req_visi += c.getId_user() + "#" + id_visite;
-            c.setId_Visite(Integer.parseInt(id_visite));
-            return req_visi;
+
+    private String generer_req_visiter() {
+        String id_visite = setIdVisite();
+        String req_visi = "VISITER#";
+        req_visi += c.getId_user() + "#" + id_visite;
+        c.setId_Visite(Integer.parseInt(id_visite));
+        return req_visi;
     }
-    
-    private void construire_compte_user(String chaine){
-        javax.swing.JOptionPane.showMessageDialog(null,chaine);
+
+    private void construire_compte_user(String chaine) {
+        javax.swing.JOptionPane.showMessageDialog(null, chaine);
         construireMesInfos(chaine);
         construireInfosPerso();
         construireDiplomes();
         construireCompetences();
     }
-    
-    private void construireInfosPerso(){
-        jLabel_Nom_prenom.setText(c.getNom() +" "+ c.getPrenom());
+
+    private void construireInfosPerso() {
+        jLabel_Nom_prenom.setText(c.getNom() + " " + c.getPrenom());
         jLabel_mail.setText("Adresse mail : " + c.getAdresse_mail());
-        jLabel_tel.setText("Numéro de Téléphone : "+c.getTelephone());
-        jLabel_naissance.setText("Année de Naissance : "+c.getDateNaiss());
-        
+        jLabel_tel.setText("Numéro de Téléphone : " + c.getTelephone());
+        jLabel_naissance.setText("Année de Naissance : " + c.getDateNaiss());
+
     }
-    
-    private void construireDiplomes(){
+
+    private void construireDiplomes() {
         int i = 0;
         int j = 0;
-        String [] decoupage;
+        String[] decoupage;
         jLabel_Diplome_User.setText("");
         jLabel_Diplome_User.setText("<html>");
-        while(!c.listeDiplome[i].equals("")){
+        while (!c.listeDiplome[i].equals("")) {
             j = 0;
             decoupage = c.listeDiplome[i].split("#");
-            if(i==0){
+            if (i == 0) {
                 j = 1;
             }
-            jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j+1] + " Année : " + decoupage[j+2] +" <br>");
+            jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "Diplome : " + decoupage[j] + " Etablissement : " + decoupage[j + 1] + " Année : " + decoupage[j + 2] + " <br>");
             i++;
         }
         jLabel_Diplome_User.setText(jLabel_Diplome_User.getText() + "</html>");
     }
-    
-    private void construireCompetences(){
+
+    private void construireCompetences() {
         int i = 0;
         int j = 0;
-        String [] decoupage;
+        String[] decoupage;
         jLabel_Competence_User.setText("<html>");
-        while(!c.listeCompetence[i].equals("")){
+        while (!c.listeCompetence[i].equals("")) {
             j = 0;
-            if(i==0){
-                j=1;
+            if (i == 0) {
+                j = 1;
             }
             decoupage = c.listeCompetence[i].split("#");
-            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j+1] +" <br>");
+            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " <br>");
             i++;
         }
-        jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "</html>");       
+        jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "</html>");
     }
 }
