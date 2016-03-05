@@ -18,6 +18,14 @@ public class Bdd {
     public Statement st;
     /* Les enum */
 
+    public String disLikeComp(int parseInt, String string, String string0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public String likeComp(int parseInt, String string, String string0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     enum visibiliter {
 
         Prive,

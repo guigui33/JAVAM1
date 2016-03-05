@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 class TraitementDemande {
     /**
-     * classe qui traite fait le lien avec la Bdd 
+     * classe qui fait le lien avec la Bdd 
      */
     private final Bdd bdd;
     /**
@@ -55,6 +55,10 @@ class TraitementDemande {
                 return modifDip(decoupageRequete);
             case "DECONNEXION"://deconnexion du client
                 return deconnexion(decoupageRequete);
+            case "LIKECOMP":
+                return likeCompetene(decoupageRequete);
+            case "":
+                return disLikeomptetence(decoupageRequete);
             default:
                 return "ERROR#requête inconnue.";
         }
@@ -236,5 +240,29 @@ class TraitementDemande {
             Logger.getLogger(TraitementDemande.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    /**
+     * permet d'ajouter un like d'une comptetence d'un utilisateur 
+     * @param decoupageRequete contient les informations de la requète 
+     * @return un message d'erreur ou de succes au client
+     */
+    private String likeCompetene(String[] decoupageRequete) {
+        //LIKECOMP#Id_Utilisateur#id_Utilisateur_liké#Matiere
+         if(bdd.connexion()){             
+            return bdd.likeComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3]);
+        }
+        return "ERROR";
+    }
+    /**
+     * permet de supprimer un like fait par un utilisateur sur une competence 
+     * @param decoupageRequete les informations de la requete 
+     * @return un message d'erreur ou de succes au client
+     */
+    private String disLikeomptetence(String[] decoupageRequete) {
+        //DISLIKECOMP#Id_Utilisateur#id_Utilisateur_supp#Matiere
+        if(bdd.connexion()){             
+            return bdd.disLikeComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3]);
+        }
+        return "ERROR";
     }
 }
