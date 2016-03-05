@@ -249,7 +249,7 @@ class TraitementDemande {
     private String likeCompetene(String[] decoupageRequete) {
         //LIKECOMP#Id_Utilisateur#id_Utilisateur_liké#Matiere
          if(bdd.connexion()){             
-            return bdd.likeComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3]);
+            return bdd.likeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
         }
         return "ERROR";
     }
@@ -261,7 +261,7 @@ class TraitementDemande {
     private String disLikeomptetence(String[] decoupageRequete) {
         //DISLIKECOMP#Id_Utilisateur#id_Utilisateur_supp#Matiere
         if(bdd.connexion()){             
-            return bdd.disLikeComp(Integer.parseInt(decoupageRequete[1]),decoupageRequete[2],decoupageRequete[3]);
+            return bdd.disLikeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
         }
         return "ERROR";
     }
