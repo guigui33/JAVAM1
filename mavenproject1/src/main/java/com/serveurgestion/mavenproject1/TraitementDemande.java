@@ -57,8 +57,8 @@ class TraitementDemande {
                 return deconnexion(decoupageRequete);
             case "LIKECOMP":
                 return likeCompetene(decoupageRequete);
-            case "":
-                return disLikeomptetence(decoupageRequete);
+            case "UNLIKECOMP":
+                return unLikeCompetence(decoupageRequete);
             default:
                 return "ERROR#requête inconnue.";
         }
@@ -258,10 +258,10 @@ class TraitementDemande {
      * @param decoupageRequete les informations de la requete 
      * @return un message d'erreur ou de succes au client
      */
-    private String disLikeomptetence(String[] decoupageRequete) {
+    private String unLikeCompetence(String[] decoupageRequete) {
         //DISLIKECOMP#Id_Utilisateur#id_Utilisateur_supp#Matiere
         if(bdd.connexion()){             
-            return bdd.disLikeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
+            return bdd.unLikeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
         }
         return "ERROR";
     }

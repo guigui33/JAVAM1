@@ -18,7 +18,7 @@ public class Bdd {
     public Statement st;
     /* Les enum */
 
-    public String disLikeComp(int idUtili, int idUtili2, String matiere) {
+    public String unLikeComp(int idUtili, int idUtili2, String matiere) {
        
     }
 
