@@ -57,8 +57,6 @@ class TraitementDemande {
                 return deconnexion(decoupageRequete);
             case "LIKECOMP":
                 return likeCompetene(decoupageRequete);
-            case "UNLIKECOMP":
-                return unLikeCompetence(decoupageRequete);
             default:
                 return "ERROR#requête inconnue.";
         }
@@ -250,18 +248,6 @@ class TraitementDemande {
         //LIKECOMP#Id_Utilisateur#id_Utilisateur_liké#Matiere
          if(bdd.connexion()){             
             return bdd.likeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
-        }
-        return "ERROR";
-    }
-    /**
-     * permet de supprimer un like fait par un utilisateur sur une competence 
-     * @param decoupageRequete les informations de la requete 
-     * @return un message d'erreur ou de succes au client
-     */
-    private String unLikeCompetence(String[] decoupageRequete) {
-        //DISLIKECOMP#Id_Utilisateur#id_Utilisateur_supp#Matiere
-        if(bdd.connexion()){             
-            return bdd.unLikeComp(Integer.parseInt(decoupageRequete[1]),Integer.parseInt(decoupageRequete[2]),decoupageRequete[3]);
         }
         return "ERROR";
     }

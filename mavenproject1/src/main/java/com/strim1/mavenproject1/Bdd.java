@@ -18,10 +18,6 @@ public class Bdd {
     public Statement st;
     /* Les enum */
 
-    public String unLikeComp(int idUtili, int idUtili2, String matiere) {
-       
-    }
-
     public String likeComp(int idUtili, int idUtili2, String matiere)  {
        
     }
