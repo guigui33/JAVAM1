@@ -18,10 +18,6 @@ public class Bdd {
     public Statement st;
     /* Les enum */
 
-    public String likeComp(int idUtili, int idUtili2, String matiere)  {
-       
-    }
-
     enum visibiliter {
 
         Prive,
@@ -355,6 +351,8 @@ public class Bdd {
     public String supprimerCompetence(int id, String matiere) {
         try {
             st = co.createStatement();
+            String sql2 = "DELETE FROM Liker WHERE IdRecepteur=" + id + " AND Matiere='" + matiere + "'";
+            st.executeUpdate(sql2);
             String sql = "DELETE FROM Competences WHERE IdUtilisateur=" + id + " AND Matiere='" + matiere + "'";
             st.executeUpdate(sql);
             return new GestionRetourBDD().valeurRetour("Suppression competence");
@@ -404,7 +402,7 @@ public class Bdd {
             if (!requeteWHERE.equals("WHERE")) {
                 whereMatiere = " AND ";
             }
-            whereMatiere += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' ";
+            whereMatiere += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' ORDER BY NbrLike ";
         }
 
         if (n == Bdd.niveau.Moyen) {
@@ -480,21 +478,21 @@ public class Bdd {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Bon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Tresbon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp!='Prive') ";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp!='Prive' ORDER BY NbrLike) ";
                             }
                             break;
                         case 2:
@@ -544,21 +542,21 @@ public class Bdd {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Bon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp!='Prive' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Tresbon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp!='Prive') ";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp!='Prive' ORDER BY NbrLike) ";
                             }
                             break;
                         case 2:
@@ -608,21 +606,21 @@ public class Bdd {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Moyen' OR  Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Bon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public')";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND (Niveau='Bon' OR Niveau='TresBon') AND VisibleComp='Public' ORDER BY NbrLike)";
                             }
 
                             if (n == Bdd.niveau.Tresbon) {
                                 if (!requeteWHERE.equals("WHERE")) {
                                     whereNiveau = " AND ";
                                 }
-                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp='Public') ";
+                                whereNiveau += " u.Id IN (SELECT IdUtilisateur FROM Competences WHERE Matiere LIKE '" + matiere + "' AND Niveau='TresBon' AND VisibleComp='Public' ORDER BY NbrLike) ";
                             }
                             break;
                         case 2:
@@ -687,6 +685,7 @@ public class Bdd {
 
             String nom, prenom, mail, tel, matiere, niveau, diplome, eta, Diplome, visibiliter, retourInfo = "", retourComp = "", retourDip = "", retourAdmin = "", retourVisiteur;
             String visiteur = typeVisiteur(idcourant, idvisite);
+            int nbrLike, getLike;
             boolean disponible;
             Date annee;
 
@@ -698,7 +697,8 @@ public class Bdd {
             String r5 = "SELECT * FROM Diplomes WHERE IdUtilisateur=" + idvisite + "";
             String r6 = "SELECT * FROM Competences WHERE IdUtilisateur=" + idvisite + " AND VisibleComp='Public'";
             String r7 = "SELECT * FROM Diplomes WHERE IdUtilisateur=" + idvisite + " AND VisibleDip='Public'";
-            boolean vr;
+            
+            boolean vr, vr1;
             switch (visiteur) {
 
                 case "Utilisateur":
@@ -730,11 +730,27 @@ public class Bdd {
                             if (resultatComp.isLast()) {
                                 matiere = resultatComp.getString("Matiere");
                                 niveau = resultatComp.getString("Niveau");
-                                retourComp = retourComp + matiere + "#" + niveau + "#" + "END_C#";
+                                nbrLike= resultatComp.getInt("NbrLike");
+                                String r8=  "SELECT * FROM Liker WHERE IdEmetteur="+idcourant+" AND Matiere='"+matiere+"' AND IdRecepteur="+idvisite+"";
+                                vr1=verifierRequete(r8);
+                                if(vr1 == true){
+                                    getLike=1;
+                                }else{
+                                    getLike=0;
+                                }
+                                retourComp = retourComp + matiere + "#" + niveau + "#" + nbrLike + "#" + getLike + "#END_C#";
                             } else {
                                 matiere = resultatComp.getString("Matiere");
                                 niveau = resultatComp.getString("Niveau");
-                                retourComp = retourComp + matiere + "#" + niveau + "$";
+                                nbrLike= resultatComp.getInt("NbrLike");
+                                String r8=  "SELECT * FROM Liker WHERE IdEmetteur="+idcourant+" AND Matiere='"+matiere+"' AND IdRecepteur="+idvisite+"";
+                                vr1=verifierRequete(r8);
+                                if(vr1 == true){
+                                    getLike=1;
+                                }else{
+                                    getLike=0;
+                                }
+                                retourComp = retourComp + matiere + "#" + niveau + "#" + nbrLike +  "#" + getLike + "$";
                             }
 
                         }
@@ -793,12 +809,14 @@ public class Bdd {
                             matiere = resultatAdmin.getString("Matiere");
                             niveau = resultatAdmin.getString("Niveau");
                             visibiliter = resultatAdmin.getString("VisibleComp");
-                            retourAdmin = retourAdmin + matiere + "#" + niveau + "#" + visibiliter + "#END_C#";
+                            nbrLike= resultatAdmin.getInt("NbrLike");
+                            retourAdmin = retourAdmin + matiere + "#" + niveau + "#" + visibiliter + "#" + nbrLike + "#END_C#";
                         } else {
                             matiere = resultatAdmin.getString("Matiere");
                             niveau = resultatAdmin.getString("Niveau");
                             visibiliter = resultatAdmin.getString("VisibleComp");
-                            retourAdmin = retourAdmin + matiere + "#" + niveau + "#" + visibiliter + "$";
+                            nbrLike= resultatAdmin.getInt("NbrLike");
+                            retourAdmin = retourAdmin + matiere + "#" + niveau + "#" + visibiliter + "#" + nbrLike + "$";
                         }
 
                     }
@@ -858,11 +876,13 @@ public class Bdd {
                             if (resultatComp.isLast()) {
                                 matiere = resultatComp.getString("Matiere");
                                 niveau = resultatComp.getString("Niveau");
-                                retourComp = retourComp + matiere + "#" + niveau + "#" + "END_C#";
+                                nbrLike= resultatComp.getInt("NbrLike");
+                                retourComp = retourComp + matiere + "#" + niveau + "#" + nbrLike +"#END_C#";
                             } else {
                                 matiere = resultatComp.getString("Matiere");
                                 niveau = resultatComp.getString("Niveau");
-                                retourComp = retourComp + matiere + "#" + niveau + "$";
+                                nbrLike= resultatComp.getInt("NbrLike");
+                                retourComp = retourComp + matiere + "#" + niveau + "#" + nbrLike + "$"; 
                             }
 
                         }
@@ -1054,6 +1074,42 @@ public class Bdd {
             return false;
         }
         
+        
+    public String likeComp(int idEmetteur, int idRecepteur, String matiere)  {
+        ResultSet r1;
+        int i=0;
+       	try {
+                if(idEmetteur == idRecepteur){
+                    
+                    return "Tu ne peux pas t'auto liker !";
+                }else{
+        	st = co.createStatement();
+                String sql=("SELECT * FROM Liker WHERE IdEmetteur="+idEmetteur+" AND IdRecepteur="+idRecepteur+" AND Matiere='"+matiere+"' ");
+                    r1 = st.executeQuery(sql);
+                    if(r1.next()){
+                        i=1;
+                    }
+                if(i==0){
+        	String sql1 = "INSERT INTO Liker VALUES (" + idEmetteur + "," + idRecepteur + ",'" + matiere + "')";
+                st.executeUpdate(sql1);
+                String sql2 ="UPDATE `Competences` SET `NbrLike`= `NbrLike`+ 1 WHERE Matiere='"+matiere+"' AND IdUtilisateur="+idRecepteur+"";
+                st.executeUpdate(sql2);
+        	return new GestionRetourBDD().valeurRetour("Ajout Like ok");
+                }else{
+                    String sql1="DELETE FROM Liker WHERE IdEmetteur="+idEmetteur+" AND IdRecepteur="+idRecepteur+" AND  Matiere='"+matiere+"'";
+                    st.executeUpdate(sql1);
+                    String sql2 ="UPDATE `Competences` SET `NbrLike`= `NbrLike`- 1 WHERE Matiere='"+matiere+"' AND IdUtilisateur="+idRecepteur+"";
+                    st.executeUpdate(sql2);
+        	return new GestionRetourBDD().valeurRetour("Retour Like ok");
+                }
+              }
+    	} catch (SQLException ex) {
+        	Logger.getLogger(Bdd.class.getName()).log(Level.SEVERE, null, ex);
+        	return new GestionRetourBDD().valeurRetour("Erreur Inconnue");
+    	}
+	}
+    
+    
     public static void main(String[] args) {
         String test;
         Bdd bdd = new Bdd();
@@ -1070,12 +1126,13 @@ public class Bdd {
         //test=bdd.connexionClient("abc", "123456");
         //bdd.envoyerMessage(3, 2, "Test 5 objet", "Test 5 message");
         //test= bdd.messagerie(2);
+        test=bdd.recherche(3, "NULL", "NULL", "NULL", "Java", niveau.Bon);
         //test=bdd.utilisateur();
-        //test=bdd.visiterProfil(3,3);
+        //test=bdd.visiterProfil(3,2);
         //test=bdd.recherche(1, "NULL", "NULL", "NULL", "NULL", niveau.NULL);
         //bdd.estDisponible(3);
         //test=bdd.getNomPrenom(2);
-        test=bdd.afficherMessage(6);
+        //test= bdd.likeComp(3,2,"Java");
         System.out.println(test);
     }
 }
