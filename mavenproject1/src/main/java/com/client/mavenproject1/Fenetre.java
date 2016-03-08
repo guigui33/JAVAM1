@@ -7,10 +7,16 @@ package com.client.mavenproject1;
 
 import com.stri.clientmessagerie.AppliMessagerie;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.paint.Color;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
 /**
@@ -100,6 +106,9 @@ public class Fenetre extends javax.swing.JFrame {
         jLabel_Diplome_User = new javax.swing.JLabel();
         jPanel_Compétences = new javax.swing.JPanel();
         jLabel_Competence_User = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList_like = new javax.swing.JList<>();
+        jLabel12 = new javax.swing.JLabel();
         Panel_Compte = new javax.swing.JPanel();
         jLabel_Nom_prenom1 = new javax.swing.JLabel();
         Photo_profil = new javax.swing.JLabel();
@@ -175,7 +184,6 @@ public class Fenetre extends javax.swing.JFrame {
         setTitle("Annuaire des étudiants");
         setLocationByPlatform(true);
 
-        Icone.setIcon(new javax.swing.ImageIcon("C:\\Users\\AFBD\\Desktop\\STRI-logo-OK2.png")); // NOI18N
         Icone.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Icone.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -614,21 +622,46 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_Competence_User.setText("Aucunes compéte,ces ou l'utilisateur ne souhaite pas les afficher");
 
+        jList_like.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "test", "test1" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList_like);
+
+        jLabel12.setText("Like / Unlike");
+        jLabel12.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                like(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_CompétencesLayout = new javax.swing.GroupLayout(jPanel_Compétences);
         jPanel_Compétences.setLayout(jPanel_CompétencesLayout);
         jPanel_CompétencesLayout.setHorizontalGroup(
             jPanel_CompétencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_CompétencesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_CompétencesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_Competence_User)
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addComponent(jLabel_Competence_User, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_CompétencesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(100, 100, 100))
         );
         jPanel_CompétencesLayout.setVerticalGroup(
             jPanel_CompétencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_CompétencesLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(jLabel_Competence_User)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addGroup(jPanel_CompétencesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel_Competence_User)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel12)
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout Panel_UserLayout = new javax.swing.GroupLayout(Panel_User);
@@ -802,7 +835,7 @@ public class Fenetre extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel_Compétences1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Compétences1Layout.createSequentialGroup()
-                        .addGap(0, 362, Short.MAX_VALUE)
+                        .addGap(0, 239, Short.MAX_VALUE)
                         .addComponent(jLabel_modier_competence)
                         .addContainerGap())
                     .addGroup(jPanel_Compétences1Layout.createSequentialGroup()
@@ -815,7 +848,7 @@ public class Fenetre extends javax.swing.JFrame {
                 .addComponent(jLabel_modier_competence)
                 .addGap(17, 17, 17)
                 .addComponent(jLabel_mesCompetences)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout Panel_CompteLayout = new javax.swing.GroupLayout(Panel_Compte);
@@ -888,7 +921,6 @@ public class Fenetre extends javax.swing.JFrame {
 
         jLabel_modif_confirm_mdp.setText("Confirmer le mot de passe :");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\AFBD\\Desktop\\retour-icone-3745-96.png")); // NOI18N
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1031,7 +1063,6 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\AFBD\\Desktop\\retour-icone-3745-96.png")); // NOI18N
         jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1202,7 +1233,6 @@ public class Fenetre extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\AFBD\\Desktop\\retour-icone-3745-96.png")); // NOI18N
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1472,8 +1502,9 @@ public class Fenetre extends javax.swing.JFrame {
         // TODO add your handling code here:
         construire_entete(0);
         c.envoyerRequete(generer_req_deco());
+                javax.swing.JOptionPane.showMessageDialog(null, "Au revoir et à bientôt !");
         c.deconnexion();
-        javax.swing.JOptionPane.showMessageDialog(null, "Au revoir et à bientôt !");
+
         afficherRechercherAcceuil();
         CardLayout cardLayout = (CardLayout) (jPanel_Principal.getLayout());
         cardLayout.show(jPanel_Principal, "Panel_Recherche");
@@ -1576,6 +1607,12 @@ public class Fenetre extends javax.swing.JFrame {
         cardLayout.show(jPanel_Principal, "Panel_User");
     }//GEN-LAST:event_click_visiter
 
+    private void like(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_like
+        // TODO add your handling code here:
+        System.out.println("id likant : " + c.getId_user() + "||| id_liké : " + c.getId_Visite() + "||| compétence : " + jList_like.getSelectedValue());
+
+    }//GEN-LAST:event_like
+
     /**
      * @param args the command line arguments
      */
@@ -1626,6 +1663,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_visi_inscr;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel1_coordonnees_visible1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -1687,6 +1725,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JList<String> jList3;
+    private javax.swing.JList<String> jList_like;
     private javax.swing.JPanel jPanel_Compétences;
     private javax.swing.JPanel jPanel_Compétences1;
     private javax.swing.JPanel jPanel_Coordonnees;
@@ -1697,6 +1736,7 @@ public class Fenetre extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_Principal;
     private javax.swing.JPasswordField jPassword_connexion;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane_liste_comp;
     private javax.swing.JScrollPane jScrollPane_liste_dip;
     private javax.swing.JSeparator jSeparator1;
@@ -1847,7 +1887,7 @@ public class Fenetre extends javax.swing.JFrame {
             } else {
                 DLM.addElement(decoupage[0]);
             }
-            jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " Visibilite : " + decoupage[j + 2] + " <br>");
+            jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " Visibilite : " + decoupage[j + 2] + " || Nb Like : 2 <br>"); //decoupage[j+3]
             i++;
         }
         jLabel_mesCompetences.setText(jLabel_mesCompetences.getText() + "</html>");
@@ -2066,15 +2106,21 @@ public class Fenetre extends javax.swing.JFrame {
         int j = 0;
         String[] decoupage;
         jLabel_Competence_User.setText("<html>");
+        DefaultListModel DLM = new DefaultListModel();
         while (!c.listeCompetence[i].equals("")) {
             j = 0;
             if (i == 0) {
                 j = 1;
             }
             decoupage = c.listeCompetence[i].split("#");
-            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " <br>");
+            jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "Competence : " + decoupage[j] + " Niveau : " + decoupage[j + 1] + " || NB Like : 0 <br>");
+            
+            DLM.addElement("<html><i><font color='green'>" + decoupage[j] + "</font></i></html>");
             i++;
         }
         jLabel_Competence_User.setText(jLabel_Competence_User.getText() + "</html>");
+        jList_like.setModel(DLM);
     }
+    
+
 }
